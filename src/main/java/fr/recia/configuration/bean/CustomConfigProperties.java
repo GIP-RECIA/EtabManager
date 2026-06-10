@@ -37,6 +37,7 @@ import static fr.recia.configuration.Constants.JSON_ARRAY_SUFFIX;
 @Slf4j
 public class CustomConfigProperties {
 
+    private String ldapResetPassword;
     private String pronoteGroupRegex;
     private Integer suppressDays;
     private List<AlertProperties> alerts;

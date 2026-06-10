@@ -200,6 +200,45 @@ public class PersonneController {
         }
     }
 
+    @GetMapping(value = "/{id}/reset")
+    public ResponseEntity<PersonneDetailDto> resetPersonne(@AuthenticationPrincipal AppUser principal, @PathVariable Long id) {
+        APersonne personne = personneService.getPersonne(id);
+        if (personne == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        // Vérifier qu'on a les droits de modifier la personne = que sur une des structures dans laquelle est la personne on a les droits de modification
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        boolean canModify = false;
+        for (AStructure aStructure : personne.getListeStructures()) {
+            if (allowedSiren.contains(aStructure.getSiren())) {
+                canModify = true;
+                break;
+            }
+        }
+        if (canModify) {
+            boolean ok = personneService.resetPersonne(personne);
+            if(ok){
+                // Log Audit
+                auditService.log(
+                    AuditEvent.builder()
+                        .timestamp(OffsetDateTime.now(ZoneId.systemDefault()))
+                        .eventType(EventType.RESET_ACCOUNT)
+                        .actor(principal.getUsername())
+                        .target(String.valueOf(id))
+                        .payload(Map.of(
+                            "uid", personne.getUid()
+                        ))
+                        .build()
+                );
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            log.warn("User {} is not authorized to reset person {}", principal.getUsername(), id);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
     @PutMapping("/{id}/lock")
     public ResponseEntity<Void> lockPerson(@AuthenticationPrincipal AppUser principal, @PathVariable Long id){
         APersonne personne = personneService.getPersonne(id);

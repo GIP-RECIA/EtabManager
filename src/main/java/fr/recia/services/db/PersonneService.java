@@ -34,6 +34,7 @@ import fr.recia.db.repositories.personne.APersonneRepository;
 import fr.recia.ldap.LdapUser;
 import fr.recia.ldap.repository.LdapPeopleDao;
 import fr.recia.services.cache.CacheInvalidationService;
+import fr.recia.services.creation.PasswordGenerator;
 import fr.recia.web.dto.function.DisciplineDisplayDto;
 import fr.recia.web.dto.function.DisciplinesInFilliereDisplayDto;
 import fr.recia.web.dto.user.PersonneDetailDto;
@@ -73,6 +74,8 @@ public class PersonneService {
     private RelationService relationService;
     @Autowired
     private AppProperties appProperties;
+    @Autowired
+    private PasswordGenerator passwordGenerator;
 
 
     public List<DatabasePersonneDto> searchPersonne(String name, boolean admin) {
@@ -131,6 +134,28 @@ public class PersonneService {
     public APersonne getPersonne(Long id) {
         log.trace("getPersonne for {}", id);
         return aPersonneRepository.findById(id).orElse(null);
+    }
+
+    /**
+     * Réinitialise le mot de passe d'un compte
+     */
+    public boolean resetPersonne(APersonne aPersonne){
+        log.trace("resetPersonne for {}", aPersonne.getId());
+        // TODO : de qui on peut réinitialiser les mot de passe ?
+        if(aPersonne.getCleJointure().getSource().startsWith("SarapisUi_") && aPersonne.getEtat().equals(Etat.Valide)){
+            // Modifications en base
+            aPersonne.setPassword(passwordGenerator.genPassword());
+            aPersonne.setEtat(Etat.Invalide);
+            aPersonneRepository.saveAndFlush(aPersonne);
+            // Modifications dans le LDAP
+            ldapPeopleDao.resetPersonne(aPersonne.getUid(), appProperties.getCustomConfig().getLdapResetPassword());
+            // Invalidation du dache
+            cacheInvalidationService.evictPersonneAndAssociatedStructures(aPersonne.getId(), aPersonne.getStructRattachement().getId());
+            return true;
+        } else {
+            log.warn("Try to reset not local or invalid account {}", aPersonne.getId());
+        }
+        return false;
     }
 
     /**

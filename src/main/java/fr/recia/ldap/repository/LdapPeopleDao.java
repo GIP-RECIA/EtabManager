@@ -44,6 +44,29 @@ public class LdapPeopleDao {
     private CustomLdapProperties ldapProperties;
     private PeopleResponseAttributesMapper peopleResponseAttributesMapper;
 
+    public void resetPersonne(String uid, String password){
+        List<Name> dns = ldapTemplate.search(
+            query()
+                .base(ldapProperties.getUserBranch().getBaseDN())
+                .where("uid").is(uid),
+            (ContextMapper<Name>) ctx -> ((DirContextAdapter) ctx).getDn()
+        );
+        if (!dns.isEmpty()) {
+            Name dn = dns.get(0);
+            ModificationItem[] mods = new ModificationItem[] {
+                new ModificationItem(
+                    DirContext.REPLACE_ATTRIBUTE,
+                    new BasicAttribute("userPassword", password)
+                ),
+                new ModificationItem(
+                    DirContext.REPLACE_ATTRIBUTE,
+                    new BasicAttribute("ESCOPersonEtatCompte", "INVALIDE")
+                )
+            };
+            ldapTemplate.modifyAttributes(dn, mods);
+        }
+    }
+
     public void lockPerson(String uid) {
         List<Name> dns = ldapTemplate.search(
             query()

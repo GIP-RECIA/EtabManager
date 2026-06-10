@@ -57,6 +57,7 @@ public class PersonneDetailDto {
     private String patronyme;
     private String sn;
     private String uid;
+    private String password;
     private Date dateFin;
     private Date dateSourceModification;
     private String login;
@@ -86,6 +87,10 @@ public class PersonneDetailDto {
         this.sn = aPersonne.getSn();
         if (showUid) {
             this.uid = aPersonne.getUid();
+            // TODO : dans quel cas on affiche le mot de passe ?
+            if(aPersonne.getCleJointure().getSource().startsWith("SarapisUi_") && aPersonne.getEtat().equals(Etat.Invalide)){
+                this.password = aPersonne.getPassword();
+            }
         }
         this.login = aPersonne.getLogin().getNom();
         this.dateFin = aPersonne.getDateFin();
