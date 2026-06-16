@@ -25,6 +25,7 @@ import fr.recia.configuration.bean.CustomConfigProperties;
 import fr.recia.configuration.bean.CustomLdapProperties;
 import fr.recia.configuration.bean.CustomMailProperties;
 import fr.recia.configuration.bean.CustomMetricsProperties;
+import fr.recia.configuration.bean.ExportEsidocProperties;
 import fr.recia.configuration.bean.FrontProperties;
 import fr.recia.configuration.bean.GroupProperties;
 import fr.recia.configuration.bean.GrouperProperties;
@@ -71,6 +72,7 @@ public class AppProperties {
     private AdminProperties admin;
     private GrouperProperties grouper;
     private RestrictionRentreeProperties restrictionRentree;
+    private ExportEsidocProperties exportEsidoc;
     private UIDFactoryProperties uidFactory;
     private RedisProperties redis;
     private RedisSessionCleanupProperties session;
@@ -115,6 +117,7 @@ public class AppProperties {
             authorizedServices + ",\n" +
             rights + ",\n" +
             restrictionRentree + ",\n" +
+            exportEsidoc + ",\n" +
             admin + ",\n" +
             grouper + ",\n" +
             redis + ",\n" +

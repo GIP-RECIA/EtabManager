@@ -36,4 +36,9 @@ public class RestTemplateConfiguration {
         return new RestTemplate();
     }
 
+    @Bean
+    public RestTemplate restTemplateEsidoc() {
+        return new RestTemplate();
+    }
+
 }

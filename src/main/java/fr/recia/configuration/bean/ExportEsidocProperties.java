@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package fr.recia.audit;
+package fr.recia.configuration.bean;
 
-public enum EventType {
-    CREATE_ACCOUNT,
-    MODIFY_ACCOUNT,
-    MODIFY_FONCTION,
-    LOCK_ACCOUNT,
-    UNLOCK_ACCOUNT,
-    DELETE_ACCOUNT,
-    FORCEDELETE_ACCOUNT,
-    UNDODELETE_ACCOUNT,
-    RESET_ACCOUNT,
-    UPDATE_RIGHTS,
-    UPDATE_RESTRICTIONS,
-    EXPORT_ESIDOC
+import lombok.Data;
+
+@Data
+public class ExportEsidocProperties {
+    private String url;
+    private String apiKey;
 }
