@@ -6,6 +6,7 @@
     "access": "Gérer les accès aux services",
     "groups": "Gérer les groupes",
     "restriction": "Paramétrer la rentrée",
-    "settings": "Paramétrer l'établissement"
+    "settings": "Paramétrer l'établissement",
+    "esidocexports": "Exporter vers esidoc"
   }
 }

@@ -34,6 +34,11 @@ const devRoutes = [
     name: 'settings',
     component: () => import('@/views/SettingsView.vue'),
   },
+  {
+    path: '/esidocexports',
+    name: 'esidocexports',
+    component: () => import('@/views/EsidocExportView.vue'),
+  },
 ]
 
 const prodRoutes: never[] = []

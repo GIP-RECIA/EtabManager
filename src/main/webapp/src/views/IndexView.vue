@@ -19,6 +19,7 @@ import {
   faArrowLeft,
   faClock,
   faCubesStacked,
+  faFileExport,
   faHouse,
   faUserGear,
   faUsersGear,
@@ -121,6 +122,17 @@ const isDev = import.meta.env.DEV
               />
               {{ t('page.index.settings') }}
             </a>
+          </li>
+          <li v-if="isDev">
+            <router-link
+              :to="{ name: 'esidocexports' }"
+              class="btn-tertiary"
+            >
+              <FontAwesomeIcon
+                :icon="faFileExport"
+              />
+              {{ t('page.index.esidocexports') }}
+            </router-link>
           </li>
         </ul>
       </div>
