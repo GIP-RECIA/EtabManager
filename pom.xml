@@ -10,7 +10,7 @@
     <relativePath/>
   </parent>
 
-  <groupId>fr.recia</groupId>
+  <groupId>fr.recia.manager</groupId>
   <artifactId>etab-manager</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>

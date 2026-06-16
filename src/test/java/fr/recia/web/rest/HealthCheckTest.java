@@ -16,6 +16,7 @@
 
 package fr.recia.web.rest;
 
+import fr.recia.manager.web.rest.HealthCheckController;
 import fr.recia.test.TestUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

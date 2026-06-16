@@ -16,19 +16,20 @@
 
 package fr.recia.web.rest;
 
-import fr.recia.configuration.AppProperties;
-import fr.recia.db.entities.APersonneAStructure;
-import fr.recia.db.entities.education.Discipline;
-import fr.recia.db.entities.fonction.Fonction;
-import fr.recia.db.entities.fonction.TypeFonctionFiliere;
-import fr.recia.db.entities.personne.APersonne;
-import fr.recia.db.entities.structure.Etablissement;
-import fr.recia.db.repositories.APersonneAStructureRepository;
-import fr.recia.db.repositories.education.DisciplineRepository;
-import fr.recia.db.repositories.fonction.FonctionRepository;
-import fr.recia.db.repositories.fonction.TypeFonctionFiliereRepository;
-import fr.recia.db.repositories.personne.APersonneRepository;
-import fr.recia.db.repositories.structure.EtablissementRepository;
+import fr.recia.manager.configuration.AppProperties;
+import fr.recia.manager.db.entities.APersonneAStructure;
+import fr.recia.manager.db.entities.education.Discipline;
+import fr.recia.manager.db.entities.fonction.Fonction;
+import fr.recia.manager.db.entities.fonction.TypeFonctionFiliere;
+import fr.recia.manager.db.entities.personne.APersonne;
+import fr.recia.manager.db.entities.structure.Etablissement;
+import fr.recia.manager.db.repositories.APersonneAStructureRepository;
+import fr.recia.manager.db.repositories.education.DisciplineRepository;
+import fr.recia.manager.db.repositories.fonction.FonctionRepository;
+import fr.recia.manager.db.repositories.fonction.TypeFonctionFiliereRepository;
+import fr.recia.manager.db.repositories.personne.APersonneRepository;
+import fr.recia.manager.db.repositories.structure.EtablissementRepository;
+import fr.recia.manager.web.rest.StructureController;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
