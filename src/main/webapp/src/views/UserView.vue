@@ -422,7 +422,7 @@ function onAttach(): void {
     gap: 32px;
 
     &:focus-visible {
-      outline: 2px dotted var(--#{$prefix}system-blue);
+      outline: 2px dotted var(--#{$prefix}primary);
       outline-offset: 8px;
       border-radius: 10px;
     }
