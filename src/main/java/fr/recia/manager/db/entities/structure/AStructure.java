@@ -138,14 +138,12 @@ public abstract class AStructure extends AbstractTimedEntity {
      * Relation unidirectionnelle.
      * Personne étant le contact de la structure.
      */
-    @Fetch(FetchMode.JOIN)
     @OneToOne(fetch = FetchType.LAZY)
     private APersonne contact;
     /**
      * Relation unidirectionnelle.
      * Personne étant le responsable de la structure.
      */
-    @Fetch(FetchMode.JOIN)
     @OneToOne(fetch = FetchType.LAZY)
     private APersonne responsable;
     /**
