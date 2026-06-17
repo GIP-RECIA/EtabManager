@@ -24,6 +24,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import jakarta.persistence.Entity;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -51,7 +53,7 @@ public class NonEnseignantEtablissement extends APersonnel {
      * @param givenName     Prénom usuel.
      * @param sn            Nom d'usage.
      */
-    public NonEnseignantEtablissement(final Date anneeScolaire, final CleJointure cleJointure,
+    public NonEnseignantEtablissement(final LocalDate anneeScolaire, final CleJointure cleJointure,
                                       final String cn, final String givenName, final String sn) {
         super(anneeScolaire, CategoriePersonne.Non_enseignant_etablissement, cleJointure, cn, givenName, sn);
     }

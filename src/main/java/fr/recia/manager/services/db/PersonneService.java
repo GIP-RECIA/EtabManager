@@ -49,6 +49,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
@@ -205,7 +206,7 @@ public class PersonneService {
     public boolean forceDelete(APersonne aPersonne){
         if(aPersonne.getEtat().equals(Etat.Delete) && aPersonne.getDateModification().equals(aPersonne.getDateAcquittement())){
             aPersonne.setForceEtat(ForceEtat.Deleted);
-            Date date = new Date();
+            LocalDateTime date = LocalDateTime.now();
             aPersonne.setDateModification(date);
             aPersonneRepository.saveAndFlush(aPersonne);
             cacheInvalidationService.evictPersonneAndAssociatedStructures(aPersonne.getId(), aPersonne.getStructRattachement().getId());
@@ -223,7 +224,7 @@ public class PersonneService {
         if(!aPersonne.getEtat().equals(Etat.Delete) && !ForceEtat.Deleted.equals(aPersonne.getForceEtat()) && aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_)){
             ldapPeopleDao.putInDeleteState(aPersonne.getUid());
             aPersonne.setEtat(Etat.Delete);
-            Date date = new Date();
+            LocalDateTime date = LocalDateTime.now();;
             aPersonne.setDateAcquittement(date);
             aPersonne.setDateModification(date);
             aPersonneRepository.saveAndFlush(aPersonne);

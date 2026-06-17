@@ -25,6 +25,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import jakarta.persistence.Entity;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -53,7 +55,7 @@ public class TuteurStage extends APersonne {
      * @param sn            Nom d'usage.
      * @param societe       Société dont la personne est le responsable.
      */
-    public TuteurStage(final Date anneeScolaire, final CleJointure cleJointure,
+    public TuteurStage(final LocalDate anneeScolaire, final CleJointure cleJointure,
                        final String cn, final String givenName, final String sn, final AStructure societe) {
         super(anneeScolaire, CategoriePersonne.Tuteur_stage, cleJointure, cn, givenName, sn);
         this.setStructRattachement(societe);

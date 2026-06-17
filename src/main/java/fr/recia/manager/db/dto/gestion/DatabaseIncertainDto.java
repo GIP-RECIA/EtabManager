@@ -20,6 +20,7 @@ import fr.recia.manager.db.enums.Etat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -33,6 +34,6 @@ public class DatabaseIncertainDto {
     private Etat etat;
     private String source;
     private String cn;
-    private Date dateModification;
-    private Date dateAcquittement;
+    private LocalDateTime dateModification;
+    private LocalDateTime dateAcquittement;
 }

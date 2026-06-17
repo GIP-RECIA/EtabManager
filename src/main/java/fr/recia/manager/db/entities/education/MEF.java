@@ -31,10 +31,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,8 +48,7 @@ public class MEF extends AbstractSimpleEntity {
      * Année scolaire en cours du MEF.
      * Année à la rentrée de septembre.
      */
-    @Temporal(TemporalType.DATE)
-    private Date anneeScolaire;
+    private LocalDate anneeScolaire;
     /**
      * code MEF, N_MEF => ENTEleveMEF.
      */

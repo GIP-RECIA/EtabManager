@@ -31,9 +31,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -54,8 +53,7 @@ public abstract class AGroupe extends AbstractTimedEntity {
      * Année scolaire de validité de l'objet.
      * Année à la rentrée de septembre.
      */
-    @Temporal(TemporalType.DATE)
-    private Date anneeScolaire;
+    private LocalDate anneeScolaire;
     /**
      * Nom unique de groupe, peut servir comme identifiant au sein d'un établissement.
      */

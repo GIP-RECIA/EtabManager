@@ -42,13 +42,13 @@ public class DatabasePersonneDto {
     private String sn;
     private String login;
     private String uid;
-    private Date dateModification;
-    private Date dateAcquittement;
-    private Date dateSuppression;
-    private Date dateModificationSource;
+    private LocalDateTime dateModification;
+    private LocalDateTime dateAcquittement;
+    private LocalDateTime dateSuppression;
+    private LocalDateTime dateModificationSource;
 
     public DatabasePersonneDto(Long id, Etat etat, CategoriePersonne categorie, String source, String cn, String email,
-                               String sn, String uid, Date dateModification, Date dateAcquittement, Date dateModificationSource) {
+                               String sn, String uid, LocalDateTime dateModification, LocalDateTime dateAcquittement, LocalDateTime dateModificationSource) {
         this.id = id;
         this.etat = etat;
         this.categorie = categorie;
@@ -71,7 +71,7 @@ public class DatabasePersonneDto {
     }
 
     public DatabasePersonneDto(Long id, Etat etat, CategoriePersonne categorie, String source, String cn, String email,
-                               String givenName, String sn, String login, String uid, Date dateModification, Date dateAcquittement, Date dateModificationSource) {
+                               String givenName, String sn, String login, String uid, LocalDateTime dateModification, LocalDateTime dateAcquittement, LocalDateTime dateModificationSource) {
         this.id = id;
         this.etat = etat;
         this.categorie = categorie;
@@ -96,7 +96,7 @@ public class DatabasePersonneDto {
 
 
     public DatabasePersonneDto(Long id, Etat etat, CategoriePersonne categorie, String source, String cn, String email,
-                               String sn, Date dateModification, Date dateAcquittement, Date dateModificationSource) {
+                               String sn, LocalDateTime dateModification, LocalDateTime dateAcquittement, LocalDateTime dateModificationSource) {
         this.id = id;
         this.etat = etat;
         this.categorie = categorie;
@@ -118,7 +118,7 @@ public class DatabasePersonneDto {
     }
 
     public DatabasePersonneDto(Long id, Etat etat, CategoriePersonne categorie, String source, String cn, String email,
-                               String givenName, String sn, String login, Date dateModification, Date dateAcquittement, Date dateModificationSource) {
+                               String givenName, String sn, String login, LocalDateTime dateModification, LocalDateTime dateAcquittement, LocalDateTime dateModificationSource) {
         this.id = id;
         this.etat = etat;
         this.categorie = categorie;

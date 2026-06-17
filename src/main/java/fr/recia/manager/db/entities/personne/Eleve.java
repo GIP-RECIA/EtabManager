@@ -34,6 +34,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -121,7 +123,7 @@ public class Eleve extends APersonne {
      * @param givenName     Prénom usuel.
      * @param sn            Nom d'usage.
      */
-    public Eleve(final Date anneeScolaire, final CleJointure cleJointure,
+    public Eleve(final LocalDate anneeScolaire, final CleJointure cleJointure,
                  final String cn, final String givenName, final String sn) {
         super(anneeScolaire, CategoriePersonne.Eleve, cleJointure, cn, givenName, sn);
     }

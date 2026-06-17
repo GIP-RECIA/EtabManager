@@ -26,6 +26,7 @@ import lombok.ToString;
 
 import jakarta.persistence.Entity;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -54,7 +55,7 @@ public class ResponsableEntreprise extends APersonne implements Serializable {
      * @param sn            Nom d'usage.
      * @param societe       Société dont la personne est le responsable.
      */
-    public ResponsableEntreprise(final Date anneeScolaire, final CleJointure cleJointure,
+    public ResponsableEntreprise(final LocalDate anneeScolaire, final CleJointure cleJointure,
                                  final String cn, final String givenName, final String sn, final AStructure societe) {
         super(anneeScolaire, CategoriePersonne.Responsable_Entreprise, cleJointure, cn, givenName, sn);
         this.setStructRattachement(societe);

@@ -48,6 +48,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -289,7 +290,7 @@ public class FonctionService {
                 default:
                     break;
             }
-            aPersonne.setDateModification(new Date());
+            aPersonne.setDateModification(LocalDateTime.now());
             aPersonneRepository.saveAndFlush(aPersonne);
         }
 

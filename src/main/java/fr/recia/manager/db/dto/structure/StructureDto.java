@@ -36,6 +36,7 @@ import fr.recia.manager.web.dto.user.PersonneInListDto;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -52,7 +53,7 @@ public class StructureDto {
     private Etat etat;
     private EtatAlim etatAlim;
     private String source;
-    private Date anneeScolaire;
+    private LocalDate anneeScolaire;
     private Adresse adresse;
     private CategorieStructure categorie;
     private String type;

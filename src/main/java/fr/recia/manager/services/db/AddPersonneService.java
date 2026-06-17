@@ -76,6 +76,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -144,7 +145,7 @@ public class AddPersonneService {
     public APersonne addPersonne(UserCreation userCreation) {
         log.debug("Trying to create local user {}", userCreation);
         // 1. Récupération de la date
-        Instant date = new Date().toInstant();
+        LocalDateTime date = LocalDateTime.now();
         // 2. Récupération de l'année scolaire actuelle (on suppose que c'est la dernière)
         AnneeScolaire anneeScolaire = anneeScolaireRepository.findFirstByOrderByDateCreationDesc();
         final String anneeEnCours = anneeScolaire.getAnneeEnCours().toString().split("-")[0];
@@ -183,8 +184,8 @@ public class AddPersonneService {
         GenUID genUID = genUIDRepository.findByCAndLAndXx(codeGenerateur, codeRegion, codeAnnee).orElseGet(() -> {
             log.debug("No genUID : creating a new one");
             GenUID newGenUID = new GenUID();
-            newGenUID.setDateCreation(Date.from(date));
-            newGenUID.setDateModification(Date.from(date));
+            newGenUID.setDateCreation(date);
+            newGenUID.setDateModification(date);
             newGenUID.setIiii(0);
             newGenUID.setXx(codeAnnee);
             newGenUID.setL(codeRegion);
@@ -204,8 +205,8 @@ public class AddPersonneService {
         CategoriePersonne catPer = userCreation.getCategoriePersonne();
         Civilite civilite = userCreation.getCivilite();
         APersonne apersonne = instanciatePersonne(catPer);
-        apersonne.setDateCreation(Date.from(date));
-        apersonne.setDateModification(Date.from(date));
+        apersonne.setDateCreation(date);
+        apersonne.setDateModification(date);
         apersonne.setAnneeScolaire(anneeScolaire.getAnneeEnCours());
         apersonne.setCategorie(catPer);
         apersonne.setCleJointure(new CleJointure(source, cle));

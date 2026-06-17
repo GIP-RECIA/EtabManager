@@ -19,6 +19,8 @@ package fr.recia.manager.web.dto.function;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -26,6 +28,6 @@ import java.util.Date;
 public class DisciplineDisplayDto {
     private Long id;
     private String libelle;
-    private Date dateDebut;
-    private Date dateFin;
+    private LocalDate dateDebut;
+    private LocalDateTime dateFin;
 }

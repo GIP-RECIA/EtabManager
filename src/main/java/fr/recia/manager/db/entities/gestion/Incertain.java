@@ -32,6 +32,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -50,8 +52,7 @@ public class Incertain extends AbstractSimpleEntity {
     /**
      * Création automatique de la date de création de l'objet lors de la construction.
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreation;
+    private LocalDateTime dateCreation;
     /**
      * Valeur pouvant poser problème.
      */
@@ -148,8 +149,7 @@ public class Incertain extends AbstractSimpleEntity {
      */
     @PrePersist
     public void prePersistOps() {
-        Date d = new Date();
-        d.setTime(Calendar.getInstance().getTimeInMillis());
+        LocalDateTime d = LocalDateTime.now();
         if (this.dateCreation == null) {
             this.dateCreation = d;
         }

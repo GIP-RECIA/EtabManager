@@ -24,6 +24,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import jakarta.persistence.Entity;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -51,7 +53,7 @@ public class PersonneRelationEleve extends APersonne {
      * @param givenName     Prénom usuel.
      * @param sn            Nom d'usage.
      */
-    public PersonneRelationEleve(final Date anneeScolaire, final CleJointure cleJointure,
+    public PersonneRelationEleve(final LocalDate anneeScolaire, final CleJointure cleJointure,
                                  final String cn, final String givenName, final String sn) {
         super(anneeScolaire, CategoriePersonne.Personne_relation_eleve, cleJointure, cn, givenName, sn);
     }
