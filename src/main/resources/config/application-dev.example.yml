@@ -15,7 +15,7 @@ spring:
     type: caffeine
     cache-names: fonctionAlerts, collectivites, etablissement, fonctions, personneFonctions, structureFonctions, typesFonctionFiliere, disciplines, personnesWithoutFunctions, personnesByEtablissement, personne, relations, stuctureDBById, personneLDAPByUid, typeFonctionFiliere, discipline, incertains
     caffeine:
-      spec: maximumSize=10000,expireAfterWrite=30m
+      spec: maximumSize=10000,expireAfterWrite=30m,recordStats
 
   jpa:
     show-sql: true
