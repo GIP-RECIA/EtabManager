@@ -145,13 +145,8 @@ app:
   front:
     default-structure-image:
     default-user-image:
-    end-function-warning:
 
-    staff:
-      teaching:
-      school:
-      collectivity:
-      academic:
+    end-function-warning:
 
     edit-allowed-states:
       -

@@ -28,32 +28,11 @@ import java.util.Map;
 public class FrontProperties {
 
     private Long endFunctionWarning;
-    private StaffProperties staff;
     private List<Etat> editAllowedStates;
     private List<Etat> filterAccountStates;
     private ExtendedUportalProperties extendedUportal;
     private String defaultStructureImage;
     private String defaultUserImage;
-
-    @Data
-    public static class StaffProperties {
-
-        private CategoriePersonne teaching;
-        private CategoriePersonne school;
-        private CategoriePersonne collectivity;
-        private CategoriePersonne academic;
-
-        @Override
-        public String toString() {
-            return "{" +
-                "\n\t\t\"teaching\": \"" + teaching + "\"," +
-                "\n\t\t\"school\": \"" + school + "\"," +
-                "\n\t\t\"collectivity\": \"" + collectivity + "\"," +
-                "\n\t\t\"academic\": \"" + academic + "\"" +
-                "\n\t}";
-        }
-
-    }
 
     @Data
     public static class ExtendedUportalProperties {
@@ -91,7 +70,6 @@ public class FrontProperties {
     public String toString() {
         return "\"FrontProperties\": {" +
             "\n\t\"endFunctionWarning\": " + endFunctionWarning + "," +
-            "\n\t\"staff\": " + staff + "," +
             "\n\t\"editAllowedStates\": " + ListUtil.toStringList(editAllowedStates) + "," +
             "\n\t\"filterAccountStates\": " + ListUtil.toStringList(filterAccountStates) + "," +
             "\n\t\"extendedUportal\": " + extendedUportal +

@@ -58,12 +58,6 @@ app:
   front:
     end-function-warning: 2
 
-    staff:
-      teaching: Enseignant
-      school: Non_enseignant_etablissement
-      collectivity: Non_enseignant_collectivite_locale
-      academic: Non_enseignant_service_academique
-
     edit-allowed-states:
       - Invalide
       - Valide
