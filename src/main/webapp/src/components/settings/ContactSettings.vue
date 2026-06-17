@@ -102,9 +102,7 @@ watch(
             <div class="field-layout">
               <div class="field-container">
                 <div class="middle">
-                  <label
-                    for="siteWeb"
-                  >
+                  <label for="siteWeb">
                     {{ t('page.settings.info.contact.website') }}
                   </label>
                   <input

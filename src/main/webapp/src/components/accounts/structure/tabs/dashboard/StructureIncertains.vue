@@ -232,9 +232,7 @@ const table = useVueTable({
       <div class="field-layout">
         <div class="field-container">
           <div class="middle">
-            <label
-              for="structure-search"
-            >
+            <label for="structure-search">
               {{ t('page.structure.accounts.search') }}
             </label>
             <input

@@ -102,9 +102,7 @@ watch(
             <div class="field-layout">
               <div class="field-container">
                 <div class="middle">
-                  <label
-                    for="nomCourt"
-                  >
+                  <label for="nomCourt">
                     {{ t('page.settings.info.identity.shortName') }}
                   </label>
                   <input

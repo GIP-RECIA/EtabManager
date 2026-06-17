@@ -108,9 +108,7 @@ const table = useVueTable({
           <div class="field-layout">
             <div class="field-container">
               <div class="middle">
-                <label
-                  for="user-search"
-                >
+                <label for="user-search">
                   {{ t('page.account.user.search') }}
                 </label>
                 <input
@@ -135,9 +133,7 @@ const table = useVueTable({
           <div class="field-layout">
             <div class="field-container">
               <div class="middle">
-                <label
-                  for="structure-search"
-                >
+                <label for="structure-search">
                   {{ t('page.account.structure.search') }}
                 </label>
                 <input
