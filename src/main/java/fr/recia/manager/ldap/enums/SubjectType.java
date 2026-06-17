@@ -51,15 +51,15 @@ public enum SubjectType {
     /**
      * Identifier.
      */
-    private int id;
+    private final int id;
     /**
      * The code.
      */
-    private String code;
+    private final String code;
     /**
      * The I18N key.
      */
-    private String descKey;
+    private final String descKey;
 
     public static SubjectType fromName(final String name) {
         if (name != null) {

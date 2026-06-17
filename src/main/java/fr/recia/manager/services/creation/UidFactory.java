@@ -98,7 +98,7 @@ public class UidFactory {
      */
     public String uid(final String clee) {
         long clef = Long.parseLong(clee);
-        char uid[] = new char[nbLettreTotal];
+        char[] uid = new char[nbLettreTotal];
 
         for (int i = nbLettreTotal; --i >= 0; ) {
             int c = (int) (clef % baseConvertion);

@@ -253,7 +253,7 @@ public class SecurityConfiguration {
 
         return new OncePerRequestFilter() {
             @Override
-            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+            protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
                 String logoutRequest = request.getParameter("logoutRequest");
                 String ip = request.getRemoteAddr();
                 String uri = request.getRequestURI();

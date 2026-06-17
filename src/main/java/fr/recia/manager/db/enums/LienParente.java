@@ -16,6 +16,11 @@
 
 package fr.recia.manager.db.enums;
 
+import lombok.Getter;
+
+import java.util.Arrays;
+
+@Getter
 public enum LienParente {
     Pere(20, 1),
     Mere(10, 2),
@@ -82,7 +87,7 @@ public enum LienParente {
             return LienParente.GardeEnfant;
         } else {
             throw new IllegalArgumentException("Value of '" + code + "' doesn't match any code to enum " +
-                LienParente.class.getCanonicalName() + " in defined values " + ResponsableLegal.values());
+                LienParente.class.getCanonicalName() + " in defined values " + Arrays.toString(ResponsableLegal.values()));
         }
     }
 

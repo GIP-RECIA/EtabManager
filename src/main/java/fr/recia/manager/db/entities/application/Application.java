@@ -71,7 +71,7 @@ public class Application extends AbstractEntity {
 
 	//Relations
 	/** Relation bidirectionnelle. */
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinTable(name = "applications_profils", joinColumns = @JoinColumn(name = "APPLICATION_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "PROFIL_ID", referencedColumnName = "ID"))
 	private Set<Profil> profils = new HashSet<>();
 

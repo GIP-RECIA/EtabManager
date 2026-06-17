@@ -49,7 +49,7 @@ public class LoginService {
         List<Login> loginList = loginRepository.findByNomLike(loginPrefix + "%");
         String newLogin = loginPrefix;
         int nbMax = 0;
-        int nb = 0;
+        int nb;
         boolean[] cptUtilise = new boolean[100];
         if (loginList != null) {
             for (Login l : loginList) {

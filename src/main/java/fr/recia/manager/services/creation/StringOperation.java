@@ -53,10 +53,10 @@ public class StringOperation {
         // on normalise la chaine
         String temp = Normalizer.normalize(chaine, Normalizer.Form.NFC);
         // on remplace les caratères entrelacés
-        temp = temp.replaceAll("Æ", "AE");
-        temp = temp.replaceAll("æ", "ae");
-        temp = temp.replaceAll("Œ", "OE");
-        temp = temp.replaceAll("œ", "oe");
+        temp = temp.replace("Æ", "AE");
+        temp = temp.replace("æ", "ae");
+        temp = temp.replace("Œ", "OE");
+        temp = temp.replace("œ", "oe");
         // et on remplace les caractères avec accents par décomposition des caratères :
         // caractère primaire suivi du caractère d'accent et suppression des caractères non ascii
         temp = Normalizer.normalize(temp, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
@@ -71,13 +71,12 @@ public class StringOperation {
      * @return <code>String</code>Le CN formaté.
      */
     public String cleanForCN(final String sn, final String givenName) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(sansAccent(sn.replaceAll(REGEX_CN, STRING_SPACE)
-            .replaceAll(REGEX_SPACES, STRING_SPACE)));
-        sb.append(STRING_SPACE);
-        sb.append(sansAccent(givenName.replaceAll(REGEX_CN, STRING_SPACE)
-            .replaceAll(REGEX_SPACES, STRING_SPACE).toUpperCase()));
-        return sb.toString();
+        String sb = sansAccent(sn.replaceAll(REGEX_CN, STRING_SPACE)
+            .replaceAll(REGEX_SPACES, STRING_SPACE)) +
+            STRING_SPACE +
+            sansAccent(givenName.replaceAll(REGEX_CN, STRING_SPACE)
+                .replaceAll(REGEX_SPACES, STRING_SPACE).toUpperCase());
+        return sb;
     }
 
 }

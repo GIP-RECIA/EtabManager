@@ -60,12 +60,9 @@ public class MailAlternate {
 			return false;
 		MailAlternate other = (MailAlternate) obj;
 		if (mail == null) {
-			if (other.mail != null)
-				return false;
-		} else if (!mail.equals(other.mail))
-			return false;
-		return true;
-	}
+            return other.mail == null;
+		} else return mail.equals(other.mail);
+    }
 
 
 }
