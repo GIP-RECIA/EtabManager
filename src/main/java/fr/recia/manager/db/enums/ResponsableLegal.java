@@ -16,6 +16,8 @@
 
 package fr.recia.manager.db.enums;
 
+import java.util.Arrays;
+
 public enum ResponsableLegal {
     @Deprecated
     Non(0), Legal(1), EnCharge(2), Contact(3);
@@ -45,7 +47,7 @@ public enum ResponsableLegal {
             return ResponsableLegal.Contact;
         }
         throw new IllegalArgumentException("Value of '" + code + "' doesn't match any code to enum "
-            + ResponsableLegal.class.getCanonicalName() + " in defined values " + ResponsableLegal.values());
+            + ResponsableLegal.class.getCanonicalName() + " in defined values " + Arrays.toString(ResponsableLegal.values()));
     }
 
     @Override

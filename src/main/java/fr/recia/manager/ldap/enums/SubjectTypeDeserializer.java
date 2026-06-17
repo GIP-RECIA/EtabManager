@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Created by jgribonvald on 01/04/15.
@@ -33,7 +34,7 @@ public class SubjectTypeDeserializer extends JsonDeserializer<SubjectType> {
         SubjectType type = SubjectType.fromName(jp.getValueAsString());
         if (type != null) return type;
         throw new JsonMappingException(jp, String.format("Invalid value '%s' for %s, must be in range of %s",
-            jp.getValueAsString(), SubjectType.class.getSimpleName(), SubjectType.values().toString()
+            jp.getValueAsString(), SubjectType.class.getSimpleName(), Arrays.toString(SubjectType.values())
         ));
     }
 

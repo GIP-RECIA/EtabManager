@@ -150,7 +150,7 @@ public class CustomCas30ServiceTicketValidator implements TicketValidator {
      * @return the fully constructed URL.
      */
     protected final String constructValidationUrl(final String ticket, final String serviceUrl) {
-        final Map<String, String> urlParameters = new HashMap<String, String>();
+        final Map<String, String> urlParameters = new HashMap<>();
 
         log.debug("Placing URL parameters in map.");
         urlParameters.put("ticket", ticket);

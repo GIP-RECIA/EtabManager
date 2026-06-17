@@ -265,6 +265,7 @@ public class PersonneController {
         for (AStructure aStructure : personne.getListeStructures()) {
             if (allowedSiren.contains(aStructure.getSiren())) {
                 canRead = true;
+                break;
             }
         }
         if (canRead) {
@@ -304,6 +305,7 @@ public class PersonneController {
         for (AStructure aStructure : personne.getListeStructures()) {
             if (allowedSiren.contains(aStructure.getSiren())) {
                 canRead = true;
+                break;
             }
         }
         if (canRead) {
@@ -345,6 +347,7 @@ public class PersonneController {
             for (AStructure aStructure : personne.getListeStructures()) {
                 if (allowedSiren.contains(aStructure.getSiren())) {
                     canRead = true;
+                    break;
                 }
             }
             if (canRead) {
@@ -381,6 +384,7 @@ public class PersonneController {
         for (AStructure aStructure : personne.getListeStructures()) {
             if (allowedSiren.contains(aStructure.getSiren())) {
                 canModify = true;
+                break;
             }
         }
         if (canModify) {
@@ -419,6 +423,7 @@ public class PersonneController {
         for (AStructure aStructure : personne.getListeStructures()) {
             if (allowedSiren.contains(aStructure.getSiren())) {
                 canModify = true;
+                break;
             }
         }
         if (canModify) {
@@ -457,6 +462,7 @@ public class PersonneController {
         for (AStructure aStructure : personne.getListeStructures()) {
             if (allowedSiren.contains(aStructure.getSiren())) {
                 canModify = true;
+                break;
             }
         }
         if (canModify) {

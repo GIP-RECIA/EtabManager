@@ -39,12 +39,13 @@ public class EtabManagerApplication {
 
         Environment env = app.run(args).getEnvironment();
         log.info(
-            "Access URLs:" +
-                "\n----------------------------------------------------------" +
-                "\n\tLocal: \t\thttp://127.0.0.1:{}" +
-                "\n\tExternal: \thttp://{}:{}" +
-                "\n\tProfiles: \t{}" +
-                "\n----------------------------------------------------------",
+            """
+                Access URLs:
+                ----------------------------------------------------------
+                \tLocal: \t\thttp://127.0.0.1:{}
+                \tExternal: \thttp://{}:{}
+                \tProfiles: \t{}
+                ----------------------------------------------------------""",
             env.getProperty("server.port"),
             InetAddress.getLocalHost().getHostAddress(),
             env.getProperty("server.port"),

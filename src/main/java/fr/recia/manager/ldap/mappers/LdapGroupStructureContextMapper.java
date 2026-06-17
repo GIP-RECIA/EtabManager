@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class LdapGroupStructureContextMapper implements ContextMapper<StructureFromGroup> {
 
-    private ExternalGroupHelper externalGroupHelper;
+    private final ExternalGroupHelper externalGroupHelper;
     private final CustomLdapProperties ldapProperties;
 
     public LdapGroupStructureContextMapper(ExternalGroupHelper externalGroupHelper, CustomLdapProperties ldapProperties) {
