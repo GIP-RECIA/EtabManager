@@ -12,6 +12,10 @@
       "success": "User reactivated",
       "error": "Unable to reactivate the user"
     },
+    "resetUser": {
+      "success": "User reseted",
+      "error": "Unable to reset the user"
+    },
     "lockUser": {
       "success": "User locked",
       "error": "Unable to lock the user"

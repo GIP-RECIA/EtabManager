@@ -22,6 +22,18 @@ import { CategoriePersonne, Etat } from '@/types/enums'
 export function useUserRights(
   user: Ref<User | undefined>,
 ) {
+  const canReset = computed<boolean>(() => {
+    if (!user.value)
+      return false
+
+    const { etat, local, guichet } = user.value
+
+    return (local || !guichet) && [
+      Etat.Valide,
+      Etat.Bloque,
+    ].includes(etat)
+  })
+
   const canToggleLock = computed<boolean>(() => {
     if (!user.value)
       return false
@@ -117,6 +129,7 @@ export function useUserRights(
   })
 
   return {
+    canReset,
     canToggleLock,
     canDelete,
     canUndoDelete,

@@ -200,7 +200,7 @@ public class PersonneController {
         }
     }
 
-    @GetMapping(value = "/{id}/reset")
+    @PutMapping(value = "/{id}/reset")
     public ResponseEntity<PersonneDetailDto> resetPersonne(@AuthenticationPrincipal AppUser principal, @PathVariable Long id) {
         APersonne personne = personneService.getPersonne(id);
         if (personne == null) {

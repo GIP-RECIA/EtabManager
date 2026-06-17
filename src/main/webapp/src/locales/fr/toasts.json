@@ -12,6 +12,10 @@
       "success": "Utilisateur réactivé avec succès",
       "error": "Impossible de réactiver l'utilisateur"
     },
+    "resetUser": {
+      "success": "Utilisateur réinitilisé avec succès",
+      "error": "Impossible de réinitiliser l'utilisateur"
+    },
     "lockUser": {
       "success": "Utilisateur bloqué avec succès",
       "error": "Impossible de bloquer l'utilisateur"

@@ -33,6 +33,7 @@ import {
   getUser,
   lockUser,
   removeUserOneAdditional,
+  resetUser,
   searchUser,
   setUserAdditional,
   setUserOneAdditional,
@@ -173,6 +174,45 @@ function useUndoDeleteUserMutation() {
     },
     onError(error, _vars, _context) {
       errorHandler(error, t('toast.undoDeleteUser.error'))
+    },
+    onSettled(_data, _error, vars, context) {
+      queryCache.invalidateQueries({ key: ['user', vars] })
+      context.oldUser?.listeStructures.forEach((structure) => {
+        queryCache.invalidateQueries({ key: ['structure', structure.id] })
+      })
+    },
+  })
+}
+
+function useResetUserMutation() {
+  const queryCache = useQueryCache()
+
+  return useMutation({
+    mutation: resetUser,
+    onMutate(vars, _context) {
+      const oldUser = queryCache.getQueryData<User>(['user', vars])
+
+      if (oldUser) {
+        const newData = oldUser
+        newData.etat = Etat.Invalide
+
+        queryCache.setQueryData<User | undefined>(
+          ['user', vars],
+          newData,
+        )
+      }
+
+      return { oldUser }
+    },
+    onSuccess(_data, _vars, _context) {
+      toast.success(
+        t('toast.resetUser.success'),
+        {
+        } as ToastContainerOptions,
+      )
+    },
+    onError(error, _vars, _context) {
+      errorHandler(error, t('toast.resetUser.error'))
     },
     onSettled(_data, _error, vars, context) {
       queryCache.invalidateQueries({ key: ['user', vars] })
@@ -379,6 +419,7 @@ export {
   useForceDeleteUserMutation,
   useLockUserMutation,
   useRemoveUserOneAdditionalMutation,
+  useResetUserMutation,
   useSearchUserQuery,
   useSetUserAdditionalMutation,
   useSetUserOneAdditionalMutation,

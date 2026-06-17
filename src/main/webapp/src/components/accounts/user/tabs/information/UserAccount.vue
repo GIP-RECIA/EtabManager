@@ -43,7 +43,7 @@ const { t } = useI18n()
             {{ t('page.user.info.account.uid') }}
           </h4>
           <SafeEmptyData
-            :value="user?.uid"
+            :value="user.uid"
           />
         </li>
         <li>
@@ -68,6 +68,14 @@ const { t } = useI18n()
               />
             </span>
           </div>
+        </li>
+        <li v-if="user?.password">
+          <h4>
+            {{ t('page.user.info.account.password') }}
+          </h4>
+          <SafeEmptyData
+            :value="user.password"
+          />
         </li>
         <li>
           <h4>

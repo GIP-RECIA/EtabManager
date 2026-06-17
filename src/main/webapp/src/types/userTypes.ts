@@ -67,6 +67,7 @@ export type User = CommonUser & {
   cn: string
   sn: string
   uid?: string
+  password?: string
   dateFin?: string
   dateSourceModification: string
   login: string

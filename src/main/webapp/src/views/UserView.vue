@@ -21,6 +21,7 @@ import type {
   UserStructure,
 } from '@/types/index.ts'
 import {
+  faKey,
   faLink,
   faLock,
   faLockOpen,
@@ -43,6 +44,7 @@ import {
   useDeleteUserMutation,
   useForceDeleteUserMutation,
   useLockUserMutation,
+  useResetUserMutation,
   useUndoDeleteUserMutation,
   useUnlockUserMutation,
   useUserQuery,
@@ -53,6 +55,7 @@ const { t } = useI18n()
 const { data: user } = useUserQuery()
 
 const {
+  canReset,
   canToggleLock,
   canDelete,
   canUndoDelete,
@@ -147,6 +150,18 @@ function editFunction(
 /* Actions */
 
 const {
+  mutate: reset,
+} = useResetUserMutation()
+
+function onReset(): void {
+  if (!user.value)
+    return
+
+  const { id } = user.value
+  reset(id)
+}
+
+const {
   mutate: lock,
 } = useLockUserMutation()
 const {
@@ -223,6 +238,18 @@ function onAttach(): void {
         </h2>
 
         <ul>
+          <li v-if="canReset">
+            <button
+              type="button"
+              class="btn-primary small"
+              @click="onReset"
+            >
+              {{ t('button.reset') }}
+              <FontAwesomeIcon
+                :icon="faKey"
+              />
+            </button>
+          </li>
           <li v-if="canToggleLock">
             <button
               type="button"
