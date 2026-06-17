@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.5.15</version>
+    <version>4.1.0</version>
     <relativePath/>
   </parent>
 
@@ -36,8 +36,8 @@
   </distributionManagement>
 
   <properties>
-    <check.java.version>17</check.java.version>
-    <java.version>17</java.version>
+    <check.java.version>21</check.java.version>
+    <java.version>21</java.version>
     <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
   </properties>
 
@@ -152,10 +152,6 @@
       <artifactId>spring-boot-devtools</artifactId>
       <scope>runtime</scope>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-loader-tools</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -473,14 +469,6 @@
       </dependencies>
       <build>
         <plugins>
-          <plugin>
-            <!--
-              Plugin that provides API-first development using openapi-generator to
-              generate Spring-MVC endpoint stubs at compile time from an OpenAPI definition file
-            -->
-            <groupId>org.openapitools</groupId>
-            <artifactId>openapi-generator-maven-plugin</artifactId>
-          </plugin>
           <plugin>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>

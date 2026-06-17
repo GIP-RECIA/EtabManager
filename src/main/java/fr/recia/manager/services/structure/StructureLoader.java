@@ -146,6 +146,6 @@ public class StructureLoader implements InitializingBean {
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {}
+    public void afterPropertiesSet() {}
 
 }

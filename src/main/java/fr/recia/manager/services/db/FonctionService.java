@@ -47,6 +47,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -205,7 +206,7 @@ public class FonctionService {
                     ok = true;
                 } else if (nbExistingFonctions == 1){
                     // Par contre si on a une date de début/fin il faut mettre à jour la fonction avec les nouvelles dates
-                    Fonction fonction = fonctionRepository.findSameFonctionsInStructure(fonctionDto.getPersonne(), fonctionDto.getStructure(), fonctionDto.getDiscipline(), fonctionDto.getFiliere()).get(0);
+                    Fonction fonction = fonctionRepository.findSameFonctionsInStructure(fonctionDto.getPersonne(), fonctionDto.getStructure(), fonctionDto.getDiscipline(), fonctionDto.getFiliere()).getFirst();
                     // TODO : date de début sur les fonctions
                     if(fonctionDto.getDateFin() != null && !fonctionDto.getDateFin().equals(fonction.getDateFin())){
                         log.debug("Function {}-{} already added for user {} in etab {}, updating dates...", fonctionDto.getFiliere(), fonctionDto.getDiscipline(), fonctionDto.getPersonne(), fonctionDto.getStructure());
@@ -254,7 +255,7 @@ public class FonctionService {
                 default:
                     break;
             }
-            aPersonne.setDateModification(new Date());
+            aPersonne.setDateModification(LocalDateTime.now());
             aPersonneRepository.saveAndFlush(aPersonne);
         }
 

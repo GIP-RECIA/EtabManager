@@ -18,12 +18,14 @@ package fr.recia.manager.web.dto.function;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
 public class FonctionToModify {
     private Long filiere;
     private Long discipline;
-    private Date dateDebut;
-    private Date dateFin;
+    private LocalDate dateDebut;
+    private LocalDateTime dateFin;
 }

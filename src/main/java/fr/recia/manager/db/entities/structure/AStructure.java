@@ -46,10 +46,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -81,8 +80,7 @@ public abstract class AStructure extends AbstractTimedEntity {
      * Année scolaire de validité de l'individu.
      * Année à la rentrée de septembre.
      */
-    @Temporal(TemporalType.DATE)
-    private Date anneeScolaire;
+    private LocalDate anneeScolaire;
     /**
      * Adresse de la structure.
      */

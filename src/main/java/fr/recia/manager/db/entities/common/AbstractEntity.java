@@ -27,6 +27,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Version;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,22 +41,18 @@ public abstract class AbstractEntity extends AbstractSimpleEntity implements Ser
     @Version
     private long version;
     /** Création automatique de la date de création de l'objet lors de la construction. */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreation;
+    private LocalDateTime dateCreation;
     /** Donne l'information de la date de modification de l'objet. */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateModification;
+    private LocalDateTime dateModification;
     /** Donne l'information de la date d'acquittement de l'objet lors de l'export. */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateAcquittement;
+    private LocalDateTime dateAcquittement;
 
     /**
      * Setter automatique du membre dateCreation lors de la creation de l'objet.
      */
     @PrePersist
     public void prePersistOps() {
-        Date d = new Date();
-        d.setTime(Calendar.getInstance().getTimeInMillis());
+        LocalDateTime d = LocalDateTime.now();
         if (this.dateCreation == null) {
             this.dateCreation = d;
         }
@@ -70,7 +67,7 @@ public abstract class AbstractEntity extends AbstractSimpleEntity implements Ser
      */
     @PreUpdate
     public void preUpdateOps() {
-        this.dateModification.setTime(Calendar.getInstance().getTimeInMillis());
+        this.dateModification = LocalDateTime.now();
     }
 
     @Override

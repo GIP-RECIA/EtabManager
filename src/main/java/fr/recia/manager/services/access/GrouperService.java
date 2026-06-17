@@ -66,7 +66,7 @@ public class GrouperService {
         HttpEntity<?> entity = new HttpEntity<>(payload, createHeaders());
         ResponseEntity<WsFindGroupsResponse> responseEntity = restTemplate.exchange(url, HttpMethod.POST, entity, WsFindGroupsResponse.class);
         if (responseEntity.getBody() != null) {
-            return responseEntity.getBody().getWsFindGroupsResults().getGroupResults().get(0).getUuid();
+            return responseEntity.getBody().getWsFindGroupsResults().getGroupResults().getFirst().getUuid();
         }
         return null;
     }

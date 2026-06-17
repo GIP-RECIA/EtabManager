@@ -35,6 +35,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -62,8 +63,7 @@ public class MappingAGroupeAPersonne implements Serializable {
     private String source;
 
     /** Donne l'information de la date de fin de l'objet. */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateFin;
+    private LocalDateTime dateFin;
 
     /**
      * The pk

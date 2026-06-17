@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -89,8 +90,8 @@ public class LoginService {
         }
         Login login = new Login(newLogin);
         login.setApersonneLogin(aPersonne);
-        login.setDateCreation(Date.from(date));
-        login.setDateModification(Date.from(date));
+        login.setDateCreation(LocalDateTime.from(date));
+        login.setDateModification(LocalDateTime.from(date));
         return login;
     }
 

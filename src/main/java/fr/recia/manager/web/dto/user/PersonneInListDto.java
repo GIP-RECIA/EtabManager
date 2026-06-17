@@ -24,6 +24,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class PersonneInListDto {
     private CategoriePersonne categoriePersonne;
     private String login;
     private String email;
-    private Date dateModificationSource;
-    private Date dateSuppression;
+    private LocalDateTime dateModificationSource;
+    private LocalDateTime dateSuppression;
     private String guichet;
     private boolean local;
 

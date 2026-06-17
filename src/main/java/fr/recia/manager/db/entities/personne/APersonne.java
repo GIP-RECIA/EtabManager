@@ -65,6 +65,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -82,7 +85,7 @@ import java.util.Set;
 })
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public abstract class APersonne extends AbstractTimedEntity {
 
@@ -95,8 +98,7 @@ public abstract class APersonne extends AbstractTimedEntity {
     /**
      * Année scolaire de validité de l'individu. Année à la rentrée de septembre.
      */
-    @Temporal(TemporalType.DATE)
-    private Date anneeScolaire;
+    private LocalDate anneeScolaire;
     /**
      * Catégorie de la personne : Eleve, Enseignant ...
      */
@@ -128,8 +130,7 @@ public abstract class APersonne extends AbstractTimedEntity {
     /**
      * Date de naissance.
      */
-    @Temporal(TemporalType.DATE)
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
     /**
      * Nom et prénom accentué.
      */
@@ -203,8 +204,7 @@ public abstract class APersonne extends AbstractTimedEntity {
     /**
      * Sauvegarde de la date de validation de la charte.
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date validationCharte;
+    private LocalDateTime validationCharte;
     /**
      * Flag pour indiquer que le compte est placé en liste rouge. Par défaut à false.
      */
@@ -224,13 +224,11 @@ public abstract class APersonne extends AbstractTimedEntity {
     /**
      *
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateFin;
+    private LocalDateTime dateFin;
     /**
      *
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateSourceModification;
+    private LocalDateTime dateSourceModification;
     /**
      * Relation bidirectionnelle.
      * Login de l'individu généré par l'ENT.
@@ -327,8 +325,7 @@ public abstract class APersonne extends AbstractTimedEntity {
     @PrePersist
     public void prePersistOps() {
         super.prePersistOps();
-        Date d = new Date();
-        d.setTime(Calendar.getInstance().getTimeInMillis());
+        LocalDateTime d = LocalDateTime.now();
         if (this.dateSourceModification == null) {
             this.dateSourceModification = d;
         }
@@ -342,7 +339,7 @@ public abstract class APersonne extends AbstractTimedEntity {
     @PreUpdate
     public void preUpdateOps() {
         if(!this.getEtat().equals(Etat.Delete)){
-            this.setDateModification(new Date());
+            this.setDateModification(LocalDateTime.now());
         }
     }
 
@@ -365,7 +362,7 @@ public abstract class APersonne extends AbstractTimedEntity {
      * @param givenName     Prénom usuel.
      * @param sn            Nom d'usage.
      */
-    public APersonne(final Date anneeScolaire, final CategoriePersonne categorie, final CleJointure cleJointure,
+    public APersonne(final LocalDate anneeScolaire, final CategoriePersonne categorie, final CleJointure cleJointure,
                      final String cn, final String givenName, final String sn) {
         super();
         this.anneeScolaire = anneeScolaire;

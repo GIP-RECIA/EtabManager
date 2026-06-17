@@ -30,6 +30,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -96,7 +99,7 @@ public class Fonction extends AFonction {
      * @param dateFin   Date de fin de la fonction.
      */
     public Fonction(final TypeFonctionFiliere filiere, final AStructure structure,
-                    final APersonne personne, final String source, final Date dateFin) {
+                    final APersonne personne, final String source, final LocalDateTime dateFin) {
         super(CategorieFonction.Fonction, personne, source, dateFin);
         this.filiere = filiere;
         this.structure = structure;
@@ -130,7 +133,7 @@ public class Fonction extends AFonction {
      * @param dateFin         Date de fin de la fonction.
      */
     public Fonction(final Discipline disciplinePoste, final TypeFonctionFiliere filiere,
-                    final AStructure structure, final APersonne personne, final String source, final Date dateFin) {
+                    final AStructure structure, final APersonne personne, final String source, final LocalDateTime dateFin) {
         super(CategorieFonction.Fonction, personne, source, dateFin);
         this.disciplinePoste = disciplinePoste;
         this.filiere = filiere;

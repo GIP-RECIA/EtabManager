@@ -21,6 +21,8 @@ import fr.recia.manager.db.enums.Civilite;
 import fr.recia.manager.web.dto.function.FonctionToModify;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -32,10 +34,10 @@ public class UserCreation {
     private CategoriePersonne categoriePersonne;
     private String prenom;
     private String nom;
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
     private Civilite civilite;
-    private Date dateFin;
-    private Date dateDebut;
+    private LocalDateTime dateFin;
+    private LocalDateTime dateDebut;
     // Tous sauf élève
     private String courriel;
     // Spécifique élève

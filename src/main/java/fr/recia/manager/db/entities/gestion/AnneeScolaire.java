@@ -25,8 +25,8 @@ import lombok.ToString;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -42,21 +42,18 @@ public class AnneeScolaire extends AbstractEntity {
      * année à la rentrée (de septembre).
      */
     @Column(unique = true, nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date anneeEnCours;
+    private LocalDate anneeEnCours;
     /**
      * Date exacte du passage à l'année suivante pour les insertions.
      */
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date passageAnneeSuivante;
+    private LocalDate passageAnneeSuivante;
     /**
      * Date de fin des autorisations des accés pour les utilisateurs de l'année scolaire précédente.
      * Si null on y place la date de passageAnneeSuivante.
      */
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date finAutorisation;
+    private LocalDate finAutorisation;
     /**
      * Booleen indiquant l'insertion du complet des établissements en début d'année scolaire.
      */
@@ -71,7 +68,7 @@ public class AnneeScolaire extends AbstractEntity {
      * @param finAutorisation      Date de fin des autorisations des accés
      *                             pour les utilisateurs de l'année scolaire précédente.
      */
-    public AnneeScolaire(final Date anneeEnCours, final Date passageAnneeSuivante, final Date finAutorisation) {
+    public AnneeScolaire(final LocalDate anneeEnCours, final LocalDate passageAnneeSuivante, final LocalDate finAutorisation) {
         super();
         this.anneeEnCours = anneeEnCours;
         this.passageAnneeSuivante = passageAnneeSuivante;

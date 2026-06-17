@@ -27,7 +27,7 @@ public class RestTemplateConfiguration {
     @Bean
     public RestTemplate restTemplateGrouper(MappingJackson2HttpMessageConverter jacksonMessageConverter) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(0, jacksonMessageConverter);
+        restTemplate.getMessageConverters().addFirst(jacksonMessageConverter);
         return restTemplate;
     }
 

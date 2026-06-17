@@ -35,6 +35,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.MappedSuperclass;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -73,7 +75,7 @@ public abstract class APersonnel extends APersonne {
     )
     private Set<TypeService> services = new HashSet<>();
 
-    public APersonnel(final Date anneeScolaire, final CategoriePersonne categorie, final CleJointure cleJointure,
+    public APersonnel(final LocalDate anneeScolaire, final CategoriePersonne categorie, final CleJointure cleJointure,
                       final String cn, final String givenName, final String sn) {
         super(anneeScolaire, categorie, cleJointure, cn, givenName, sn);
     }

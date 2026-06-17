@@ -21,6 +21,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -32,7 +33,7 @@ public class SearchedPersonneDto {
     private Etat etat;
     private boolean local;
     private String cn;
-    private Date dateSuppression;
+    private LocalDateTime dateSuppression;
     private String uid;
     private String email;
 

@@ -34,8 +34,9 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -68,9 +69,6 @@ public abstract class AFonction extends AbstractTimedEntity {
     @JoinColumn(name = "personne_fk")
     private APersonne personne;
 
-    @Temporal(TemporalType.DATE)
-    private Date dateFin;
-
     /**
      * Constructeur de l'objet AFonction.java.
      *
@@ -93,7 +91,7 @@ public abstract class AFonction extends AbstractTimedEntity {
      * @param source    Source d'alimentation gérant cette fonction.
      * @param dateFin   Date de fin de la fonction.
      */
-    public AFonction(final CategorieFonction categorie, final APersonne personne, final String source, final Date dateFin) {
+    public AFonction(final CategorieFonction categorie, final APersonne personne, final String source, final LocalDateTime dateFin) {
         this.categorie = categorie;
         this.source = source;
         this.personne = personne;

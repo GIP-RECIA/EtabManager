@@ -13,7 +13,7 @@ spring:
     name: EtabManager
 
   profiles:
-    active: @spring.profiles.active@
+    active: dev
     group:
       dev: dev
       test: test

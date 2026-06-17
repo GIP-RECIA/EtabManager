@@ -22,6 +22,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -36,8 +38,8 @@ public class FonctionDto {
     private Long discipline;
     private String source;
     private Long structure;
-    private Date dateFin;
-    private Date dateDebut;
+    private LocalDateTime dateFin;
+    private LocalDate dateDebut;
 
     public FonctionDto(Long filiere, Long discipline, String source) {
         this.filiere = filiere;
@@ -52,7 +54,7 @@ public class FonctionDto {
         this.structure = structure;
     }
 
-    public FonctionDto(Long filiere, Long discipline, String source, Long structure, Date dateFin) {
+    public FonctionDto(Long filiere, Long discipline, String source, Long structure, LocalDateTime dateFin) {
         this.filiere = filiere;
         this.discipline = discipline;
         this.source = source;
@@ -75,7 +77,7 @@ public class FonctionDto {
         this.structure = structure;
     }
 
-    public FonctionDto(Long personne, Long filiere, Long discipline, String source, Long structure, Date dateFin) {
+    public FonctionDto(Long personne, Long filiere, Long discipline, String source, Long structure, LocalDateTime dateFin) {
         this.personne = personne;
         this.filiere = filiere;
         this.discipline = discipline;

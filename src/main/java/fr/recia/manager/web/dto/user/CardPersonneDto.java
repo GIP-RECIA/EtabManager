@@ -22,6 +22,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -33,7 +34,7 @@ public class CardPersonneDto {
     private Etat etat;
     private boolean local;
     private String cn;
-    private Date dateSuppression;
+    private LocalDateTime dateSuppression;
 
     public CardPersonneDto(DatabasePersonneDto databasePersonneDto) {
         this.id = databasePersonneDto.getId();

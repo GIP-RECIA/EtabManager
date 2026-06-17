@@ -24,6 +24,7 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @MappedSuperclass
@@ -33,8 +34,7 @@ import java.util.Date;
 public abstract class AbstractTimedEntity extends AbstractEntity implements Serializable {
 
 	/** Donne l'information de la date de fin de l'objet lors de l'export. */
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateFin;
+    protected LocalDateTime dateFin;
 
 	@Override
 	public String toString() {

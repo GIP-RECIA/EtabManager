@@ -321,7 +321,7 @@ public class SecurityConfiguration {
 
     @Bean
     @Order(1)
-    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) {
         http
             .csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -346,7 +346,7 @@ public class SecurityConfiguration {
 
     @Bean
     @Order(2)
-    public SecurityFilterChain webFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain webFilterChain(HttpSecurity http) {
         http
             .csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())

@@ -28,6 +28,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -46,24 +47,24 @@ public class PersonneDetailDto {
 
     private Long id;
     private Etat etat;
-    private Date anneeScolaire;
+    private LocalDate anneeScolaire;
     private CategoriePersonne categorie;
     private Civilite civilite;
     private String source;
     private String cn;
-    private Date dateNaissance;
+    private LocalDate dateNaissance;
     private String email;
     private String givenName;
     private String patronyme;
     private String sn;
     private String uid;
     private String password;
-    private Date dateFin;
-    private Date dateSourceModification;
+    private LocalDateTime dateFin;
+    private LocalDateTime dateSourceModification;
     private String login;
-    private Date dateModification;
-    private Date dateAcquittement;
-    private Date dateSuppression;
+    private LocalDateTime dateModification;
+    private LocalDateTime dateAcquittement;
+    private LocalDateTime dateSuppression;
     private String photo;
     private String idPronote;
     private boolean listeRouge;
@@ -97,8 +98,7 @@ public class PersonneDetailDto {
         this.dateSourceModification = aPersonne.getDateSourceModification();
         if (aPersonne.getEtat() == Etat.Delete && aPersonne.getDateModification().equals(aPersonne.getDateAcquittement())) {
             this.etat = Etat.Deleting;
-            final LocalDateTime dateSuppression = aPersonne.getDateModification().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(20);
-            this.dateSuppression = Date.from(dateSuppression.atZone(ZoneId.systemDefault()).toInstant());
+            this.dateSuppression = aPersonne.getDateModification().plusDays(20);
         }
         this.photo = aPersonne.getPhoto();
         this.idPronote = null;

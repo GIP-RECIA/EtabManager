@@ -27,10 +27,9 @@ import lombok.ToString;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import jakarta.persistence.UniqueConstraint;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 @Entity
 @Table(uniqueConstraints = {
@@ -52,8 +51,7 @@ public class Enseignement extends AbstractSimpleEntity {
      * Année scolaire de validité de l'objet.
      * Année à la rentrée de septembre.
      */
-    @Temporal(TemporalType.DATE)
-    private Date anneeScolaire;
+    private LocalDate anneeScolaire;
     /**
      * Libellé de la matière enseignée.
      */

@@ -52,7 +52,7 @@ public class LdapPeopleDao {
             (ContextMapper<Name>) ctx -> ((DirContextAdapter) ctx).getDn()
         );
         if (!dns.isEmpty()) {
-            Name dn = dns.get(0);
+            Name dn = dns.getFirst();
             ModificationItem[] mods = new ModificationItem[] {
                 new ModificationItem(
                     DirContext.REPLACE_ATTRIBUTE,
@@ -75,7 +75,7 @@ public class LdapPeopleDao {
             (ContextMapper<Name>) ctx -> ((DirContextAdapter) ctx).getDn()
         );
         if (!dns.isEmpty()) {
-            Name dn = dns.get(0);
+            Name dn = dns.getFirst();
             ModificationItem[] mods = new ModificationItem[] {
                 new ModificationItem(
                     DirContext.REPLACE_ATTRIBUTE,
@@ -94,7 +94,7 @@ public class LdapPeopleDao {
             (ContextMapper<Name>) ctx -> ((DirContextAdapter) ctx).getDn()
         );
         if (!dns.isEmpty()) {
-            Name dn = dns.get(0);
+            Name dn = dns.getFirst();
             ModificationItem[] mods = new ModificationItem[] {
                 new ModificationItem(
                     DirContext.REPLACE_ATTRIBUTE,
@@ -113,7 +113,7 @@ public class LdapPeopleDao {
             (ContextMapper<Name>) ctx -> ((DirContextAdapter) ctx).getDn()
         );
         if (!dns.isEmpty()) {
-            Name dn = dns.get(0);
+            Name dn = dns.getFirst();
             ModificationItem[] mods = new ModificationItem[] {
                 new ModificationItem(
                     DirContext.REPLACE_ATTRIBUTE,
@@ -132,7 +132,7 @@ public class LdapPeopleDao {
             (ContextMapper<Name>) ctx -> ((DirContextAdapter) ctx).getDn()
         );
         if (!dns.isEmpty()) {
-            Name dn = dns.get(0);
+            Name dn = dns.getFirst();
             ModificationItem[] mods = new ModificationItem[] {
                 new ModificationItem(
                     DirContext.REPLACE_ATTRIBUTE,
@@ -151,7 +151,7 @@ public class LdapPeopleDao {
                 .where("uid").is(uid),
             peopleResponseAttributesMapper
         );
-        return result.isEmpty() ? null : result.get(0);
+        return result.isEmpty() ? null : result.getFirst();
     }
 
 }

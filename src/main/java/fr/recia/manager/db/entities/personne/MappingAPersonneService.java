@@ -35,6 +35,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -64,8 +65,7 @@ public class MappingAPersonneService implements Serializable {
     @EmbeddedId
     private MappingAPersonneServiceId pk = new MappingAPersonneServiceId();
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateFin;
+    private LocalDateTime dateFin;
 
     @Basic
     @Column(length = IntConst.ISOURCE, name = "SOURCE", nullable = false)

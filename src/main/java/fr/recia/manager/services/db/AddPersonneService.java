@@ -63,6 +63,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -121,7 +122,7 @@ public class AddPersonneService {
     public APersonne addPersonne(UserCreation userCreation, boolean isAdminFonc) {
         log.debug("Trying to create local user {}", userCreation);
         // 1. Récupération de la date
-        Instant date = new Date().toInstant();
+        LocalDateTime date = LocalDateTime.now();
         // 2. Récupération de l'année scolaire actuelle (on suppose que c'est la dernière)
         AnneeScolaire anneeScolaire = anneeScolaireRepository.findFirstByOrderByDateCreationDesc();
         final String anneeEnCours = anneeScolaire.getAnneeEnCours().toString().split("-")[0];
@@ -147,7 +148,7 @@ public class AddPersonneService {
         List<String> domainsOfStructure = structureLoader.getDomainsOfStructure(aStructure.getSiren());
         String codeGenerateur;
         if (domainsOfStructure.size() == 1) {
-            codeGenerateur = appProperties.getUidFactory().getDomainToCodeGenerateur().get(domainsOfStructure.get(0));
+            codeGenerateur = appProperties.getUidFactory().getDomainToCodeGenerateur().get(domainsOfStructure.getFirst());
         } else {
             codeGenerateur = appProperties.getUidFactory().getDefaultCodeGenerateur();
         }
@@ -156,8 +157,8 @@ public class AddPersonneService {
         GenUID genUID = genUIDRepository.findByCAndLAndXx(codeGenerateur, uidFactory.getCodeRegion(), codeAnnee).orElseGet(() -> {
             log.debug("No genUID : creating a new one");
             GenUID newGenUID = new GenUID();
-            newGenUID.setDateCreation(Date.from(date));
-            newGenUID.setDateModification(Date.from(date));
+            newGenUID.setDateCreation(date);
+            newGenUID.setDateModification(date);
             newGenUID.setIiii(0);
             newGenUID.setXx(codeAnnee);
             newGenUID.setL(uidFactory.getCodeRegion());
@@ -177,8 +178,8 @@ public class AddPersonneService {
         CategoriePersonne catPer = userCreation.getCategoriePersonne();
         Civilite civilite = userCreation.getCivilite();
         APersonne apersonne = instanciatePersonne(catPer);
-        apersonne.setDateCreation(Date.from(date));
-        apersonne.setDateModification(Date.from(date));
+        apersonne.setDateCreation(date);
+        apersonne.setDateModification(date);
         apersonne.setAnneeScolaire(anneeScolaire.getAnneeEnCours());
         apersonne.setCategorie(catPer);
         apersonne.setCleJointure(new CleJointure(source, cle));
