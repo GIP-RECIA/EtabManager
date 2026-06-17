@@ -18,6 +18,7 @@ package fr.recia.manager.db.entities.personne;
 
 import fr.recia.manager.db.entities.common.AbstractEntity;
 import fr.recia.manager.db.utils.IntConst;
+import jakarta.persistence.FetchType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,21 +56,21 @@ public class Login extends AbstractEntity {
      * Relation bidirectionnelle.
      * Personne ayant ce login.
      */
-    @OneToOne(cascade = {CascadeType.REFRESH})
+    @OneToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "apersonne_login")
     private APersonne apersonneLogin;
     /**
      * Relation bidirectionnelle.
      * Personne ayant cet alias.
      */
-    @OneToOne(cascade = {CascadeType.REFRESH})
+    @OneToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "apersonne_alias")
     private APersonne apersonneAlias;
     /**
      * Relation bidirectionnelle.
      * Personne ayant eu ce login/alias.
      */
-    @ManyToOne(cascade = {CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "apersonne_old_alias")
     private APersonne apersonneOldAlias;
 
