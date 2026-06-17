@@ -32,6 +32,7 @@ import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.personne.Eleve;
 import fr.recia.manager.db.entities.personne.Enseignant;
 import fr.recia.manager.db.entities.personne.Login;
+import fr.recia.manager.db.entities.personne.NonEnseignantCollectiviteLocale;
 import fr.recia.manager.db.entities.personne.NonEnseignantEtablissement;
 import fr.recia.manager.db.entities.personne.NonEnseignantServiceAcademique;
 import fr.recia.manager.db.entities.structure.AStructure;
@@ -234,12 +235,14 @@ public class AddPersonneService {
         APersonne apersonne;
         if (catPer == CategoriePersonne.Eleve) {
             apersonne = new Eleve();
+        } else if (catPer == CategoriePersonne.Enseignant) {
+            apersonne = new Enseignant();
         } else if (catPer == CategoriePersonne.Non_enseignant_etablissement) {
             apersonne = new NonEnseignantEtablissement();
         } else if (catPer == CategoriePersonne.Non_enseignant_service_academique) {
             apersonne = new NonEnseignantServiceAcademique();
-        } else if (catPer == CategoriePersonne.Enseignant) {
-            apersonne = new Enseignant();
+        } else if (catPer == CategoriePersonne.Non_enseignant_collectivite_locale) {
+            apersonne = new NonEnseignantServiceAcademique();
         }
         // Type invalide
         else {
@@ -255,15 +258,19 @@ public class AddPersonneService {
         if (apersonne.getCategorie() == CategoriePersonne.Eleve) {
             updateEleve((Eleve) apersonne, userCreation);
         }
-        if (apersonne.getCategorie() == CategoriePersonne.Non_enseignant_etablissement) {
-            updateNonEnsEtablissement((NonEnseignantEtablissement) apersonne, aStructure, userCreation, isAdminFonc);
-        }
-        if (apersonne.getCategorie() == CategoriePersonne.Non_enseignant_service_academique) {
-            updateNonEnsServiceAcad((NonEnseignantServiceAcademique) apersonne, aStructure, userCreation, isAdminFonc);
-        }
-        if (apersonne.getCategorie() == CategoriePersonne.Enseignant) {
+        else if (apersonne.getCategorie() == CategoriePersonne.Enseignant) {
             updateEnseignant((Enseignant) apersonne, aStructure, userCreation, isAdminFonc);
         }
+        else if (apersonne.getCategorie() == CategoriePersonne.Non_enseignant_etablissement) {
+            updateNonEnsEtablissement((NonEnseignantEtablissement) apersonne, aStructure, userCreation, isAdminFonc);
+        }
+        else if (apersonne.getCategorie() == CategoriePersonne.Non_enseignant_service_academique) {
+            updateNonEnsServiceAcad((NonEnseignantServiceAcademique) apersonne, aStructure, userCreation, isAdminFonc);
+        }
+        else if (apersonne.getCategorie() == CategoriePersonne.Non_enseignant_collectivite_locale) {
+            updateNonEnsCollLoc((NonEnseignantCollectiviteLocale) apersonne, aStructure, userCreation, isAdminFonc);
+        }
+
     }
 
     /**
@@ -281,6 +288,15 @@ public class AddPersonneService {
         log.debug("updating nonEnseignantServiceAcademique {}", nonEnseignantServiceAcademique.getUid());
         fonctionService.saveAdditionalFonctions(nonEnseignantServiceAcademique.getId(), aStructure.getId(), userCreation.getFonctions(), new ArrayList<>(), FonctionAction.save, isAdminFonc);
     }
+
+    /**
+     * Ajout des attributs spécifiques à un nonEnseignantCollectiviteLocale
+     */
+    private void updateNonEnsCollLoc(final NonEnseignantCollectiviteLocale nonEnseignantCollectiviteLocale, final AStructure aStructure, final UserCreation userCreation, boolean isAdminFonc) {
+        log.debug("updating nonEnseignantCollectiviteLocale {}", nonEnseignantCollectiviteLocale.getUid());
+        fonctionService.saveAdditionalFonctions(nonEnseignantCollectiviteLocale.getId(), aStructure.getId(), userCreation.getFonctions(), new ArrayList<>(), FonctionAction.save, isAdminFonc);
+    }
+
 
     /**
      * Ajout des attributs spécifiques à un enseignant
