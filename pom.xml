@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.18</version>
+    <version>3.5.15</version>
     <relativePath/>
   </parent>
 
@@ -36,16 +36,19 @@
   </distributionManagement>
 
   <properties>
-    <check.java.version>11</check.java.version>
-    <java.version>11</java.version>
+    <check.java.version>17</check.java.version>
+    <java.version>17</java.version>
     <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
-    <springdoc-api.version>1.8.0</springdoc-api.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.dataformat</groupId>
+      <artifactId>jackson-dataformat-yaml</artifactId>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -82,7 +85,9 @@
     <dependency>
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-apt</artifactId>
+      <version>5.1.0</version>
       <scope>provided</scope>
+      <classifier>jakarta</classifier>
     </dependency>
     <dependency>
       <groupId>com.querydsl</groupId>
@@ -91,6 +96,8 @@
     <dependency>
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-jpa</artifactId>
+      <version>5.1.0</version>
+      <classifier>jakarta</classifier>
     </dependency>
     <dependency>
       <groupId>fr.recia</groupId>
@@ -126,11 +133,6 @@
       <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-inline</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.openapitools</groupId>
       <artifactId>jackson-databind-nullable</artifactId>
       <version>0.2.10</version>
@@ -139,21 +141,6 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-data-rest</artifactId>
-      <version>${springdoc-api.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-ui</artifactId>
-      <version>${springdoc-api.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springdoc</groupId>
-      <artifactId>springdoc-openapi-webmvc-core</artifactId>
-      <version>${springdoc-api.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -287,39 +274,6 @@
         </excludes>
       </resource>
     </resources>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <!--
-            Plugin that provides API-first development using openapi-generator to
-            generate Spring-MVC endpoint stubs at compile time from an OpenAPI definition file
-          -->
-          <groupId>org.openapitools</groupId>
-          <artifactId>openapi-generator-maven-plugin</artifactId>
-          <version>7.20.0</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>generate</goal>
-              </goals>
-              <configuration>
-                <inputSpec>${project.basedir}/src/main/resources/swagger/api.yml</inputSpec>
-                <generatorName>spring</generatorName>
-                <apiPackage>fr.recia.web.rest</apiPackage>
-                <modelPackage>fr.recia.services.rest.dto</modelPackage>
-                <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
-                <importMappings>Problem=org.zalando.problem.Problem</importMappings>
-                <skipValidateSpec>false</skipValidateSpec>
-                <configOptions>
-                  <delegatePattern>true</delegatePattern>
-                  <title>etab-manager</title>
-                </configOptions>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
@@ -358,26 +312,6 @@
             </licenseSet>
           </licenseSets>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mysema.maven</groupId>
-        <artifactId>apt-maven-plugin</artifactId>
-        <version>1.1.3</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>process</goal>
-            </goals>
-            <phase>generate-sources</phase>
-            <configuration>
-              <outputDirectory>target/generated-sources/java</outputDirectory>
-              <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
-              <options>
-                <querydsl.generatedAnnotationClass>com.querydsl.core.annotations.Generated</querydsl.generatedAnnotationClass>
-              </options>
-            </configuration>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>io.gatling</groupId>

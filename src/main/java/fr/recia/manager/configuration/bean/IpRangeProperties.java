@@ -21,7 +21,7 @@ import fr.recia.manager.utils.ListUtil;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.Set;
 
 import static fr.recia.manager.configuration.Constants.JSON_ARRAY_DELIMITER;

@@ -24,11 +24,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.session.data.redis.config.ConfigureRedisAction;
-import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisIndexedHttpSession;
 
 @Slf4j
 @Configuration
-@EnableRedisHttpSession(redisNamespace = "${spring.redis.namespace}")
+@EnableRedisIndexedHttpSession(redisNamespace = "${spring.redis.namespace}")
 public class SessionConfig {
 
     @Autowired

@@ -26,8 +26,8 @@ import fr.recia.manager.security.AppUser;
 import fr.recia.manager.security.AppRole;
 import fr.recia.manager.services.structure.StructureLoader;
 import lombok.extern.slf4j.Slf4j;
-import org.jasig.cas.client.session.SingleSignOutFilter;
-import org.jasig.cas.client.validation.Assertion;
+import org.apereo.cas.client.session.SingleSignOutFilter;
+import org.apereo.cas.client.validation.Assertion;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -46,11 +46,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -322,10 +322,10 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             )
-            .antMatcher("/api/**")
+            .securityMatcher("/api/**")
             .authorizeHttpRequests(auth -> auth
-                .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
-                .antMatchers("/api/config").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
+                .requestMatchers("/api/config").permitAll()
                 .anyRequest().authenticated()
             )
             .exceptionHandling(e -> e
@@ -352,10 +352,10 @@ public class SecurityConfiguration {
                 .authenticationEntryPoint(casAuthenticationEntryPoint(serviceProperties()))
             )
             .authorizeHttpRequests(auth -> auth
-                .antMatchers("/health-check").permitAll()
-                .antMatchers("/", "/ui/**").authenticated()
+                .requestMatchers("/health-check").permitAll()
+                .requestMatchers("/", "/ui/**").authenticated()
                 // Cet endpoint doit être accessible car c'est le callback du CAS vers l'appli spring pour faire valider le ticket
-                .antMatchers(appProperties.getCas().getCasTicketCallback()).permitAll()
+                .requestMatchers(appProperties.getCas().getCasTicketCallback()).permitAll()
                 .anyRequest().denyAll()
             );
 
