@@ -62,6 +62,7 @@ import fr.recia.manager.web.dto.user.UserCreation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -119,6 +120,7 @@ public class AddPersonneService {
      * @param userCreation Le DTO venant du front qui contient les informations nécéssaires à la création
      */
     // TODO : gérer l'ajout de classes locales et groupes locaux, et de responsables d'un élève
+    @Transactional(rollbackFor = Exception.class)
     public APersonne addPersonne(UserCreation userCreation, boolean isAdminFonc) {
         log.debug("Trying to create local user {}", userCreation);
         // 1. Récupération de la date
