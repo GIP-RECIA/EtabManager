@@ -29,6 +29,7 @@ import fr.recia.manager.services.structure.StructureLoader;
 import lombok.extern.slf4j.Slf4j;
 import org.apereo.cas.client.session.SingleSignOutFilter;
 import org.apereo.cas.client.validation.Assertion;
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -46,6 +47,8 @@ import org.springframework.security.core.userdetails.AuthenticationUserDetailsSe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.Filter;
@@ -304,7 +307,9 @@ public class SecurityConfiguration {
         http
             .csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
             )
+            .addFilterAfter(csrfCookieFilter(), CsrfFilter.class)
             .securityMatcher("/api/**")
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
@@ -327,7 +332,9 @@ public class SecurityConfiguration {
         http
             .csrf(csrf -> csrf
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
             )
+            .addFilterAfter(csrfCookieFilter(), CsrfFilter.class)
             // Filtre pour le logout à mettre avant tout
             .addFilterBefore(singleSignOutFilter(), CsrfFilter.class)
             // La partie exceptionHandling permet de rediriger sur le CAS si on a un 403
@@ -343,6 +350,21 @@ public class SecurityConfiguration {
             );
 
         return http.build();
+    }
+
+    @Bean
+    public Filter csrfCookieFilter() {
+        return new OncePerRequestFilter() {
+            @Override
+            protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+                                            @NonNull FilterChain filterChain) throws ServletException, IOException {
+                CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+                if (csrfToken != null) {
+                    csrfToken.getToken();
+                }
+                filterChain.doFilter(request, response);
+            }
+        };
     }
 
 }
