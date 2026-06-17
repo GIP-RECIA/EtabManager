@@ -18,14 +18,14 @@ package fr.recia.manager.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class RestTemplateConfiguration {
 
     @Bean
-    public RestTemplate restTemplateGrouper(MappingJackson2HttpMessageConverter jacksonMessageConverter) {
+    public RestTemplate restTemplateGrouper(JacksonJsonHttpMessageConverter jacksonMessageConverter) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().addFirst(jacksonMessageConverter);
         return restTemplate;
