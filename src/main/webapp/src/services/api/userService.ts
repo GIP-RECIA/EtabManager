@@ -57,7 +57,7 @@ async function undoDeleteUser(id: number) {
 
 async function resetUser(id: number) {
   return (
-    await axios.put(
+    await axios.put<void>(
       `/api/personne/${id}/reset`,
     )
   ).status === 200
