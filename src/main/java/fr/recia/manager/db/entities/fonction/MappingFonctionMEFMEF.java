@@ -25,14 +25,11 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Parent;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.util.Date;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Embeddable
 @Getter

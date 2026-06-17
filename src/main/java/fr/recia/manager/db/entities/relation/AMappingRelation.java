@@ -25,16 +25,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.AssociationOverride;
-import javax.persistence.AssociationOverrides;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import jakarta.persistence.AssociationOverride;
+import jakarta.persistence.AssociationOverrides;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 
 @Entity

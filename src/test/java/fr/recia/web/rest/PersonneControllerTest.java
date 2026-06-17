@@ -38,7 +38,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;

@@ -24,11 +24,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,7 +42,7 @@ public class Classe extends AGroupeOfFoncClasseGroupe {
     /**
      * Mefs associé à la classe.
      */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "classes_mefs",
         joinColumns = @JoinColumn(name = "CLASSE_ID", referencedColumnName = "ID"),
         inverseJoinColumns = @JoinColumn(name = "MEF_ID", referencedColumnName = "ID")

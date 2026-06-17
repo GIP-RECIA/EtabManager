@@ -19,8 +19,8 @@ package fr.recia.manager.configuration.bean.validator;
 import inet.ipaddr.AddressStringException;
 import inet.ipaddr.IPAddressString;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.util.Collection;
 
 public class IpAddressValidator implements ConstraintValidator<IpAddress, Object> {
