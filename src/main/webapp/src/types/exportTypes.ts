@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-export * from './alertTypes.ts'
-export * from './configurationTypes.ts'
-export * from './confirmationTypes.ts'
-export * from './endInfoTypes.ts'
-export * from './enumValuesTypes.ts'
-export * from './exportTypes.ts'
-export * from './functionTypes.ts'
-export * from './incertainTypes.ts'
-export * from './restrictionTypes.ts'
-export * from './rightTypes.ts'
-export * from './structureTypes.ts'
-export * from './userTypes.ts'
+export type ExportSuccess = 'success' | 'partial' | 'fail' | ''
+
+export interface ExportResponseAPI {
+  exceptionUais: string[]
+  alreadyExportedUais: string[]
+  success: ExportSuccess
+  successfulUais: string[]
+}
+
+export interface ExportResponse {
+
+  data: ExportResponseAPI | undefined
+  httpCode: number
+
+}
