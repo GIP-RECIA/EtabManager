@@ -17,10 +17,13 @@
 package fr.recia.manager.services.db;
 
 import fr.recia.manager.configuration.AppProperties;
+import fr.recia.manager.db.dto.groupe.ClasseDto;
 import fr.recia.manager.db.entities.common.CleJointure;
 import fr.recia.manager.db.entities.education.Enseignement;
 import fr.recia.manager.db.entities.education.MEF;
 import fr.recia.manager.db.entities.education.MappingEleveEnseignement;
+import fr.recia.manager.db.entities.fonction.FonctionMEF;
+import fr.recia.manager.db.entities.fonction.MappingFonctionMEFMEF;
 import fr.recia.manager.db.entities.gestion.AnneeScolaire;
 import fr.recia.manager.db.entities.gestion.GenUID;
 import fr.recia.manager.db.entities.groupe.AGroupeOfFoncClasseGroupe;
@@ -44,6 +47,7 @@ import fr.recia.manager.db.enums.Etat;
 import fr.recia.manager.db.enums.Sexe;
 import fr.recia.manager.db.repositories.education.EnseignementRepository;
 import fr.recia.manager.db.repositories.education.MEFRepository;
+import fr.recia.manager.db.repositories.fonction.FonctionMEFRepository;
 import fr.recia.manager.db.repositories.gestion.AnneeScolaireRepository;
 import fr.recia.manager.db.repositories.gestion.GenUIDRepository;
 import fr.recia.manager.db.repositories.groupe.AGroupeOfFoncClasseGroupeRepository;
@@ -62,6 +66,8 @@ import fr.recia.manager.services.creation.PasswordGenerator;
 import fr.recia.manager.services.creation.UidFactory;
 import fr.recia.manager.services.exceptions.EmailAlreadyExistsException;
 import fr.recia.manager.services.structure.StructureLoader;
+import fr.recia.manager.web.dto.enseignement.ClasseFormationPossibleDto;
+import fr.recia.manager.web.dto.enseignement.EnseignementFormationPossibleDto;
 import fr.recia.manager.web.dto.enseignement.EnseignementModifyRequest;
 import fr.recia.manager.web.dto.enseignement.EnseignementPossibleDto;
 import fr.recia.manager.web.dto.enseignement.FormationModifyRequest;
@@ -105,6 +111,8 @@ public class AddPersonneService {
     private LoginRepository<Login> loginRepository;
     @Autowired
     private MEFRepository<MEF> mefRepository;
+    @Autowired
+    private FonctionMEFRepository<FonctionMEF> fonctionMEFRepository;
     @Autowired
     private EnseignementRepository<Enseignement> enseignementRepository;
     @Autowired
@@ -352,7 +360,29 @@ public class AddPersonneService {
     }
 
     public List<FormationPossibleDto> getFormationsPossible(final long etabId){
-        return null;
+        Map<Long, FormationPossibleDto> formationPossibleDtoMap = new HashMap<>();
+        List<MEF> mefs = mefRepository.findMefsByEtablissement(etabId);
+        for(MEF mef: mefs){
+            if(!formationPossibleDtoMap.containsKey(mef.getId())){
+                formationPossibleDtoMap.put(mef.getId(), new FormationPossibleDto(mef));
+            }
+            FormationPossibleDto formationPossibleDto = formationPossibleDtoMap.get(mef.getId());
+            List<ClasseDto> classes = classeRepository.findClassesByMefAndEtablissement(mef.getId(), etabId);
+            for(ClasseDto classe : classes){
+                ClasseFormationPossibleDto classeFormationPossibleDto = formationPossibleDto.addClasse(classe);
+                for(Enseignement enseignement : enseignementRepository.findEnseignementsByClasse(classe.getId())){
+                    classeFormationPossibleDto.addEnseignement(enseignement);
+                }
+                for(Enseignement enseignement : enseignementRepository.findEnseignementsGroupesByClasse(classe.getId())){
+                    classeFormationPossibleDto.addEnseignement(enseignement);
+                }
+            }
+        }
+        // Suppression des classes fantomes
+        for(FormationPossibleDto formationPossibleDto : formationPossibleDtoMap.values()){
+            formationPossibleDto.getClasses().removeIf(classeFormationPossibleDto -> classeFormationPossibleDto.getEnseignements().isEmpty());
+        }
+        return new ArrayList<>(formationPossibleDtoMap.values());
     }
 
 }

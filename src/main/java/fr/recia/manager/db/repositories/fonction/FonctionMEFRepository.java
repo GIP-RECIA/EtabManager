@@ -17,9 +17,13 @@
 package fr.recia.manager.db.repositories.fonction;
 
 import fr.recia.manager.db.entities.fonction.FonctionMEF;
+import fr.recia.manager.db.entities.structure.Etablissement;
 import fr.recia.manager.db.repositories.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface FonctionMEFRepository<T extends FonctionMEF> extends AbstractRepository<T, Long> {
+    List<FonctionMEF> findByEtablissement(Etablissement etablissement);
 }
