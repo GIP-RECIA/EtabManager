@@ -16,14 +16,15 @@
 
 package fr.recia.manager.web.dto.export;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.List;
+import org.springframework.http.HttpStatus;
 
 @Data
-public class EsidocWSResponse {
-    private List<String> exceptionUais;
-    private String success;
-    private List<String> successfulUais;
-    private List<String> alreadyExportedUais;
+@AllArgsConstructor
+public class EsidocWSResponseInfo {
+
+    private EsidocWSResponse esidocWSResponse;
+    private HttpStatus httpStatus;
+
 }

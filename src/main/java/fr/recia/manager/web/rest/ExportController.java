@@ -26,6 +26,7 @@ import fr.recia.manager.security.AppUser;
 import fr.recia.manager.services.db.StructureService;
 import fr.recia.manager.services.export.EsidocExportService;
 import fr.recia.manager.web.dto.export.EsidocWSResponse;
+import fr.recia.manager.web.dto.export.EsidocWSResponseInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,7 +61,7 @@ public class ExportController {
         final AStructure aStructure = structureService.getStructureDBFromId(id);
         Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
         if (allowedSiren.contains(aStructure.getSiren())) {
-            final EsidocWSResponse esidocWSResponse = esidocExportService.exportForEtab(((Etablissement) aStructure).getUai());
+            final EsidocWSResponseInfo esidocWSResponseInfo = esidocExportService.exportForEtab(((Etablissement) aStructure).getUai());
             auditService.log(
                 AuditEvent.builder()
                     .timestamp(OffsetDateTime.now(ZoneId.systemDefault()))
@@ -68,14 +69,10 @@ public class ExportController {
                     .actor(principal.getUsername())
                     .target(String.valueOf(id))
                     .payload(Map.of(
-                        "esidocWSResponse", esidocWSResponse
+                        "esidocWSResponseInfo", esidocWSResponseInfo
                     ))
                     .build());
-            if(!esidocWSResponse.getSuccess().equals("fail")){
-                return ResponseEntity.ok(esidocWSResponse);
-            } else {
-                return ResponseEntity.internalServerError().body(esidocWSResponse);
-            }
+            return ResponseEntity.status(esidocWSResponseInfo.getHttpStatus()).body(esidocWSResponseInfo.getEsidocWSResponse());
         } else {
             log.warn("User {} is not authorized to export esidoc in {}", principal.getUsername(), id);
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
