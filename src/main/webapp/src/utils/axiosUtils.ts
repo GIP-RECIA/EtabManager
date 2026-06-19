@@ -32,12 +32,13 @@ const instance = axios.create({
   withCredentials: true,
 })
 
+export const i18nHandled: number[] = [401, 404, 500]
+
 function errorHandler(
   e: any,
   toastOrI18n?: boolean | string,
 ): void {
   let showToast: boolean = typeof toastOrI18n == 'boolean' && toastOrI18n
-  const i18nHandled: number[] = [401, 404, 500]
   let message: string, error: any
 
   if (axios.isAxiosError(e)) {
@@ -78,5 +79,6 @@ function errorHandler(
 
 export {
   errorHandler,
+  i18nHandled as i18nHandledErrors,
   instance,
 }
