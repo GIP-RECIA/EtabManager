@@ -23,6 +23,7 @@ import fr.recia.manager.audit.AuditEvent;
 import fr.recia.manager.audit.AuditService;
 import fr.recia.manager.audit.EventType;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
+import fr.recia.manager.db.entities.education.Enseignement;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.structure.AStructure;
 import fr.recia.manager.db.enums.Etat;
@@ -32,6 +33,8 @@ import fr.recia.manager.services.db.AddPersonneService;
 import fr.recia.manager.services.db.FonctionService;
 import fr.recia.manager.services.db.PersonneService;
 import fr.recia.manager.services.db.StructureService;
+import fr.recia.manager.web.dto.enseignement.EnseignementModifyRequest;
+import fr.recia.manager.web.dto.enseignement.FormationModifyRequest;
 import fr.recia.manager.web.dto.function.FonctionAction;
 import fr.recia.manager.web.dto.function.JsonAdditionalFonctionBody;
 import fr.recia.manager.web.dto.user.PersonneDetailDto;
@@ -541,4 +544,63 @@ public class PersonneController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }
+
+    @PostMapping(value = "/{id}/enseignement")
+    public ResponseEntity<Void> setPersonneEnseignements(@AuthenticationPrincipal AppUser principal, @PathVariable Long id, @RequestBody EnseignementModifyRequest body) {
+        AStructure aStructure = structureService.getStructureDBFromId(body.getStructure());
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        if (allowedSiren.contains(aStructure.getSiren())) {
+            boolean success = addPersonneService.modifyEnseignements(id, body);
+            // Log Audit
+            auditService.log(
+                AuditEvent.builder()
+                    .timestamp(OffsetDateTime.now(ZoneId.systemDefault()))
+                    .eventType(EventType.MODIFY_ENSEIGNEMENT)
+                    .actor(principal.getUsername())
+                    .target(id.toString())
+                    .payload(Map.of(
+                        "body", body,
+                        "success", success)
+                    )
+                    .build()
+            );
+            if (!success) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            log.warn("User {} is not authorized to modify enseignements for user {} in {}", principal.getUsername(), id, body.getStructure());
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @PostMapping(value = "/{id}/formation")
+    public ResponseEntity<Void> setFormations(@AuthenticationPrincipal AppUser principal, @PathVariable Long id, @RequestBody FormationModifyRequest body) {
+        AStructure aStructure = structureService.getStructureDBFromId(body.getStructure());
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        if (allowedSiren.contains(aStructure.getSiren())) {
+            boolean success = addPersonneService.modifyFormation(id, body);
+            // Log Audit
+            auditService.log(
+                AuditEvent.builder()
+                    .timestamp(OffsetDateTime.now(ZoneId.systemDefault()))
+                    .eventType(EventType.MODIFY_FORMATION)
+                    .actor(principal.getUsername())
+                    .target(id.toString())
+                    .payload(Map.of(
+                        "body", body,
+                        "success", success)
+                    )
+                    .build()
+            );
+            if (!success) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            log.warn("User {} is not authorized to modify formation for user {} in {}", principal.getUsername(), id, body.getStructure());
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
 }
