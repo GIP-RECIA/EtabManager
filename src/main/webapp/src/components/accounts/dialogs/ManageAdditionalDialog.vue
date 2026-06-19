@@ -54,7 +54,6 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   'update:modelValue': [value: boolean]
-  'save': []
 }>()
 
 const modelValue = defineModel<boolean>({ required: true })
