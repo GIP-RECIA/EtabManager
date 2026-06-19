@@ -49,6 +49,8 @@ import fr.recia.manager.db.repositories.groupe.ClasseRepository;
 import fr.recia.manager.db.repositories.groupe.MappingAGroupeAPersonneEnseignementRepository;
 import fr.recia.manager.db.repositories.groupe.MappingAGroupeAPersonneRepository;
 import fr.recia.manager.db.repositories.personne.APersonneRepository;
+import fr.recia.manager.db.repositories.personne.EleveRepository;
+import fr.recia.manager.db.repositories.personne.EnseignantRepository;
 import fr.recia.manager.db.repositories.personne.LoginRepository;
 import fr.recia.manager.db.repositories.structure.AStructureRepository;
 import fr.recia.manager.services.cache.CacheInvalidationService;
@@ -57,6 +59,8 @@ import fr.recia.manager.services.creation.PasswordGenerator;
 import fr.recia.manager.services.creation.UidFactory;
 import fr.recia.manager.services.exceptions.EmailAlreadyExistsException;
 import fr.recia.manager.services.structure.StructureLoader;
+import fr.recia.manager.web.dto.enseignement.EnseignementModifyRequest;
+import fr.recia.manager.web.dto.enseignement.FormationModifyRequest;
 import fr.recia.manager.web.dto.function.FonctionAction;
 import fr.recia.manager.web.dto.user.UserCreation;
 import lombok.extern.slf4j.Slf4j;
@@ -69,6 +73,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -78,6 +83,10 @@ public class AddPersonneService {
 
     @Autowired
     private APersonneRepository<APersonne> aPersonneRepository;
+    @Autowired
+    private EnseignantRepository<Enseignant> enseignantRepository;
+    @Autowired
+    private EleveRepository<Eleve> eleveRepository;
     @Autowired
     private AStructureRepository<AStructure> aStructureRepository;
     @Autowired
@@ -104,8 +113,6 @@ public class AddPersonneService {
     private NameCalculator nameCalculator;
     @Autowired
     private PasswordGenerator passwordGenerator;
-    @Autowired
-    private FonctionService fonctionService;
     @Autowired
     private LoginService loginService;
     @Autowired
@@ -223,8 +230,6 @@ public class AddPersonneService {
         // Gestion du login
         Login login = loginService.updateLogin(nameCalculator.login(userCreation.getNom(), userCreation.getPrenom()), apersonne);
         loginRepository.saveAndFlush(login);
-        // Champs spécfiques pour chaque catégorie de personne
-        updateSpecificFields(apersonne, userCreation, aStructure, isAdminFonc);
         // Vider les caches concernés
         cacheInvalidationService.evictPersonneAndAssociatedStructures(apersonne.getId(), aStructure.getId());
         return apersonne;
@@ -254,104 +259,65 @@ public class AddPersonneService {
     }
 
     /**
-     * Met à jour les champs spécifiques en fonction du profil
-     */
-    private void updateSpecificFields(APersonne apersonne, UserCreation userCreation, AStructure aStructure, boolean isAdminFonc) {
-        if (apersonne.getCategorie() == CategoriePersonne.Eleve) {
-            updateEleve((Eleve) apersonne, userCreation);
-        }
-        else if (apersonne.getCategorie() == CategoriePersonne.Enseignant) {
-            updateEnseignant((Enseignant) apersonne, aStructure, userCreation, isAdminFonc);
-        }
-        else if (apersonne.getCategorie() == CategoriePersonne.Non_enseignant_etablissement) {
-            updateNonEnsEtablissement((NonEnseignantEtablissement) apersonne, aStructure, userCreation, isAdminFonc);
-        }
-        else if (apersonne.getCategorie() == CategoriePersonne.Non_enseignant_service_academique) {
-            updateNonEnsServiceAcad((NonEnseignantServiceAcademique) apersonne, aStructure, userCreation, isAdminFonc);
-        }
-        else if (apersonne.getCategorie() == CategoriePersonne.Non_enseignant_collectivite_locale) {
-            updateNonEnsCollLoc((NonEnseignantCollectiviteLocale) apersonne, aStructure, userCreation, isAdminFonc);
-        }
-
-    }
-
-    /**
-     * Ajout des attributs spécifiques à un nonEnseignantEtablissement
-     */
-    private void updateNonEnsEtablissement(final NonEnseignantEtablissement nonEnseignantEtablissement, final AStructure aStructure, final UserCreation userCreation, boolean isAdminFonc) {
-        log.debug("updating nonEnseignantEtablissement {}", nonEnseignantEtablissement.getUid());
-        fonctionService.saveAdditionalFonctions(nonEnseignantEtablissement.getId(), aStructure.getId(), userCreation.getFonctions(), new ArrayList<>(), FonctionAction.save, isAdminFonc);
-    }
-
-    /**
-     * Ajout des attributs spécifiques à un nonEnseignantServiceAcademique
-     */
-    private void updateNonEnsServiceAcad(final NonEnseignantServiceAcademique nonEnseignantServiceAcademique, final AStructure aStructure, final UserCreation userCreation, boolean isAdminFonc) {
-        log.debug("updating nonEnseignantServiceAcademique {}", nonEnseignantServiceAcademique.getUid());
-        fonctionService.saveAdditionalFonctions(nonEnseignantServiceAcademique.getId(), aStructure.getId(), userCreation.getFonctions(), new ArrayList<>(), FonctionAction.save, isAdminFonc);
-    }
-
-    /**
-     * Ajout des attributs spécifiques à un nonEnseignantCollectiviteLocale
-     */
-    private void updateNonEnsCollLoc(final NonEnseignantCollectiviteLocale nonEnseignantCollectiviteLocale, final AStructure aStructure, final UserCreation userCreation, boolean isAdminFonc) {
-        log.debug("updating nonEnseignantCollectiviteLocale {}", nonEnseignantCollectiviteLocale.getUid());
-        fonctionService.saveAdditionalFonctions(nonEnseignantCollectiviteLocale.getId(), aStructure.getId(), userCreation.getFonctions(), new ArrayList<>(), FonctionAction.save, isAdminFonc);
-    }
-
-
-    /**
      * Ajout des attributs spécifiques à un enseignant
      */
-    private void updateEnseignant(final Enseignant enseignant, final AStructure aStructure, final UserCreation userCreation, boolean isAdminFonc) {
-        log.debug("updating enseignant {}", enseignant.getUid());
-        fonctionService.saveAdditionalFonctions(enseignant.getId(), aStructure.getId(), userCreation.getFonctions(), new ArrayList<>(), FonctionAction.save, isAdminFonc);
-        List<MappingAGroupeAPersonneEnseignement> personneEnseignements = new ArrayList<>();
-        // Ajout de tous les groupes de l'enseignement
-        for (Long groupId : userCreation.getGroupesEns()) {
-            MappingAGroupeAPersonneEnseignement personneEnseignement = new MappingAGroupeAPersonneEnseignement();
-            MappingAGroupeAPersonneEnseignementId pk = new MappingAGroupeAPersonneEnseignementId();
-            pk.setEnseignant(enseignant);
-            Enseignement enseignement = enseignementRepository.getReferenceById(userCreation.getEnseignementProf());
-            pk.setEnseignement(enseignement);
-            AGroupeOfFoncClasseGroupe aGroupeOfFoncClasseGroupe = aGroupeOfFoncClasseGroupeRepository.getReferenceById(groupId);
-            pk.setGroupe(aGroupeOfFoncClasseGroupe);
-            personneEnseignement.setPk(pk);
-            personneEnseignement.setSource(enseignant.getCleJointure().getSource());
-            personneEnseignements.add(personneEnseignement);
+    public boolean modifyEnseignements(final Long enseignantId, final EnseignementModifyRequest enseignementModifyRequest) {
+        try{
+            Enseignant enseignant = enseignantRepository.findById(enseignantId).get();
+            log.debug("updating enseignant {}", enseignant.getUid());
+            List<MappingAGroupeAPersonneEnseignement> personneEnseignements = new ArrayList<>();
+            // Ajout de tous les groupes de l'enseignement
+            for (Long groupId : enseignementModifyRequest.getClassesGroupes()) {
+                MappingAGroupeAPersonneEnseignement personneEnseignement = new MappingAGroupeAPersonneEnseignement();
+                MappingAGroupeAPersonneEnseignementId pk = new MappingAGroupeAPersonneEnseignementId();
+                pk.setEnseignant(enseignant);
+                Enseignement enseignement = enseignementRepository.getReferenceById(enseignementModifyRequest.getEnseignement());
+                pk.setEnseignement(enseignement);
+                AGroupeOfFoncClasseGroupe aGroupeOfFoncClasseGroupe = aGroupeOfFoncClasseGroupeRepository.getReferenceById(groupId);
+                pk.setGroupe(aGroupeOfFoncClasseGroupe);
+                personneEnseignement.setPk(pk);
+                personneEnseignement.setSource(enseignant.getCleJointure().getSource());
+                personneEnseignements.add(personneEnseignement);
+            }
+            mappingAGroupeAPersonneEnseignementRepository.saveAllAndFlush(personneEnseignements);
+            return true;
+        } catch (Exception e) {
+            log.error("Couldn't update enseignements for {}", enseignantId, e);
+            return false;
         }
-        mappingAGroupeAPersonneEnseignementRepository.saveAllAndFlush(personneEnseignements);
     }
 
     /**
      * Ajout des attributs spécifiques à un élève
      */
-    private void updateEleve(final Eleve eleve, final UserCreation userCreation) {
-        log.debug("updating eleve {}", eleve.getUid());
-        eleve.setStatut(userCreation.getStatut());
-        eleve.setRegime(userCreation.getRegime());
-        eleve.setMajeur(userCreation.isMajeur());
-        eleve.setMajeurAnticipe(userCreation.isMajeurAnticipe());
-        eleve.setTransport(userCreation.isTransportScolaire());
-        MEF mef = mefRepository.getReferenceById(userCreation.getMefEleve());
-        log.debug("mef for eleve is {}", mef.getId());
-        eleve.setMef(mef);
-        Set<MappingEleveEnseignement> mappingEleveEnseignements = new HashSet<>();
-        for (Long enseignementId : userCreation.getEnseignements()) {
-            Enseignement enseignement = enseignementRepository.getReferenceById(enseignementId);
-            log.debug("Adding new enseignement {}", enseignement);
-            mappingEleveEnseignements.add(new MappingEleveEnseignement(eleve.getCleJointure().getSource(), enseignement));
+    public boolean modifyFormation(final Long eleveId, final FormationModifyRequest formationModifyRequest) {
+        try {
+            Eleve eleve = eleveRepository.findById(eleveId).get();
+            log.debug("updating eleve {}", eleve.getUid());
+            MEF mef = mefRepository.getReferenceById(formationModifyRequest.getMef());
+            log.debug("mef for eleve is {}", mef.getId());
+            eleve.setMef(mef);
+            Set<MappingEleveEnseignement> mappingEleveEnseignements = new HashSet<>();
+            for (Long enseignementId : formationModifyRequest.getEnseignements()) {
+                Enseignement enseignement = enseignementRepository.getReferenceById(enseignementId);
+                log.debug("Adding new enseignement {}", enseignement);
+                mappingEleveEnseignements.add(new MappingEleveEnseignement(eleve.getCleJointure().getSource(), enseignement));
+            }
+            log.debug("All enseignements are {}", mappingEleveEnseignements);
+            eleve.setEnseignements(mappingEleveEnseignements);
+            aPersonneRepository.saveAndFlush(eleve);
+            log.debug("Saved enseignements...");
+            // On fait par le MappingAGroupeAPersonne car on ne peut pas faire via la classe
+            Classe classe = classeRepository.getReferenceById(formationModifyRequest.getClasse());
+            log.debug("Adding {} to class {}", eleve.getUid(), classe.getId());
+            MappingAGroupeAPersonne mappingAGroupeAPersonne = new MappingAGroupeAPersonne(eleve.getCleJointure().getSource(), eleve, classe);
+            mappingAGroupeAPersonneRepository.saveAndFlush(mappingAGroupeAPersonne);
+            log.debug("Saved classe...");
+            return true;
+        } catch (Exception e) {
+            log.error("Couldn't update formation for {}", eleveId, e);
+            return false;
         }
-        log.debug("All enseignements are {}", mappingEleveEnseignements);
-        eleve.setEnseignements(mappingEleveEnseignements);
-        aPersonneRepository.saveAndFlush(eleve);
-        log.debug("Saved enseignements...");
-        // On fait par le MappingAGroupeAPersonne car on ne peut pas faire via la classe
-        Classe classe = classeRepository.getReferenceById(userCreation.getClasse());
-        log.debug("Adding {} to class {}", eleve.getUid(), classe.getId());
-        MappingAGroupeAPersonne mappingAGroupeAPersonne = new MappingAGroupeAPersonne(eleve.getCleJointure().getSource(), eleve, classe);
-        mappingAGroupeAPersonneRepository.saveAndFlush(mappingAGroupeAPersonne);
-        log.debug("Saved classe...");
     }
 
 }
