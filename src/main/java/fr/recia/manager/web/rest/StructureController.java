@@ -28,10 +28,13 @@ import fr.recia.manager.db.repositories.gestion.AnneeScolaireRepository;
 import fr.recia.manager.security.AppUser;
 import fr.recia.manager.security.AppRole;
 import fr.recia.manager.services.alert.AlertService;
+import fr.recia.manager.services.db.AddPersonneService;
 import fr.recia.manager.services.db.FonctionService;
 import fr.recia.manager.services.db.IncertainService;
 import fr.recia.manager.services.db.PersonneService;
 import fr.recia.manager.services.db.StructureService;
+import fr.recia.manager.web.dto.enseignement.EnseignementPossibleDto;
+import fr.recia.manager.web.dto.enseignement.FormationPossibleDto;
 import fr.recia.manager.web.dto.function.DisciplinesInFillierePossiblesDto;
 import fr.recia.manager.web.dto.function.ListFonctionPossibleDto;
 import lombok.extern.slf4j.Slf4j;
@@ -61,6 +64,8 @@ public class StructureController {
     private FonctionService fonctionService;
     @Autowired
     private PersonneService personneService;
+    @Autowired
+    private AddPersonneService addPersonneService;
     @Autowired
     private AlertService alertService;
     @Autowired
@@ -107,6 +112,24 @@ public class StructureController {
         AnneeScolaire anneeScolaire = anneeScolaireRepository.findFirstByOrderByDateCreationDesc();
         List<DisciplinesInFillierePossiblesDto> fonctionPossibles = structureService.getPossibleFonctions(source);
         return new ResponseEntity<>(new ListFonctionPossibleDto(anneeScolaire.getPassageAnneeSuivante(), fonctionPossibles), HttpStatus.OK);
+    }
+
+    /**
+     * Récupère la liste de tous les enseignements qu'on peut ajouter à des enseignants dans l'établissement
+     */
+    @GetMapping("/{id}/enseignements")
+    public ResponseEntity<List<EnseignementPossibleDto>> getEnseignements(@PathVariable Long id){
+        List<EnseignementPossibleDto> enseignementPossible = addPersonneService.getEnseignementsPossible(id);
+        return new ResponseEntity<>(enseignementPossible, HttpStatus.OK);
+    }
+
+    /**
+     * Récupère la liste de toutes les formations qu'on peut ajouter à des elèves dans l'établissement
+     */
+    @GetMapping("/{id}/formations")
+    public ResponseEntity<List<FormationPossibleDto>> getFormations(@PathVariable Long id){
+        List<FormationPossibleDto> formationsPossible = addPersonneService.getFormationsPossible(id);
+        return new ResponseEntity<>(formationsPossible, HttpStatus.OK);
     }
 
     /**

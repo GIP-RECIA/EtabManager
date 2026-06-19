@@ -38,7 +38,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public abstract class AGroupeOfFoncClasseGroupe extends AGroupeOfAPersonne {
 

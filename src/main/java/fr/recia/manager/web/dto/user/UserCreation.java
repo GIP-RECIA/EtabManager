@@ -38,19 +38,4 @@ public class UserCreation {
     private Date dateDebut;
     // Tous sauf élève
     private String courriel;
-    // Spécifique élève
-    private String statut;
-    private String regime;
-    private boolean majeur;
-    private boolean majeurAnticipe;
-    private boolean transportScolaire;
-    private Long mefEleve;
-    private Long classe;
-    private List<Long> enseignements;
-    // Tous sauf élève
-    private List<FonctionToModify> fonctions;
-    // Spécifique enseignant
-    private Long enseignementProf;
-    private List<Long> groupesEns;
-
 }
