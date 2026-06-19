@@ -34,7 +34,7 @@ import javax.persistence.Entity;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public class EnsTutStageRelation extends AStageRelation {
 

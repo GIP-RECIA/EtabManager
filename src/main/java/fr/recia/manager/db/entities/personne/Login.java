@@ -41,7 +41,7 @@ import javax.persistence.UniqueConstraint;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public class Login extends AbstractEntity {
 

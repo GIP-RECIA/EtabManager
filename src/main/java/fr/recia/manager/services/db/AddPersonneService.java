@@ -36,6 +36,8 @@ import fr.recia.manager.db.entities.personne.NonEnseignantCollectiviteLocale;
 import fr.recia.manager.db.entities.personne.NonEnseignantEtablissement;
 import fr.recia.manager.db.entities.personne.NonEnseignantServiceAcademique;
 import fr.recia.manager.db.entities.structure.AStructure;
+import fr.recia.manager.db.entities.structure.Etablissement;
+import fr.recia.manager.db.enums.CategorieGroupe;
 import fr.recia.manager.db.enums.CategoriePersonne;
 import fr.recia.manager.db.enums.Civilite;
 import fr.recia.manager.db.enums.Etat;
@@ -53,6 +55,7 @@ import fr.recia.manager.db.repositories.personne.EleveRepository;
 import fr.recia.manager.db.repositories.personne.EnseignantRepository;
 import fr.recia.manager.db.repositories.personne.LoginRepository;
 import fr.recia.manager.db.repositories.structure.AStructureRepository;
+import fr.recia.manager.db.repositories.structure.EtablissementRepository;
 import fr.recia.manager.services.cache.CacheInvalidationService;
 import fr.recia.manager.services.creation.NameCalculator;
 import fr.recia.manager.services.creation.PasswordGenerator;
@@ -60,8 +63,9 @@ import fr.recia.manager.services.creation.UidFactory;
 import fr.recia.manager.services.exceptions.EmailAlreadyExistsException;
 import fr.recia.manager.services.structure.StructureLoader;
 import fr.recia.manager.web.dto.enseignement.EnseignementModifyRequest;
+import fr.recia.manager.web.dto.enseignement.EnseignementPossibleDto;
 import fr.recia.manager.web.dto.enseignement.FormationModifyRequest;
-import fr.recia.manager.web.dto.function.FonctionAction;
+import fr.recia.manager.web.dto.enseignement.FormationPossibleDto;
 import fr.recia.manager.web.dto.user.UserCreation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,11 +75,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -89,6 +95,8 @@ public class AddPersonneService {
     private EleveRepository<Eleve> eleveRepository;
     @Autowired
     private AStructureRepository<AStructure> aStructureRepository;
+    @Autowired
+    private EtablissementRepository<Etablissement> etablissementRepository;
     @Autowired
     private GenUIDRepository<GenUID> genUIDRepository;
     @Autowired
@@ -249,7 +257,7 @@ public class AddPersonneService {
         } else if (catPer == CategoriePersonne.Non_enseignant_service_academique) {
             apersonne = new NonEnseignantServiceAcademique();
         } else if (catPer == CategoriePersonne.Non_enseignant_collectivite_locale) {
-            apersonne = new NonEnseignantServiceAcademique();
+            apersonne = new NonEnseignantCollectiviteLocale();
         }
         // Type invalide
         else {
@@ -318,6 +326,33 @@ public class AddPersonneService {
             log.error("Couldn't update formation for {}", eleveId, e);
             return false;
         }
+    }
+
+    public List<EnseignementPossibleDto> getEnseignementsPossible(final long etabId){
+        Etablissement etablissement = etablissementRepository.findById(etabId).get();
+        Map<Long, EnseignementPossibleDto> enseignementsPossibleMap = new HashMap<>();
+        // TODO : requête à refaire elle met 4 secondes à s'éxécuter
+        List<AGroupeOfFoncClasseGroupe> aGroupeOfFoncClasseGroupes = aGroupeOfFoncClasseGroupeRepository.findByProprietaire(etablissement);
+        for(AGroupeOfFoncClasseGroupe aGroupeOfFoncClasseGroupe : aGroupeOfFoncClasseGroupes){
+            Set<MappingAGroupeAPersonneEnseignement> mappingAGroupeAPersonneEnseignements = aGroupeOfFoncClasseGroupe.getProfsEnseignements();
+            for(MappingAGroupeAPersonneEnseignement mappingAGroupeAPersonneEnseignement : mappingAGroupeAPersonneEnseignements){
+                Enseignement enseignement = mappingAGroupeAPersonneEnseignement.getPk().getEnseignement();
+                if(!enseignementsPossibleMap.containsKey(enseignement.getId())){
+                    EnseignementPossibleDto enseignementPossible = new EnseignementPossibleDto(enseignement);
+                    enseignementsPossibleMap.put(enseignementPossible.getId(), enseignementPossible);
+                }
+                if(aGroupeOfFoncClasseGroupe.getCategorie().equals(CategorieGroupe.Classe)){
+                    enseignementsPossibleMap.get(enseignement.getId()).addClasse(aGroupeOfFoncClasseGroupe);
+                } else {
+                    enseignementsPossibleMap.get(enseignement.getId()).addGroupe(aGroupeOfFoncClasseGroupe);
+                }
+            }
+        }
+        return new ArrayList<>(enseignementsPossibleMap.values());
+    }
+
+    public List<FormationPossibleDto> getFormationsPossible(final long etabId){
+        return null;
     }
 
 }

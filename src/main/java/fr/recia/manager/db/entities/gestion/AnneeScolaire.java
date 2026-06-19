@@ -33,7 +33,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public class AnneeScolaire extends AbstractEntity {
 

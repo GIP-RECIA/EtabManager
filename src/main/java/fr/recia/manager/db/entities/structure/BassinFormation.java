@@ -38,7 +38,7 @@ import javax.persistence.UniqueConstraint;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public class BassinFormation extends AbstractSimpleEntity {
 
