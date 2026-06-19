@@ -24,7 +24,6 @@ import PageLayout from '@/components/PageLayout.vue'
 import StructureSearch from '@/components/StructureSearch.vue'
 import { getExportResponse } from '@/services/api/exportService'
 import { useEtablissementsQuery } from '@/services/queries/index.ts'
-import { i18nHandledErrors } from '@/utils'
 
 const { t } = useI18n()
 
@@ -33,8 +32,6 @@ const { data: etabs } = useEtablissementsQuery()
 const awaitingResponse = ref<boolean>(false)
 
 const exportResponse = ref<ExportResponse | undefined>(undefined)
-
-const expectedHttpCodes: number[] = [200, 201, 429, 502]
 
 const selectedStructure = ref<number>(
   etabs.value && etabs.value.length > 0
@@ -145,11 +142,6 @@ async function exportToEsidoc(): Promise<void> {
             Exporter vers esidoc
           </button>
         </div>
-        <p v-if="!awaitingResponse && exportResponse && !expectedHttpCodes.includes(exportResponse.httpCode)">
-          {{ t(i18nHandledErrors.includes(exportResponse.httpCode)
-            ? `toast.error.${exportResponse.httpCode}`
-            : 'toast.error.unmanaged') }}
-        </p>
       </div>
     </PageLayout>
   </div>
