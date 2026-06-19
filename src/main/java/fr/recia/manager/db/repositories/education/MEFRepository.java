@@ -18,8 +18,14 @@ package fr.recia.manager.db.repositories.education;
 
 import fr.recia.manager.db.entities.education.MEF;
 import fr.recia.manager.db.repositories.AbstractRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface MEFRepository<T extends MEF> extends AbstractRepository<T, Long> {
+    @Query(value = "select distinct m.* from fonctionmef f join fonctions_mefs fm on f.id = fm.FONCTIONMEF_ID "+
+        " join mef m on m.id = fm.MEF_ID where f.etablissement_fk = :etablissementId and m.mef_principal_fk = m.id", nativeQuery = true)
+    List<MEF> findMefsByEtablissement(Long etablissementId);
 }

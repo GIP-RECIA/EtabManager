@@ -16,6 +16,7 @@
 
 package fr.recia.manager.db.repositories.groupe;
 
+import fr.recia.manager.db.dto.groupe.ClasseDto;
 import fr.recia.manager.db.entities.groupe.Classe;
 import fr.recia.manager.db.repositories.AbstractRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -33,4 +34,9 @@ public interface ClasseRepository<T extends Classe> extends AbstractRepository<T
         "and c.proprietaire.id = :etablissementId"
     )
     List<String> findByPersonneId(Long personneId, Long etablissementId);
+
+    @Query(value = "select distinct c.id as id, ag.cn as cn from classes_mefs cm join classe c on cm.CLASSE_ID = c.id " +
+            "join agroupeoffoncclassegroupe a on cm.CLASSE_ID = a.id join agroupeofapersonne ap on a.id = ap.id " +
+            "join agroupe ag on a.id = ag.id where cm.MEF_ID = :mefId and a.etablissement_fk = :etablissementId", nativeQuery = true)
+    List<ClasseDto> findClassesByMefAndEtablissement(Long mefId, Long etablissementId);
 }
