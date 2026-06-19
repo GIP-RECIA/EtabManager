@@ -54,19 +54,17 @@ public class EsidocExportService {
            ResponseEntity<EsidocWSResponse> esidocWSResponseResponseEntity = restTemplate.exchange(appProperties.getExportEsidoc().getUrl() + "/" + uai, HttpMethod.GET, entity, EsidocWSResponse.class);
             return new EsidocWSResponseInfo(esidocWSResponseResponseEntity.getBody(),esidocWSResponseResponseEntity.getStatusCode());
         } catch (HttpStatusCodeException e) {
-            if (e.getStatusCode().equals(HttpStatus.BAD_GATEWAY) || e.getStatusCode().equals(HttpStatus.TOO_MANY_REQUESTS)) {
-                EsidocWSResponse responseFromException = null;
+            EsidocWSResponse esidocWSResponse = null;
+            HttpStatus httpStatus = e.getStatusCode();
                 try {
-                    responseFromException = objectMapper.readValue(
+                    esidocWSResponse = objectMapper.readValue(
                         e.getResponseBodyAsString(),
                         EsidocWSResponse.class
                     );
                 } catch (JsonProcessingException ex) {
-                    return new EsidocWSResponseInfo(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                    httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
                 }
-                return new EsidocWSResponseInfo(responseFromException, e.getStatusCode());
-            }
-            return new EsidocWSResponseInfo(null, e.getStatusCode());
+                return new EsidocWSResponseInfo(esidocWSResponse, httpStatus);
         }
     }
 
