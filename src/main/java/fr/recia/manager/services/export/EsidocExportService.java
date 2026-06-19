@@ -16,12 +16,19 @@
 
 package fr.recia.manager.services.export;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.recia.manager.configuration.AppProperties;
 import fr.recia.manager.web.dto.export.EsidocWSResponse;
+import fr.recia.manager.web.dto.export.EsidocWSResponseInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -31,16 +38,36 @@ public class EsidocExportService {
     private final AppProperties appProperties;
     private final static String API_KEY_HEADER = "x-api-key";
 
+    @Autowired
+    ObjectMapper objectMapper;
+
     public EsidocExportService(RestTemplate restTemplateEsidoc, AppProperties appProperties) {
         this.restTemplate = restTemplateEsidoc;
         this.appProperties = appProperties;
     }
 
-    public EsidocWSResponse exportForEtab(String uai){
+    public EsidocWSResponseInfo exportForEtab(String uai) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(API_KEY_HEADER, appProperties.getExportEsidoc().getApiKey());
         HttpEntity<?> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange(appProperties.getExportEsidoc().getUrl() + "/" + uai, HttpMethod.GET, entity, EsidocWSResponse.class).getBody();
+        try {
+           ResponseEntity<EsidocWSResponse> esidocWSResponseResponseEntity = restTemplate.exchange(appProperties.getExportEsidoc().getUrl() + "/" + uai, HttpMethod.GET, entity, EsidocWSResponse.class);
+            return new EsidocWSResponseInfo(esidocWSResponseResponseEntity.getBody(),esidocWSResponseResponseEntity.getStatusCode());
+        } catch (HttpStatusCodeException e) {
+            if (e.getStatusCode().equals(HttpStatus.BAD_GATEWAY) || e.getStatusCode().equals(HttpStatus.TOO_MANY_REQUESTS)) {
+                EsidocWSResponse responseFromException = null;
+                try {
+                    responseFromException = objectMapper.readValue(
+                        e.getResponseBodyAsString(),
+                        EsidocWSResponse.class
+                    );
+                } catch (JsonProcessingException ex) {
+                    return new EsidocWSResponseInfo(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                }
+                return new EsidocWSResponseInfo(responseFromException, e.getStatusCode());
+            }
+            return new EsidocWSResponseInfo(null, e.getStatusCode());
+        }
     }
 
 }
