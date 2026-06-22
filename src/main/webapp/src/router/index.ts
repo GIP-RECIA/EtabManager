@@ -20,16 +20,6 @@ const isDev = import.meta.env.DEV
 
 const devRoutes = [
   {
-    path: '/access',
-    name: 'access',
-    component: () => import('@/views/AccessView.vue'),
-  },
-  {
-    path: '/restriction',
-    name: 'restriction',
-    component: () => import('@/views/RestrictionView.vue'),
-  },
-  {
     path: '/settings',
     name: 'settings',
     component: () => import('@/views/SettingsView.vue'),
@@ -77,6 +67,16 @@ const router = createRouter({
           },
         },
       ],
+    },
+    {
+      path: '/access',
+      name: 'access',
+      component: () => import('@/views/AccessView.vue'),
+    },
+    {
+      path: '/restriction',
+      name: 'restriction',
+      component: () => import('@/views/RestrictionView.vue'),
     },
     {
       path: '/:pathName(.*)',

@@ -79,7 +79,7 @@ const homeLinksIcons: Record<string, IconDefinition> = {
               {{ t('page.index.account') }}
             </router-link>
           </li>
-          <li v-if="isDev">
+          <li>
             <router-link
               :to="{ name: 'access' }"
               class="btn-tertiary"
@@ -90,7 +90,7 @@ const homeLinksIcons: Record<string, IconDefinition> = {
               {{ t('page.index.access') }}
             </router-link>
           </li>
-          <li v-if="isDev">
+          <li>
             <router-link
               :to="{ name: 'restriction' }"
               class="btn-tertiary"
