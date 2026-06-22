@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import type { ToastContainerOptions } from 'vue3-toastify'
-import type { ExportResponse, SearchStructure } from '@/types'
+import type { ExportResponse } from '@/types'
 import { computed, ref, watch } from 'vue'
 import { toast } from 'vue3-toastify'
 import { useI18n } from 'vue-i18n'
@@ -69,14 +69,6 @@ function showToast(
   toast[type](message, options)
 }
 
-const header = computed((): string => {
-  const etab: SearchStructure | undefined = etabs.value?.find(x => x.id === selectedStructure.value)
-  if (etab && etab.uai) {
-    return t('page.esidocexports.info.header', { etab: uaiToName(etab.uai) })
-  }
-  return ''
-})
-
 const etabsByUai = computed((): Map<string, string> => {
   const map = new Map<string, string>()
 
@@ -126,9 +118,6 @@ async function exportToEsidoc(): Promise<void> {
       />
 
       <div>
-        <h2>
-          {{ header }}
-        </h2>
         <p class="desc">
           {{ t('page.esidocexports.info.desc') }}
         </p>
