@@ -4,9 +4,12 @@
     "h2": "I want to",
     "account": "Manage accounts",
     "access": "Manage service access",
-    "groups": "Manage groups",
     "restriction": "Configure back-to-school period",
     "settings": "Configure institution",
-    "esidocexports": "Export to esidoc"
+    "esidocexports": "Export to esidoc",
+    "link": {
+      "ESCO-ParamEtab": "@:page.index.settings",
+      "I2Grouper-UI": "Manage groups"
+    }
   }
 }

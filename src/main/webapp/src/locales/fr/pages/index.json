@@ -4,9 +4,12 @@
     "h2": "Je veux",
     "account": "Gérer les comptes ",
     "access": "Gérer les accès aux services",
-    "groups": "Gérer les groupes",
     "restriction": "Paramétrer la rentrée",
     "settings": "Paramétrer l'établissement",
-    "esidocexports": "Exporter vers esidoc"
+    "esidocexports": "Exporter vers esidoc",
+    "link": {
+      "ESCO-ParamEtab": "@:page.index.settings",
+      "I2Grouper-UI": "Gérer les groupes"
+    }
   }
 }

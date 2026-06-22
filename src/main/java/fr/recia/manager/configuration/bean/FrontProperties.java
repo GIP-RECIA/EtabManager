@@ -27,12 +27,29 @@ import java.util.Map;
 @Data
 public class FrontProperties {
 
+    private String defaultStructureImage;
+    private String defaultUserImage;
     private Long endFunctionWarning;
+    private List<HomeLinkProperties> homeLinks;
     private List<Etat> editAllowedStates;
     private List<Etat> filterAccountStates;
     private ExtendedUportalProperties extendedUportal;
-    private String defaultStructureImage;
-    private String defaultUserImage;
+
+    @Data
+    public static class HomeLinkProperties{
+
+        private String fname;
+        private String url;
+
+
+        @Override
+        public String toString() {
+            return "{" +
+                "\n\t\t\"fname\": \n" + fname + "\n," +
+                "\n\t\t\"url\": \n" + url + "\"" +
+                "\n\t}";
+        }
+    }
 
     @Data
     public static class ExtendedUportalProperties {
@@ -69,7 +86,10 @@ public class FrontProperties {
     @Override
     public String toString() {
         return "\"FrontProperties\": {" +
+            "\n\t\"defaultStructureImage\": \"" + defaultStructureImage + "\"," +
+            "\n\t\"defaultUserImage\": \"" + defaultUserImage + "\"," +
             "\n\t\"endFunctionWarning\": " + endFunctionWarning + "," +
+            "\n\t\"homeLinks\": " + ListUtil.toStringList(homeLinks) + "," +
             "\n\t\"editAllowedStates\": " + ListUtil.toStringList(editAllowedStates) + "," +
             "\n\t\"filterAccountStates\": " + ListUtil.toStringList(filterAccountStates) + "," +
             "\n\t\"extendedUportal\": " + extendedUportal +

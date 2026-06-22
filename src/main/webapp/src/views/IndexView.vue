@@ -15,6 +15,7 @@
 -->
 
 <script setup lang="ts">
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import {
   faArrowLeft,
   faClock,
@@ -25,12 +26,22 @@ import {
   faUsersGear,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import PageLayout from '@/components/PageLayout.vue'
+import { useConfigurationStore } from '@/stores/index.ts'
 
 const { t } = useI18n()
 
 const isDev = import.meta.env.DEV
+
+const configurationStore = useConfigurationStore()
+const { configuration } = storeToRefs(configurationStore)
+
+const homeLinksIcons: Record<string, IconDefinition> = {
+  'I2Grouper-UI': faUsersGear,
+  'ESCO-ParamEtab': faHouse,
+}
 </script>
 
 <template>
@@ -79,17 +90,6 @@ const isDev = import.meta.env.DEV
               {{ t('page.index.access') }}
             </router-link>
           </li>
-          <li>
-            <a
-              href="/portail/api/ExternalURLStats?fname=I2Grouper-UI&service=/grouperUi/"
-              class="btn-tertiary"
-            >
-              <FontAwesomeIcon
-                :icon="faUsersGear"
-              />
-              {{ t('page.index.groups') }}
-            </a>
-          </li>
           <li v-if="isDev">
             <router-link
               :to="{ name: 'restriction' }"
@@ -112,17 +112,6 @@ const isDev = import.meta.env.DEV
               {{ t('page.index.settings') }}
             </router-link>
           </li>
-          <li>
-            <a
-              href="/portail/p/ESCO-ParamEtab"
-              class="btn-tertiary"
-            >
-              <FontAwesomeIcon
-                :icon="faHouse"
-              />
-              {{ t('page.index.settings') }}
-            </a>
-          </li>
           <li v-if="isDev">
             <router-link
               :to="{ name: 'esidocexports' }"
@@ -133,6 +122,20 @@ const isDev = import.meta.env.DEV
               />
               {{ t('page.index.esidocexports') }}
             </router-link>
+          </li>
+          <li
+            v-for="link in configuration?.front.homeLinks"
+            :key="link.fname"
+          >
+            <a
+              :href="link.url"
+              class="btn-tertiary"
+            >
+              <FontAwesomeIcon
+                :icon="homeLinksIcons[link.fname]"
+              />
+              {{ t(`page.index.link.${link.fname}`) }}
+            </a>
           </li>
         </ul>
       </div>

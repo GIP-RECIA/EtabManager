@@ -15,9 +15,14 @@
  */
 
 export interface Configuration {
-  permissionTypes: string[]
   front: {
+    defaultStructureImage: string
+    defaultUserImage: string
     endFunctionWarning: number
+    homeLinks: {
+      fname: string
+      url: string
+    }[]
     editAllowedStates: string[]
     filterAccountStates: string[]
     extendedUportal: {
