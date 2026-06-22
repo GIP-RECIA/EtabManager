@@ -12,7 +12,7 @@
 
   <groupId>fr.recia.manager</groupId>
   <artifactId>etab-manager</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>war</packaging>
   <name>etab-manager</name>
   <description>API de gestion des établissements</description>
@@ -20,7 +20,7 @@
   <scm>
     <connection>scm:git:ssh://git@github.com/GIP-RECIA/EtabManager.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/EtabManager.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>0.0.1</tag>
     <url>https://github.com/GIP-RECIA/EtabManager.git</url>
   </scm>
 
