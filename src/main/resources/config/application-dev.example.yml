@@ -148,6 +148,10 @@ app:
 
     end-function-warning:
 
+    home-links:
+      - fname:
+        url:
+
     edit-allowed-states:
       -
 
