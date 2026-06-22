@@ -29,6 +29,8 @@ import fr.recia.manager.db.entities.structure.AStructure;
 import fr.recia.manager.db.entities.structure.Etablissement;
 import fr.recia.manager.db.entities.structure.QAStructure;
 import fr.recia.manager.db.entities.structure.QEtablissement;
+import fr.recia.manager.db.entities.structure.TypeStructure;
+import fr.recia.manager.db.enums.CategoriePersonne;
 import fr.recia.manager.db.repositories.education.DisciplineRepository;
 import fr.recia.manager.db.repositories.fonction.FonctionRepository;
 import fr.recia.manager.db.repositories.fonction.TypeFonctionFiliereRepository;
@@ -38,6 +40,7 @@ import fr.recia.manager.web.dto.function.DisciplinePossibleDto;
 import fr.recia.manager.web.dto.function.DisciplinesInFillierePossiblesDto;
 import fr.recia.manager.web.dto.function.FiliereDisplayDto;
 import fr.recia.manager.web.dto.function.FonctionPossibleDto;
+import fr.recia.manager.web.dto.structure.StructureConfigDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +88,15 @@ public class StructureService {
         log.trace("getEtablissement for {}", id);
         AStructure aStructure = structureRepository.findById(id).orElse(null);
         return aStructure != null ? new StructureDto(aStructure) : null;
+    }
+
+    public StructureConfigDto getConfig(Long id){
+        StructureConfigDto structureConfigDto = new StructureConfigDto();
+        // TODO : liste des profils depuis la conf en fonction du type de structure
+        List<CategoriePersonne> categoriesPersonne = List.of(CategoriePersonne.Eleve, CategoriePersonne.Enseignant,
+            CategoriePersonne.Non_enseignant_etablissement, CategoriePersonne.Non_enseignant_service_academique, CategoriePersonne.Non_enseignant_collectivite_locale);
+        structureConfigDto.setCategoriesPersonne(categoriesPersonne);
+        return structureConfigDto;
     }
 
     public List<SimpleStructureDto> getEtablissements(Set<String> allowedSiren) {
