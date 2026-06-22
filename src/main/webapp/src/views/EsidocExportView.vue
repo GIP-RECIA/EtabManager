@@ -110,7 +110,7 @@ async function exportToEsidoc(): Promise<void> {
           {{ t('page.esidocexports.info.desc') }}
         </p>
 
-        <div>
+        <div id="export-btn-container">
           <button
             class="btn-primary small"
             :disabled="selectedStructure === -1 || awaitingResponse"
@@ -130,9 +130,9 @@ async function exportToEsidoc(): Promise<void> {
 @use '@gip-recia/ui/functions' as *;
 @use '@gip-recia/ui/mixins' as *;
 
-button {
-  margin-left: auto;
-  display: block;
+#export-btn-container {
+  display: flex;
+  justify-content: end;
 }
 
 .container {
