@@ -24,8 +24,6 @@ export interface ExportResponseAPI {
 }
 
 export interface ExportResponse {
-
   data: ExportResponseAPI | undefined
   httpCode: number
-
 }
