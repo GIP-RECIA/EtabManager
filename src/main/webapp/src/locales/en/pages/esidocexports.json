@@ -8,6 +8,9 @@
       "export-exception": "An error occured when trying to export from {etab}.",
       "export-already-done": "{etab} was exported not too long ago, please try again later.",
       "success": "{etab} data were successfuly exported."
+    },
+    "btn": {
+      "export": "Export to e-sidoc"
     }
   }
 }

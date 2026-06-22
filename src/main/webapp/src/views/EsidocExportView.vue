@@ -116,7 +116,7 @@ async function exportToEsidoc(): Promise<void> {
             :disabled="selectedStructure === -1 || awaitingResponse"
             @click="exportToEsidoc"
           >
-            Exporter vers esidoc
+            {{ t('page.esidocexports.btn.export') }}
           </button>
         </div>
       </div>

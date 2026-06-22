@@ -8,6 +8,9 @@
       "export-exception": "Une erreur est survenue lors de l'exportation de l'établissement {etab}.",
       "export-already-done": "L'établissement {etab} a déjà été exporté recemment, veuillez réessayer plus tard.",
       "success": "L'exporation des données de l'établissement {etab} a été réalisée avec succès."
+    },
+    "btn": {
+      "export": "Exporter vers e-sidoc"
     }
   }
 }
