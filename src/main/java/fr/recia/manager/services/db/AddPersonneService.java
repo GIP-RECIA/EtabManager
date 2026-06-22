@@ -85,6 +85,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -279,24 +280,29 @@ public class AddPersonneService {
      */
     public boolean modifyEnseignements(final Long enseignantId, final EnseignementModifyRequest enseignementModifyRequest) {
         try{
-            Enseignant enseignant = enseignantRepository.findById(enseignantId).get();
-            log.debug("updating enseignant {}", enseignant.getUid());
-            List<MappingAGroupeAPersonneEnseignement> personneEnseignements = new ArrayList<>();
-            // Ajout de tous les groupes de l'enseignement
-            for (Long groupId : enseignementModifyRequest.getClassesGroupes()) {
-                MappingAGroupeAPersonneEnseignement personneEnseignement = new MappingAGroupeAPersonneEnseignement();
-                MappingAGroupeAPersonneEnseignementId pk = new MappingAGroupeAPersonneEnseignementId();
-                pk.setEnseignant(enseignant);
-                Enseignement enseignement = enseignementRepository.getReferenceById(enseignementModifyRequest.getEnseignement());
-                pk.setEnseignement(enseignement);
-                AGroupeOfFoncClasseGroupe aGroupeOfFoncClasseGroupe = aGroupeOfFoncClasseGroupeRepository.getReferenceById(groupId);
-                pk.setGroupe(aGroupeOfFoncClasseGroupe);
-                personneEnseignement.setPk(pk);
-                personneEnseignement.setSource(enseignant.getCleJointure().getSource());
-                personneEnseignements.add(personneEnseignement);
+            Optional<Enseignant> enseignant = enseignantRepository.findById(enseignantId);
+            if(enseignant.isPresent()){
+                log.debug("updating enseignant {}", enseignant.get().getUid());
+                List<MappingAGroupeAPersonneEnseignement> personneEnseignements = new ArrayList<>();
+                // Ajout de tous les groupes de l'enseignement
+                for (Long groupId : enseignementModifyRequest.getClassesGroupes()) {
+                    MappingAGroupeAPersonneEnseignement personneEnseignement = new MappingAGroupeAPersonneEnseignement();
+                    MappingAGroupeAPersonneEnseignementId pk = new MappingAGroupeAPersonneEnseignementId();
+                    pk.setEnseignant(enseignant.get());
+                    Enseignement enseignement = enseignementRepository.getReferenceById(enseignementModifyRequest.getEnseignement());
+                    pk.setEnseignement(enseignement);
+                    AGroupeOfFoncClasseGroupe aGroupeOfFoncClasseGroupe = aGroupeOfFoncClasseGroupeRepository.getReferenceById(groupId);
+                    pk.setGroupe(aGroupeOfFoncClasseGroupe);
+                    personneEnseignement.setPk(pk);
+                    personneEnseignement.setSource(enseignant.get().getCleJointure().getSource());
+                    personneEnseignements.add(personneEnseignement);
+                }
+                mappingAGroupeAPersonneEnseignementRepository.saveAllAndFlush(personneEnseignements);
+                return true;
+            } else {
+                log.error("Enseignant {} does not exist", enseignantId);
+                return false;
             }
-            mappingAGroupeAPersonneEnseignementRepository.saveAllAndFlush(personneEnseignements);
-            return true;
         } catch (Exception e) {
             log.error("Couldn't update enseignements for {}", enseignantId, e);
             return false;
@@ -308,28 +314,33 @@ public class AddPersonneService {
      */
     public boolean modifyFormation(final Long eleveId, final FormationModifyRequest formationModifyRequest) {
         try {
-            Eleve eleve = eleveRepository.findById(eleveId).get();
-            log.debug("updating eleve {}", eleve.getUid());
-            MEF mef = mefRepository.getReferenceById(formationModifyRequest.getMef());
-            log.debug("mef for eleve is {}", mef.getId());
-            eleve.setMef(mef);
-            Set<MappingEleveEnseignement> mappingEleveEnseignements = new HashSet<>();
-            for (Long enseignementId : formationModifyRequest.getEnseignements()) {
-                Enseignement enseignement = enseignementRepository.getReferenceById(enseignementId);
-                log.debug("Adding new enseignement {}", enseignement);
-                mappingEleveEnseignements.add(new MappingEleveEnseignement(eleve.getCleJointure().getSource(), enseignement));
+            Optional<Eleve> eleve = eleveRepository.findById(eleveId);
+            if(eleve.isPresent()){
+                log.debug("updating eleve {}", eleve.get().getUid());
+                MEF mef = mefRepository.getReferenceById(formationModifyRequest.getMef());
+                log.debug("mef for eleve is {}", mef.getId());
+                eleve.get().setMef(mef);
+                Set<MappingEleveEnseignement> mappingEleveEnseignements = new HashSet<>();
+                for (Long enseignementId : formationModifyRequest.getEnseignements()) {
+                    Enseignement enseignement = enseignementRepository.getReferenceById(enseignementId);
+                    log.debug("Adding new enseignement {}", enseignement);
+                    mappingEleveEnseignements.add(new MappingEleveEnseignement(eleve.get().getCleJointure().getSource(), enseignement));
+                }
+                log.debug("All enseignements are {}", mappingEleveEnseignements);
+                eleve.get().setEnseignements(mappingEleveEnseignements);
+                aPersonneRepository.saveAndFlush(eleve.get());
+                log.debug("Saved enseignements...");
+                // On fait par le MappingAGroupeAPersonne car on ne peut pas faire via la classe
+                Classe classe = classeRepository.getReferenceById(formationModifyRequest.getClasse());
+                log.debug("Adding {} to class {}", eleve.get().getUid(), classe.getId());
+                MappingAGroupeAPersonne mappingAGroupeAPersonne = new MappingAGroupeAPersonne(eleve.get().getCleJointure().getSource(), eleve.get(), classe);
+                mappingAGroupeAPersonneRepository.saveAndFlush(mappingAGroupeAPersonne);
+                log.debug("Saved classe...");
+                return true;
+            } else {
+                log.error("Eleve {} does not exist", eleveId);
+                return false;
             }
-            log.debug("All enseignements are {}", mappingEleveEnseignements);
-            eleve.setEnseignements(mappingEleveEnseignements);
-            aPersonneRepository.saveAndFlush(eleve);
-            log.debug("Saved enseignements...");
-            // On fait par le MappingAGroupeAPersonne car on ne peut pas faire via la classe
-            Classe classe = classeRepository.getReferenceById(formationModifyRequest.getClasse());
-            log.debug("Adding {} to class {}", eleve.getUid(), classe.getId());
-            MappingAGroupeAPersonne mappingAGroupeAPersonne = new MappingAGroupeAPersonne(eleve.getCleJointure().getSource(), eleve, classe);
-            mappingAGroupeAPersonneRepository.saveAndFlush(mappingAGroupeAPersonne);
-            log.debug("Saved classe...");
-            return true;
         } catch (Exception e) {
             log.error("Couldn't update formation for {}", eleveId, e);
             return false;
@@ -337,26 +348,31 @@ public class AddPersonneService {
     }
 
     public List<EnseignementPossibleDto> getEnseignementsPossible(final long etabId){
-        Etablissement etablissement = etablissementRepository.findById(etabId).get();
-        Map<Long, EnseignementPossibleDto> enseignementsPossibleMap = new HashMap<>();
-        // TODO : requête à refaire elle met 4 secondes à s'éxécuter
-        List<AGroupeOfFoncClasseGroupe> aGroupeOfFoncClasseGroupes = aGroupeOfFoncClasseGroupeRepository.findByProprietaire(etablissement);
-        for(AGroupeOfFoncClasseGroupe aGroupeOfFoncClasseGroupe : aGroupeOfFoncClasseGroupes){
-            Set<MappingAGroupeAPersonneEnseignement> mappingAGroupeAPersonneEnseignements = aGroupeOfFoncClasseGroupe.getProfsEnseignements();
-            for(MappingAGroupeAPersonneEnseignement mappingAGroupeAPersonneEnseignement : mappingAGroupeAPersonneEnseignements){
-                Enseignement enseignement = mappingAGroupeAPersonneEnseignement.getPk().getEnseignement();
-                if(!enseignementsPossibleMap.containsKey(enseignement.getId())){
-                    EnseignementPossibleDto enseignementPossible = new EnseignementPossibleDto(enseignement);
-                    enseignementsPossibleMap.put(enseignementPossible.getId(), enseignementPossible);
-                }
-                if(aGroupeOfFoncClasseGroupe.getCategorie().equals(CategorieGroupe.Classe)){
-                    enseignementsPossibleMap.get(enseignement.getId()).addClasse(aGroupeOfFoncClasseGroupe);
-                } else {
-                    enseignementsPossibleMap.get(enseignement.getId()).addGroupe(aGroupeOfFoncClasseGroupe);
+        Optional<Etablissement> etablissement = etablissementRepository.findById(etabId);
+        if(etablissement.isPresent()){
+            Map<Long, EnseignementPossibleDto> enseignementsPossibleMap = new HashMap<>();
+            // TODO : requête à refaire elle met 4 secondes à s'éxécuter
+            List<AGroupeOfFoncClasseGroupe> aGroupeOfFoncClasseGroupes = aGroupeOfFoncClasseGroupeRepository.findByProprietaire(etablissement.get());
+            for(AGroupeOfFoncClasseGroupe aGroupeOfFoncClasseGroupe : aGroupeOfFoncClasseGroupes){
+                Set<MappingAGroupeAPersonneEnseignement> mappingAGroupeAPersonneEnseignements = aGroupeOfFoncClasseGroupe.getProfsEnseignements();
+                for(MappingAGroupeAPersonneEnseignement mappingAGroupeAPersonneEnseignement : mappingAGroupeAPersonneEnseignements){
+                    Enseignement enseignement = mappingAGroupeAPersonneEnseignement.getPk().getEnseignement();
+                    if(!enseignementsPossibleMap.containsKey(enseignement.getId())){
+                        EnseignementPossibleDto enseignementPossible = new EnseignementPossibleDto(enseignement);
+                        enseignementsPossibleMap.put(enseignementPossible.getId(), enseignementPossible);
+                    }
+                    if(aGroupeOfFoncClasseGroupe.getCategorie().equals(CategorieGroupe.Classe)){
+                        enseignementsPossibleMap.get(enseignement.getId()).addClasse(aGroupeOfFoncClasseGroupe);
+                    } else {
+                        enseignementsPossibleMap.get(enseignement.getId()).addGroupe(aGroupeOfFoncClasseGroupe);
+                    }
                 }
             }
+            return new ArrayList<>(enseignementsPossibleMap.values());
+        } else {
+            log.error("Unknwon etab id {}", etabId);
+            return new ArrayList<>();
         }
-        return new ArrayList<>(enseignementsPossibleMap.values());
     }
 
     public List<FormationPossibleDto> getFormationsPossible(final long etabId){
