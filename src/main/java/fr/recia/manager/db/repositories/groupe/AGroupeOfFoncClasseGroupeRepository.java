@@ -24,6 +24,4 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AGroupeOfFoncClasseGroupeRepository<T extends AGroupeOfFoncClasseGroupe> extends AbstractRepository<T, Long> {
-    List<AGroupeOfFoncClasseGroupe> findByProprietaire(Etablissement proprietaire);
-}
+public interface AGroupeOfFoncClasseGroupeRepository<T extends AGroupeOfFoncClasseGroupe> extends AbstractRepository<T, Long> {}

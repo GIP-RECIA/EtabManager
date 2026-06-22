@@ -18,12 +18,11 @@ package fr.recia.manager.services.db;
 
 import fr.recia.manager.configuration.AppProperties;
 import fr.recia.manager.db.dto.groupe.ClasseDto;
+import fr.recia.manager.db.dto.groupe.EnseignementEtabDto;
 import fr.recia.manager.db.entities.common.CleJointure;
 import fr.recia.manager.db.entities.education.Enseignement;
 import fr.recia.manager.db.entities.education.MEF;
 import fr.recia.manager.db.entities.education.MappingEleveEnseignement;
-import fr.recia.manager.db.entities.fonction.FonctionMEF;
-import fr.recia.manager.db.entities.fonction.MappingFonctionMEFMEF;
 import fr.recia.manager.db.entities.gestion.AnneeScolaire;
 import fr.recia.manager.db.entities.gestion.GenUID;
 import fr.recia.manager.db.entities.groupe.AGroupeOfFoncClasseGroupe;
@@ -47,7 +46,6 @@ import fr.recia.manager.db.enums.Etat;
 import fr.recia.manager.db.enums.Sexe;
 import fr.recia.manager.db.repositories.education.EnseignementRepository;
 import fr.recia.manager.db.repositories.education.MEFRepository;
-import fr.recia.manager.db.repositories.fonction.FonctionMEFRepository;
 import fr.recia.manager.db.repositories.gestion.AnneeScolaireRepository;
 import fr.recia.manager.db.repositories.gestion.GenUIDRepository;
 import fr.recia.manager.db.repositories.groupe.AGroupeOfFoncClasseGroupeRepository;
@@ -88,7 +86,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -112,8 +109,6 @@ public class AddPersonneService {
     private LoginRepository<Login> loginRepository;
     @Autowired
     private MEFRepository<MEF> mefRepository;
-    @Autowired
-    private FonctionMEFRepository<FonctionMEF> fonctionMEFRepository;
     @Autowired
     private EnseignementRepository<Enseignement> enseignementRepository;
     @Autowired
@@ -351,21 +346,18 @@ public class AddPersonneService {
         Optional<Etablissement> etablissement = etablissementRepository.findById(etabId);
         if(etablissement.isPresent()){
             Map<Long, EnseignementPossibleDto> enseignementsPossibleMap = new HashMap<>();
-            // TODO : requête à refaire elle met 4 secondes à s'éxécuter
-            List<AGroupeOfFoncClasseGroupe> aGroupeOfFoncClasseGroupes = aGroupeOfFoncClasseGroupeRepository.findByProprietaire(etablissement.get());
-            for(AGroupeOfFoncClasseGroupe aGroupeOfFoncClasseGroupe : aGroupeOfFoncClasseGroupes){
-                Set<MappingAGroupeAPersonneEnseignement> mappingAGroupeAPersonneEnseignements = aGroupeOfFoncClasseGroupe.getProfsEnseignements();
-                for(MappingAGroupeAPersonneEnseignement mappingAGroupeAPersonneEnseignement : mappingAGroupeAPersonneEnseignements){
-                    Enseignement enseignement = mappingAGroupeAPersonneEnseignement.getPk().getEnseignement();
-                    if(!enseignementsPossibleMap.containsKey(enseignement.getId())){
-                        EnseignementPossibleDto enseignementPossible = new EnseignementPossibleDto(enseignement);
-                        enseignementsPossibleMap.put(enseignementPossible.getId(), enseignementPossible);
-                    }
-                    if(aGroupeOfFoncClasseGroupe.getCategorie().equals(CategorieGroupe.Classe)){
-                        enseignementsPossibleMap.get(enseignement.getId()).addClasse(aGroupeOfFoncClasseGroupe);
-                    } else {
-                        enseignementsPossibleMap.get(enseignement.getId()).addGroupe(aGroupeOfFoncClasseGroupe);
-                    }
+            // On passe par une requête native pour des raisons de performance
+            List<EnseignementEtabDto> enseignementEtabDtos = enseignementRepository.findEnseignementsByEtab(etabId);
+            for(EnseignementEtabDto enseignementEtabDto : enseignementEtabDtos){
+                Long ensId = enseignementEtabDto.getIdEns();
+                if(!enseignementsPossibleMap.containsKey(ensId)){
+                    EnseignementPossibleDto enseignementPossible = new EnseignementPossibleDto(enseignementEtabDto);
+                    enseignementsPossibleMap.put(ensId, enseignementPossible);
+                }
+                if(enseignementEtabDto.getCategorie().equals(CategorieGroupe.Classe)){
+                    enseignementsPossibleMap.get(ensId).addClasse(enseignementEtabDto);
+                } else {
+                    enseignementsPossibleMap.get(ensId).addGroupe(enseignementEtabDto);
                 }
             }
             return new ArrayList<>(enseignementsPossibleMap.values());
