@@ -37,6 +37,7 @@ import fr.recia.manager.web.dto.enseignement.EnseignementPossibleDto;
 import fr.recia.manager.web.dto.enseignement.FormationPossibleDto;
 import fr.recia.manager.web.dto.function.DisciplinesInFillierePossiblesDto;
 import fr.recia.manager.web.dto.function.ListFonctionPossibleDto;
+import fr.recia.manager.web.dto.structure.StructureConfigDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -101,6 +102,14 @@ public class StructureController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(etablissements, HttpStatus.OK);
+    }
+
+    /**
+     * Récupère la liste des types de profils possibles lors de la création d'un compte local dans la structure
+     */
+    @GetMapping("/{id}/config")
+    public ResponseEntity<StructureConfigDto> getConfig(@PathVariable Long id){
+        return new ResponseEntity<>(structureService.getConfig(id), HttpStatus.OK);
     }
 
     /**
