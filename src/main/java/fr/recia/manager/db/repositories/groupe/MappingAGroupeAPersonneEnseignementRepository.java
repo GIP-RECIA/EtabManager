@@ -28,7 +28,7 @@ import java.util.List;
 @Repository
 public interface MappingAGroupeAPersonneEnseignementRepository<T extends MappingAGroupeAPersonneEnseignement> extends AbstractRepository<T, MappingAGroupeAPersonneEnseignementId> {
 
-    @Query("select m.pk.groupe.cn as cn " +
+    @Query("select distinct m.pk.groupe.cn as cn " +
         "from MappingAGroupeAPersonneEnseignement m " +
         "join m.pk.groupe g "+
         "where m.pk.enseignant.id = :personneId " +
