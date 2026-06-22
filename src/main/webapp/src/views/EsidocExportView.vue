@@ -15,7 +15,6 @@
 -->
 
 <script setup lang="ts">
-import type { ToastContainerOptions } from 'vue3-toastify'
 import type { ExportResponse } from '@/types'
 import { computed, ref, watch } from 'vue'
 import { toast } from 'vue3-toastify'
@@ -58,17 +57,6 @@ function setChildEditState(state: boolean): void {
   isChildEdit.value = state
 }
 
-const options: ToastContainerOptions = {
-  autoClose: false,
-}
-
-function showToast(
-  type: 'error' | 'warning' | 'success',
-  message: string,
-): void {
-  toast[type](message, options)
-}
-
 const etabsByUai = computed((): Map<string, string> => {
   const map = new Map<string, string>()
 
@@ -92,15 +80,15 @@ async function exportToEsidoc(): Promise<void> {
 
   if (exportResponse.value.data) {
     exportResponse.value.data.exceptionUais.forEach((uai) => {
-      showToast('error', t('page.esidocexports.message.export-exception', { etab: uaiToName(uai) }))
+      toast.error(t('page.esidocexports.message.export-exception', { etab: uaiToName(uai) }), { autoClose: false })
     })
 
     exportResponse.value.data.alreadyExportedUais.forEach((uai) => {
-      showToast('warning', t('page.esidocexports.message.export-already-done', { etab: uaiToName(uai) }))
+      toast.warning(t('page.esidocexports.message.export-already-done', { etab: uaiToName(uai) }), { autoClose: false })
     })
 
     exportResponse.value.data.successfulUais.forEach((uai) => {
-      showToast('success', t('page.esidocexports.message.success', { etab: uaiToName(uai) }))
+      toast.success(t('page.esidocexports.message.success', { etab: uaiToName(uai) }), { autoClose: false })
     })
   }
 }
