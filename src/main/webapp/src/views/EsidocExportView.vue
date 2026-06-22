@@ -146,5 +146,6 @@ button {
 
 .desc {
   white-space: pre-line;
+  margin-bottom: 16px;
 }
 </style>
