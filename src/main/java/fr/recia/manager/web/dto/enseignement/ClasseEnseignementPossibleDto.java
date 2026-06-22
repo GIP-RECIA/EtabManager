@@ -1,6 +1,6 @@
 package fr.recia.manager.web.dto.enseignement;
 
-import fr.recia.manager.db.entities.groupe.AGroupeOfFoncClasseGroupe;
+import fr.recia.manager.db.dto.groupe.EnseignementEtabDto;
 import lombok.Data;
 
 @Data
@@ -8,8 +8,8 @@ public class ClasseEnseignementPossibleDto {
     private long id;
     private String libelle;
 
-    public ClasseEnseignementPossibleDto(AGroupeOfFoncClasseGroupe classe){
-        this.id = classe.getId();
-        this.libelle = classe.getCn();
+    public ClasseEnseignementPossibleDto(EnseignementEtabDto enseignementEtabDto){
+        this.id = enseignementEtabDto.getIdGr();
+        this.libelle = enseignementEtabDto.getCn();
     }
 }

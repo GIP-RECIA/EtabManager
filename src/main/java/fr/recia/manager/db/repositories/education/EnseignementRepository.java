@@ -16,6 +16,7 @@
 
 package fr.recia.manager.db.repositories.education;
 
+import fr.recia.manager.db.dto.groupe.EnseignementEtabDto;
 import fr.recia.manager.db.entities.education.Enseignement;
 import fr.recia.manager.db.repositories.AbstractRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -41,4 +42,10 @@ public interface EnseignementRepository<T extends Enseignement> extends Abstract
         "where gc.CLASSE_ID = :classeId",
         nativeQuery = true)
     List<Enseignement> findEnseignementsGroupesByClasse(Long classeId);
+
+    @Query(value = "select matiere,categorie,cn,a.id as idGr,e.id as idEns from agroupeoffoncclassegroupe agc join agroupeofapersonne aa on agc.id=aa.id "+
+        "join agroupe a on a.id=aa.id join apersonnes_agroupes_enseignements aae on aae.AGROUPEOFFONCCLASSEGROUPE_ID=agc.id "+
+        "join enseignement e on e.id=aae.ENSEIGNEMENT_ID where agc.etablissement_fk=:etabId",
+        nativeQuery = true)
+    List<EnseignementEtabDto> findEnseignementsByEtab(Long etabId);
 }
