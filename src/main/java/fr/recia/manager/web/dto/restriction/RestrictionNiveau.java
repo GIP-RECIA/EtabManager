@@ -18,12 +18,13 @@ package fr.recia.manager.web.dto.restriction;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
 public class RestrictionNiveau {
     private String niveau;
-    private ZonedDateTime dateRentreeNiveau;
+    private LocalDateTime dateRentreeNiveau;
     private List<RestrictionClasse> classes;
 }

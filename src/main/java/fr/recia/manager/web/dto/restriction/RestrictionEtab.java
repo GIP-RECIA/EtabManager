@@ -18,14 +18,14 @@ package fr.recia.manager.web.dto.restriction;
 
 import lombok.Data;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 public class RestrictionEtab {
     private boolean enabled;
-    private ZonedDateTime dateDebutBloquage;
-    private ZonedDateTime dateRentreeDefaut;
-    private ZonedDateTime dateRentreeEtab;
+    private LocalDateTime dateDebutBloquage;
+    private LocalDateTime dateRentreeDefaut;
+    private LocalDateTime dateRentreeEtab;
     private List<RestrictionNiveau> niveaux;
 }
