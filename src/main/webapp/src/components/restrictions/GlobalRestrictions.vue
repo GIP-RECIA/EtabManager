@@ -16,9 +16,7 @@
 
 <script setup lang="ts">
 import type { StructureRestriction } from '@/types/index.ts'
-import { faFloppyDisk, faPen, faXmark } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SafeEmptyData from '@/components/SafeEmptyData.vue'
 import { useSaveRestrictionsMutation } from '@/services/queries/index.ts'
@@ -36,20 +34,11 @@ const props = withDefaults(
   },
 )
 
-const emit = defineEmits<{
-  edit: [boolean]
-}>()
-
 const { t } = useI18n()
 
 const { mutate } = useSaveRestrictionsMutation()
 
 const isEdit = ref<boolean>(false)
-
-const canSave = computed<boolean>(() => (
-  // eslint-disable-next-line ts/no-use-before-define
-  enabeled.value !== props.restrictions?.enabled
-))
 
 const enabeled = ref<boolean>(false)
 
@@ -62,13 +51,6 @@ watch(
     enabeled.value = props.restrictions?.enabled ?? false
   },
 )
-
-function toggleEdit(): void {
-  if (isEdit.value)
-    enabeled.value = props.restrictions?.enabled ?? false
-  isEdit.value = !isEdit.value
-  emit('edit', isEdit.value)
-}
 
 function save(): void {
   if (
@@ -87,70 +69,33 @@ function save(): void {
     id: props.structureId,
     body,
   })
-  toggleEdit()
 }
 </script>
 
 <template>
-  <div class="r-card gloabl-restrictions-card">
-    <div class="body">
-      <div class="item">
-        <h3>
-          {{ t('page.restriction.section.state.header') }}
-        </h3>
-        <div
-          v-if="isEdit"
-        >
-          <input
-            id="enabled"
-            v-model="enabeled"
-            type="checkbox"
-          >
-          <label for="enabled">
-            {{ t(enabeled ? 'enabled' : 'disabled') }}
-          </label>
-        </div>
-        <SafeEmptyData
-          v-else
-          :value="
-            restrictions
-              ? t(restrictions.enabled ? 'enabled' : 'disabled')
-              : undefined
-          "
-        />
-      </div>
-    </div>
-
-    <footer
-      v-if="restrictions && canEdit"
+  <div class="item">
+    <div
+      v-if="!isEdit"
     >
-      <button
-        type="button"
-        :aria-label="`${t(`button.${isEdit ? 'cancel' : 'edit'}`)} - ${t('page.restriction.section.state.header')}`"
-        :disabled="disableEdit && !isEdit"
-        class="small"
-        :class="[isEdit ? 'btn-secondary' : 'btn-primary']"
-        @click="toggleEdit"
+      <input
+        id="enabled"
+        v-model="enabeled"
+        type="checkbox"
+        :disabled="disableEdit"
+        @change="save"
       >
-        {{ t(`button.${isEdit ? 'cancel' : 'edit'}`) }}
-        <FontAwesomeIcon
-          :icon="isEdit ? faXmark : faPen"
-        />
-      </button>
-      <button
-        v-show="isEdit"
-        type="button"
-        :aria-label="`${t('button.save')} - ${t('page.restriction.section.state.header')}`"
-        :disabled="!canSave"
-        class="btn-primary small"
-        @click="save"
-      >
-        {{ t('button.save') }}
-        <FontAwesomeIcon
-          :icon="faFloppyDisk"
-        />
-      </button>
-    </footer>
+      <label for="enabled">
+        {{ t('enabled') }}
+      </label>
+    </div>
+    <SafeEmptyData
+      v-else
+      :value="
+        restrictions
+          ? t(restrictions.enabled ? 'enabled' : 'disabled')
+          : undefined
+      "
+    />
   </div>
 </template>
 
@@ -159,18 +104,4 @@ function save(): void {
 @use '@gip-recia/ui/core/variables' as *;
 @use '@gip-recia/ui/functions' as *;
 @use '@gip-recia/ui/mixins' as *;
-
-.gloabl-restrictions-card {
-  > .body {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    .item {
-      > h3 {
-        margin-bottom: 4px;
-      }
-    }
-  }
-}
 </style>

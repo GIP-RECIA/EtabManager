@@ -79,6 +79,7 @@ function setChildEditState(state: boolean): void {
             :structure-id="selectedStructure"
             :restrictions="restrictions"
             :disable-edit="isChildEdit"
+            class="full-width"
             @edit="setChildEditState"
           />
 

@@ -3,9 +3,6 @@
     "h1": "Paramétrage de la rentrée",
     "section": {
       "header": "Période de rentrée",
-      "state": {
-        "header": "Etat"
-      },
       "close": {
         "header": "Fermeture des accès"
       },
