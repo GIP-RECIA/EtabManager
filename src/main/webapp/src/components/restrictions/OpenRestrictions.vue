@@ -30,7 +30,7 @@ import { useI18n } from 'vue-i18n'
 import MenuButton from '@/components/MenuButton.vue'
 import SafeEmptyData from '@/components/SafeEmptyData.vue'
 import { useSaveRestrictionsMutation } from '@/services/queries/index.ts'
-import { formatDateTime, toDateTime, toISOString } from '@/utils/index.ts'
+import { formatDateTime, toDateTime } from '@/utils/index.ts'
 import LevelRestrictions from './LevelRestrictions.vue'
 
 const props = withDefaults(
@@ -146,22 +146,26 @@ function save(): void {
   if (!props.structureId)
     return
 
+  const clearEmpty = (date: string | null): string | null => {
+    return date && date.trim().length > 1 ? date : null
+  }
+
   const body = {
     enabled: fields.value.enabled,
-    dateDebutBloquage: toISOString(fields.value.dateDebutBloquage),
-    dateRentreeDefaut: toISOString(fields.value.dateRentreeDefaut),
-    dateRentreeEtab: toISOString(fields.value.dateRentreeEtab),
+    dateDebutBloquage: clearEmpty(fields.value.dateDebutBloquage),
+    dateRentreeDefaut: clearEmpty(fields.value.dateRentreeDefaut),
+    dateRentreeEtab: clearEmpty(fields.value.dateRentreeEtab),
     niveaux: fields.value.niveaux.map((level) => {
       const classes = level.classes.map((classe) => {
         return {
           ...classe,
-          dateRentreeClasse: toISOString(classe.dateRentreeClasse),
+          dateRentreeClasse: clearEmpty(classe.dateRentreeClasse),
         }
       })
 
       return {
         ...level,
-        dateRentreeNiveau: toISOString(level.dateRentreeNiveau),
+        dateRentreeNiveau: clearEmpty(level.dateRentreeNiveau),
         classes,
       }
     }),

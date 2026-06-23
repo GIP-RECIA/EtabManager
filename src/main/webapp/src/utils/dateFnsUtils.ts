@@ -21,7 +21,6 @@ import {
   intervalToDuration,
   isAfter,
   isBefore,
-  parseISO,
 } from 'date-fns'
 
 type dateType = string | number | Date
@@ -74,13 +73,7 @@ function formatDateTime(
 
 function toDateTime(date: string | null): string | null {
   return date !== null
-    ? format(parseISO(date), 'yyyy-MM-dd\'T\'HH:mm')
-    : null
-}
-
-function toISOString(date: string | null): string | null {
-  return date !== null && date.trim().length > 1
-    ? new Date(date).toISOString()
+    ? format(date, 'yyyy-MM-dd\'T\'HH:mm')
     : null
 }
 
@@ -98,5 +91,4 @@ export {
   isBetween,
   toDateTime,
   toISODate,
-  toISOString,
 }
