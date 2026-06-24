@@ -50,6 +50,9 @@ watch(
 
     enabeled.value = props.restrictions?.enabled ?? false
   },
+  {
+    immediate: true,
+  },
 )
 
 function save(): void {
