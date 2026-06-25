@@ -70,6 +70,7 @@ import fr.recia.manager.web.dto.enseignement.EnseignementModifyRequest;
 import fr.recia.manager.web.dto.enseignement.EnseignementPossibleDto;
 import fr.recia.manager.web.dto.enseignement.FormationModifyRequest;
 import fr.recia.manager.web.dto.enseignement.FormationPossibleDto;
+import fr.recia.manager.web.dto.function.DisciplinesInFillierePossiblesDto;
 import fr.recia.manager.web.dto.user.UserCreation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -86,6 +88,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -390,7 +393,7 @@ public class AddPersonneService {
         for(FormationPossibleDto formationPossibleDto : formationPossibleDtoMap.values()){
             formationPossibleDto.getClasses().removeIf(classeFormationPossibleDto -> classeFormationPossibleDto.getEnseignements().isEmpty());
         }
-        return new ArrayList<>(formationPossibleDtoMap.values());
+        return formationPossibleDtoMap.values().stream().sorted(Comparator.comparing(FormationPossibleDto::getLibelle)).collect(Collectors.toCollection(ArrayList::new));
     }
 
 }

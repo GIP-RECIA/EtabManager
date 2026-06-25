@@ -20,19 +20,20 @@ import fr.recia.manager.db.dto.groupe.ClasseDto;
 import fr.recia.manager.db.entities.education.MEF;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Data
 public class FormationPossibleDto {
     private long id;
     private String libelle;
-    private List<ClasseFormationPossibleDto> classes;
+    private Set<ClasseFormationPossibleDto> classes;
 
     public FormationPossibleDto(MEF mef){
         this.id = mef.getId();
         this.libelle = mef.getFiliere();
-        this.classes = new ArrayList<>();
+        this.classes = new TreeSet<>(Comparator.comparing(ClasseFormationPossibleDto::getLibelle));
     }
 
     public ClasseFormationPossibleDto addClasse(ClasseDto classe){
