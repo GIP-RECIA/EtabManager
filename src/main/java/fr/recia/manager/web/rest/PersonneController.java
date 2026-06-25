@@ -494,7 +494,7 @@ public class PersonneController {
                         ))
                         .build()
                 );
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(Long.toString(apersonne.getId()), HttpStatus.CREATED);
             } catch (Exception e){
                 return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
             }
