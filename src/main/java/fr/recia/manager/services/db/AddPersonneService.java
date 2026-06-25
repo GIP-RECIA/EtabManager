@@ -363,7 +363,7 @@ public class AddPersonneService {
                     enseignementsPossibleMap.get(ensId).addGroupe(enseignementEtabDto);
                 }
             }
-            return new ArrayList<>(enseignementsPossibleMap.values());
+            return enseignementsPossibleMap.values().stream().sorted(Comparator.comparing(EnseignementPossibleDto::getLibelle)).collect(Collectors.toCollection(ArrayList::new));
         } else {
             log.error("Unknwon etab id {}", etabId);
             return new ArrayList<>();

@@ -19,21 +19,22 @@ package fr.recia.manager.web.dto.enseignement;
 import fr.recia.manager.db.dto.groupe.EnseignementEtabDto;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Data
 public class EnseignementPossibleDto {
     private long id;
     private String libelle;
-    private List<ClasseEnseignementPossibleDto> classes;
-    private List<GroupeEnseignementPossibleDto> groupes;
+    private Set<ClasseEnseignementPossibleDto> classes;
+    private Set<GroupeEnseignementPossibleDto> groupes;
 
     public EnseignementPossibleDto(EnseignementEtabDto enseignement){
         this.id = enseignement.getIdEns();
         this.libelle = enseignement.getMatiere();
-        this.classes = new ArrayList<>();
-        this.groupes = new ArrayList<>();
+        this.classes = new TreeSet<>(Comparator.comparing(ClasseEnseignementPossibleDto::getLibelle));
+        this.groupes = new TreeSet<>(Comparator.comparing(GroupeEnseignementPossibleDto::getLibelle));
     }
 
     public void addClasse(EnseignementEtabDto enseignementEtabDto){
