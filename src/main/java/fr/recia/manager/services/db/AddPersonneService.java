@@ -294,6 +294,8 @@ public class AddPersonneService {
                     personneEnseignements.add(personneEnseignement);
                 }
                 mappingAGroupeAPersonneEnseignementRepository.saveAllAndFlush(personneEnseignements);
+                // Vider les caches concernés
+                cacheInvalidationService.evictPersonne(enseignantId);
                 return true;
             } else {
                 log.error("Enseignant {} does not exist", enseignantId);
@@ -332,6 +334,8 @@ public class AddPersonneService {
                 MappingAGroupeAPersonne mappingAGroupeAPersonne = new MappingAGroupeAPersonne(eleve.get().getCleJointure().getSource(), eleve.get(), classe);
                 mappingAGroupeAPersonneRepository.saveAndFlush(mappingAGroupeAPersonne);
                 log.debug("Saved classe...");
+                // Vider les caches concernés
+                cacheInvalidationService.evictPersonne(eleveId);
                 return true;
             } else {
                 log.error("Eleve {} does not exist", eleveId);
