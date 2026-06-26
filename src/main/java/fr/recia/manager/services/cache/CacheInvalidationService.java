@@ -30,6 +30,12 @@ public class CacheInvalidationService {
         this.cacheManager = cacheManager;
     }
 
+    public void evictPersonne(Long personneId) {
+        evict("personneFonctions", personneId);
+        evict("personne", personneId);
+        evict("personneLDAPByUid", personneId);
+    }
+
     public void evictPersonneAndAssociatedStructures(Long personneId, Long structureId) {
         evict("personneFonctions", personneId);
         evict("personne", personneId);
