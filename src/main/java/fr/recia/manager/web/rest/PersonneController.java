@@ -478,10 +478,9 @@ public class PersonneController {
         // Vérifier qu'on a les droits d'ajouter la personne = que sur la structure sur laquelle on veut l'ajouter on a les droits d'écriture
         AStructure aStructure = structureService.getStructureDBFromId(userCreation.getStructureRattachement());
         Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
-        boolean isAdminFonc = principal.getRightsForEtabs().get(AppRole.ADMIN_FONCTIONS).contains(aStructure.getSiren());
         if (allowedSiren.contains(aStructure.getSiren())) {
             try {
-                APersonne apersonne = addPersonneService.addPersonne(userCreation, isAdminFonc);
+                APersonne apersonne = addPersonneService.addPersonne(userCreation);
                 // Log Audit
                 auditService.log(
                     AuditEvent.builder()
