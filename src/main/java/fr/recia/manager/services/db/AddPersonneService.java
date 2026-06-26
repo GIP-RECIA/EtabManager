@@ -65,12 +65,10 @@ import fr.recia.manager.services.creation.UidFactory;
 import fr.recia.manager.services.exceptions.EmailAlreadyExistsException;
 import fr.recia.manager.services.structure.StructureLoader;
 import fr.recia.manager.web.dto.enseignement.ClasseFormationPossibleDto;
-import fr.recia.manager.web.dto.enseignement.EnseignementFormationPossibleDto;
 import fr.recia.manager.web.dto.enseignement.EnseignementModifyRequest;
 import fr.recia.manager.web.dto.enseignement.EnseignementPossibleDto;
 import fr.recia.manager.web.dto.enseignement.FormationModifyRequest;
 import fr.recia.manager.web.dto.enseignement.FormationPossibleDto;
-import fr.recia.manager.web.dto.function.DisciplinesInFillierePossiblesDto;
 import fr.recia.manager.web.dto.user.UserCreation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,7 +141,7 @@ public class AddPersonneService {
      */
     // TODO : gérer l'ajout de classes locales et groupes locaux, et de responsables d'un élève
     @Transactional(rollbackFor = Exception.class)
-    public APersonne addPersonne(UserCreation userCreation, boolean isAdminFonc) {
+    public APersonne addPersonne(UserCreation userCreation) {
         log.debug("Trying to create local user {}", userCreation);
         // 1. Récupération de la date
         Instant date = new Date().toInstant();
