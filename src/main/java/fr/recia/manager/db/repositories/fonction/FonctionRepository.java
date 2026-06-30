@@ -31,15 +31,13 @@ public interface FonctionRepository<T extends Fonction> extends AbstractReposito
     @Query("SELECT DISTINCT new fr.recia.manager.db.dto.fonction.FonctionDto(f.filiere.id, f.disciplinePoste.id, f.source, " +
         "f.structure.id, f.dateFin) " +
         "FROM Fonction f " +
-        "WHERE f.personne.id = :id " +
-        "ORDER BY f.filiere.libelleFiliere")
+        "WHERE f.personne.id = :id ")
     List<FonctionDto> findByPersonne(Long id);
 
     @Query("SELECT DISTINCT new fr.recia.manager.web.dto.function.FonctionPossibleDto(f.filiere,f.disciplinePoste) " +
         "FROM Fonction f "+
         "LEFT JOIN f.disciplinePoste d " +
-        "WHERE f.source = :source " +
-        "ORDER BY f.source, f.filiere.codeFiliere")
+        "WHERE f.source = :source ")
     List<FonctionPossibleDto> findPossibleFonctionsBySource(String source);
 
     @Query("SELECT COUNT(f.id) " +
