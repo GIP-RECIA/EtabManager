@@ -71,17 +71,19 @@ public class AlertService {
                     // Pour chaque alerte de cette source on regarde si on est dans ce cas
                     for (CustomConfigProperties.AlertProperties.FonctionAlertProperties fonctionAlert : fonctionAlerts) {
                         long nbDiscipline = fonctionService.nbDiscipline(etablissementId, fonctionAlert.getFiliere(), fonctionAlert.getDiscipline());
-                        if (fonctionAlert.getMin() != null && fonctionAlert.getMin().getValue() > 0 && nbDiscipline < fonctionAlert.getMin().getValue()) {
-                            final TypeFonctionFiliereDto filiere = fonctionService.getTypeFonctionFiliereByCode(fonctionAlert.getFiliere(), etablissementSource);
-                            final DisciplineDto discipline = fonctionService.getDisciplineByCode(fonctionAlert.getDiscipline(), etablissementSource);
-                            alerts.add(buildFonctionAlert(filiere, discipline, fonctionAlert.getMin().getValue(),
-                                fonctionAlert.getMax().getValue(), (int) nbDiscipline, fonctionAlert.getMin().getType(), FonctionAlertType.min, fonctionAlert.getMin().isAction()));
-                        }
-                        if (fonctionAlert.getMax() != null && fonctionAlert.getMax().getValue() > 0 && nbDiscipline > fonctionAlert.getMax().getValue()) {
-                            final TypeFonctionFiliereDto filiere = fonctionService.getTypeFonctionFiliereByCode(fonctionAlert.getFiliere(), etablissementSource);
-                            final DisciplineDto discipline = fonctionService.getDisciplineByCode(fonctionAlert.getDiscipline(), etablissementSource);
-                            alerts.add(buildFonctionAlert(filiere, discipline, fonctionAlert.getMin().getValue(),
-                                fonctionAlert.getMax().getValue(), (int) nbDiscipline, fonctionAlert.getMax().getType(), FonctionAlertType.max, fonctionAlert.getMax().isAction()));
+                        final TypeFonctionFiliereDto filiere = fonctionService.getTypeFonctionFiliereByCode(fonctionAlert.getFiliere(), etablissementSource);
+                        final DisciplineDto discipline = fonctionService.getDisciplineByCode(fonctionAlert.getDiscipline(), etablissementSource);
+                        if(filiere != null && discipline != null){
+                            if (fonctionAlert.getMin() != null && fonctionAlert.getMin().getValue() > 0 && nbDiscipline < fonctionAlert.getMin().getValue()) {
+                                alerts.add(buildFonctionAlert(filiere, discipline, fonctionAlert.getMin().getValue(),
+                                    fonctionAlert.getMax().getValue(), (int) nbDiscipline, fonctionAlert.getMin().getType(), FonctionAlertType.min, fonctionAlert.getMin().isAction()));
+                            }
+                            if (fonctionAlert.getMax() != null && fonctionAlert.getMax().getValue() > 0 && nbDiscipline > fonctionAlert.getMax().getValue()) {
+                                alerts.add(buildFonctionAlert(filiere, discipline, fonctionAlert.getMin().getValue(),
+                                    fonctionAlert.getMax().getValue(), (int) nbDiscipline, fonctionAlert.getMax().getType(), FonctionAlertType.max, fonctionAlert.getMax().isAction()));
+                            }
+                        } else {
+                            log.warn("Filiere or discipline is null for {}", fonctionAlert);
                         }
                     }
                 }

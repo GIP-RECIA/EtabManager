@@ -145,12 +145,20 @@ public class StructureService {
         if(fonctionsProperties != null){
             for(CustomConfigProperties.FonctionsProperties.FiliereProperties filiereProperties : fonctionsProperties.getFilieres()){
                 TypeFonctionFiliereDto typeFonctionFiliere = typeFonctionFiliereRepository.findByCodeAndSourceSarapis(filiereProperties.getCode(), source);
-                for(String disciplineCode : filiereProperties.getDisciplines()){
-                    DisciplineDto discipline = disciplineRepository.findByCodeAndSourceSarapis(disciplineCode, source);
-                    if(!dtoListMap.containsKey(typeFonctionFiliere.getId())){
-                        dtoListMap.put(typeFonctionFiliere.getId(), new DisciplinesInFillierePossiblesDto(typeFonctionFiliere.getId(), typeFonctionFiliere.getLibelle()));
+                if(typeFonctionFiliere != null){
+                    for(String disciplineCode : filiereProperties.getDisciplines()){
+                        DisciplineDto discipline = disciplineRepository.findByCodeAndSourceSarapis(disciplineCode, source);
+                        if(discipline != null){
+                            if(!dtoListMap.containsKey(typeFonctionFiliere.getId())){
+                                dtoListMap.put(typeFonctionFiliere.getId(), new DisciplinesInFillierePossiblesDto(typeFonctionFiliere.getId(), typeFonctionFiliere.getLibelle()));
+                            }
+                            dtoListMap.get(typeFonctionFiliere.getId()).getDisciplines().add(new DisciplinePossibleDto(discipline.getId(), discipline.getLibelle()));
+                        } else {
+                            log.warn("Discipline is null for {}", disciplineCode);
+                        }
                     }
-                    dtoListMap.get(typeFonctionFiliere.getId()).getDisciplines().add(new DisciplinePossibleDto(discipline.getId(), discipline.getLibelle()));
+                } else {
+                    log.warn("Filiere is null for {}", filiereProperties.getCode());
                 }
             }
         }
