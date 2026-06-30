@@ -104,10 +104,6 @@ public abstract class AStructure extends AbstractTimedEntity {
     @Column(unique = true, nullable = false)
     private CleJointure cleJointure;
     /**
-     * Adresse email de la structure.
-     */
-    private String mail;
-    /**
      * Nom obligatoire de la structure.
      */
     @Column(nullable = false)
@@ -125,10 +121,6 @@ public abstract class AStructure extends AbstractTimedEntity {
      * Adresse du site web de la structure.
      */
     private String siteWeb;
-    /**
-     * Nom du layout owner de l'établissement permettant de définir le skin.
-     */
-    private String modeleLogin;
     /**
      * Url du logo.
      */

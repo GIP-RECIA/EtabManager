@@ -56,12 +56,10 @@ public class StructureDto {
     private Adresse adresse;
     private CategorieStructure categorie;
     private String type;
-    private String mail;
     private String nom;
     private String nomCourt;
     private String siren;
     private String siteWeb;
-    private String modeleLogin;
     private String logo;
 
     private List<TypeFonctionFiliereDto> filieres;
@@ -85,11 +83,9 @@ public class StructureDto {
         this.anneeScolaire = aStructure.getAnneeScolaire();
         this.adresse = aStructure.getAdresse();
         this.categorie = aStructure.getCategorie();
-        this.mail = aStructure.getMail();
         this.nomCourt = aStructure.getNomCourt();
         this.siren = aStructure.getSiren();
         this.siteWeb = aStructure.getSiteWeb();
-        this.modeleLogin = aStructure.getModeleLogin();
         this.logo = aStructure.getLogo();
         this.permissions = new ArrayList<>();
         String[] split = aStructure.getNom().split("\\$");
