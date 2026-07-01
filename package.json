@@ -45,7 +45,7 @@
     "@tsconfig/node24": "^24.0.4",
     "@types/jsdom": "^28",
     "@types/lodash-es": "^4",
-    "@types/node": "^24",
+    "@types/node": "^26",
     "@types/xml2js": "^0",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/test-utils": "^2.4.11",
