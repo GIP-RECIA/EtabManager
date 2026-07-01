@@ -41,7 +41,7 @@
     "@juggle/resize-observer": "^3.4.0",
     "@pinia/colada-devtools": "^1.0.0",
     "@pinia/testing": "^1.0.3",
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.61.1",
     "@tsconfig/node24": "^24.0.4",
     "@types/jsdom": "^28",
     "@types/lodash-es": "^4",
