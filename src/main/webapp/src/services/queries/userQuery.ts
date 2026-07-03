@@ -28,15 +28,14 @@ import { toast } from 'vue3-toastify'
 import { useRoute } from 'vue-router'
 import i18n from '@/plugins/i18n.ts'
 import {
+  addUserFunction,
   deleteUser,
   forceDeleteUser,
   getUser,
   lockUser,
-  removeUserOneAdditional,
+  removeUserFunction,
   resetUser,
   searchUser,
-  setUserAdditional,
-  setUserOneAdditional,
   undoDeleteUser,
   unlockUser,
   unlockUsers,
@@ -342,11 +341,11 @@ function useSearchUserQuery(
   }))
 }
 
-function useSetUserAdditionalMutation() {
+function useAddUserFunctionMutation() {
   const queryCache = useQueryCache()
 
   return useMutation({
-    mutation: setUserAdditional,
+    mutation: addUserFunction,
     onSuccess(_data, vars, _context) {
       queryCache.invalidateQueries({ key: ['structure', vars.structureId] })
       toast.success(
@@ -364,33 +363,11 @@ function useSetUserAdditionalMutation() {
   })
 }
 
-function useSetUserOneAdditionalMutation() {
+function useRemoveUserFunctionMutation() {
   const queryCache = useQueryCache()
 
   return useMutation({
-    mutation: setUserOneAdditional,
-    onSuccess(_data, vars, _context) {
-      queryCache.invalidateQueries({ key: ['structure', vars.structureId] })
-      toast.success(
-        t(`toast.additional.success.${vars.requiredAction}`),
-        {
-        } as ToastContainerOptions,
-      )
-    },
-    onError(error, vars, _context) {
-      errorHandler(error, t(`toast.additional.error.${vars.requiredAction}`))
-    },
-    onSettled: (_data, _error, vars, _context) => {
-      queryCache.invalidateQueries({ key: ['user', vars.id] })
-    },
-  })
-}
-
-function useRemoveUserOneAdditionalMutation() {
-  const queryCache = useQueryCache()
-
-  return useMutation({
-    mutation: removeUserOneAdditional,
+    mutation: removeUserFunction,
     onSuccess(_data, vars, _context) {
       queryCache.invalidateQueries({ key: ['structure', vars.structureId] })
       const key = vars.requiredAction === 'save'
@@ -415,14 +392,13 @@ function useRemoveUserOneAdditionalMutation() {
 }
 
 export {
+  useAddUserFunctionMutation,
   useDeleteUserMutation,
   useForceDeleteUserMutation,
   useLockUserMutation,
-  useRemoveUserOneAdditionalMutation,
+  useRemoveUserFunctionMutation,
   useResetUserMutation,
   useSearchUserQuery,
-  useSetUserAdditionalMutation,
-  useSetUserOneAdditionalMutation,
   useUndoDeleteUserMutation,
   useUnlockUserMutation,
   useUnlockUsersMutation,

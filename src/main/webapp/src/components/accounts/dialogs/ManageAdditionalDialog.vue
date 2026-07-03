@@ -35,9 +35,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
+  useAddUserFunctionMutation,
   usePossibleFunctionsQuery,
-  useRemoveUserOneAdditionalMutation,
-  useSetUserOneAdditionalMutation,
+  useRemoveUserFunctionMutation,
 } from '@/services/queries/index.ts'
 import { toISODate } from '@/utils/index.ts'
 import FunctionSelect from './manageAdditional/FunctionSelect.vue'
@@ -241,8 +241,8 @@ const canSave = computed<boolean>(() => {
 })
 
 const {
-  mutate: removeOneAdditional,
-} = useRemoveUserOneAdditionalMutation()
+  mutate: removeFunction,
+} = useRemoveUserFunctionMutation()
 
 async function remove(): Promise<void> {
   const {
@@ -252,7 +252,7 @@ async function remove(): Promise<void> {
   if (!userId || !structureId)
     return
 
-  removeOneAdditional({
+  removeFunction({
     id: userId,
     structureId,
     toDeleteFunction: fields.value,
@@ -266,8 +266,8 @@ function close(): void {
 }
 
 const {
-  mutate: setOneAdditional,
-} = useSetUserOneAdditionalMutation()
+  mutate: addFunction,
+} = useAddUserFunctionMutation()
 
 async function save(): Promise<void> {
   const {
@@ -277,7 +277,7 @@ async function save(): Promise<void> {
   if (!userId || !structureId)
     return
 
-  setOneAdditional({
+  addFunction({
     id: userId,
     structureId,
     toAddFunction: fields.value,

@@ -71,7 +71,7 @@ export type FunctionForm = {
   discipline?: number
 } & FunctionDate
 
-export interface SetUserAdditionalParams {
+export interface SetUserFunctionParams {
   id: number
   structureId: number
   toAddFunctions: FunctionForm[]
@@ -79,16 +79,16 @@ export interface SetUserAdditionalParams {
   requiredAction: string
 }
 
-export type SetUserOneAdditionalParams = Omit<
-  SetUserAdditionalParams,
+export type AddUserFunctionParams = Omit<
+  SetUserFunctionParams,
   'toAddFunctions'
   | 'toDeleteFunctions'
 > & {
   toAddFunction: FunctionForm
 }
 
-export type RemoveUserOneAdditionalParams = Omit<
-  SetUserAdditionalParams,
+export type RemoveUserFunctionParams = Omit<
+  SetUserFunctionParams,
   'toAddFunctions'
   | 'toDeleteFunctions'
 > & {
