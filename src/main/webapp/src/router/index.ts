@@ -37,16 +37,6 @@ const devRoutes = [
       ],
     },
   },
-  {
-    path: '/esidocexports',
-    name: 'esidocexports',
-    component: () => import('@/views/EsidocExportView.vue'),
-    meta: {
-      roles: [
-        AppRole.ESIDOC,
-      ],
-    },
-  },
 ]
 
 const prodRoutes: never[] = []
@@ -111,6 +101,16 @@ const router = createRouter({
         roles: [
           AppRole.READ_RENTREE,
           AppRole.WRITE_RENTREE,
+        ],
+      },
+    },
+    {
+      path: '/esidocexport',
+      name: 'esidocexport',
+      component: () => import('@/views/EsidocExportView.vue'),
+      meta: {
+        roles: [
+          AppRole.ESIDOC,
         ],
       },
     },

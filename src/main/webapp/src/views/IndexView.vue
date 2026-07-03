@@ -124,9 +124,9 @@ const homeLinksIcons: Record<string, IconDefinition> = {
               {{ t('page.index.settings') }}
             </router-link>
           </li>
-          <li v-if="isDev && canEsidoc">
+          <li v-if="canEsidoc">
             <router-link
-              :to="{ name: 'esidocexports' }"
+              :to="{ name: 'esidocexport' }"
               class="btn-tertiary"
             >
               <FontAwesomeIcon
