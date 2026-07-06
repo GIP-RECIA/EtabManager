@@ -17,8 +17,15 @@
 package fr.recia.manager.security;
 
 public enum AppRole {
-    READ,
-    WRITE,
+    READ_GLC,
+    WRITE_GLC,
+    READ_RENTREE,
+    WRITE_RENTREE,
+    READ_PARAMETAB,
+    WRITE_PARAMETAB,
+    READ_GROUP,
+    WRITE_GROUP,
+    ESIDOC,
     VIEW_UID,
     SEARCH_UID,
     ADMIN_FONCTIONS,

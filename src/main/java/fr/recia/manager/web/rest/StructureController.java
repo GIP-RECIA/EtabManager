@@ -82,7 +82,7 @@ public class StructureController {
     @GetMapping()
     public ResponseEntity<List<SimpleStructureDto>> getStructures(@AuthenticationPrincipal AppUser principal) {
         // Ne retourner que les établissements que la personne a le droit de lire
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GLC);
         List<SimpleStructureDto> etablissements = structureService.getStructures(allowedSiren);
         if (etablissements.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -96,7 +96,7 @@ public class StructureController {
     @GetMapping("/etablissement")
     public ResponseEntity<List<SimpleStructureDto>> getEtablissements(@AuthenticationPrincipal AppUser principal) {
         // Ne retourner que les établissements que la personne a le droit de lire
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GLC);
         List<SimpleStructureDto> etablissements = structureService.getEtablissements(allowedSiren);
         if (etablissements.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -151,7 +151,7 @@ public class StructureController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         // Check si la personne à le droit de lire sur l'établissement
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GLC);
         if (!allowedSiren.contains(etablissement.getSiren())) {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }

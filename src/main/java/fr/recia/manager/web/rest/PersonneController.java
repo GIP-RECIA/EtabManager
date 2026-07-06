@@ -90,7 +90,7 @@ public class PersonneController {
                                                                     @RequestParam(value = "staff", required = false, defaultValue = "False") boolean staff,
                                                                     @RequestParam(value = "check_rights", required = false, defaultValue = "True") boolean checkRights) {
         List<DatabasePersonneDto> personnes;
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GLC);
         boolean canSearchByUid = principal.getGlobalRights().contains(AppRole.SEARCH_UID);
 
         // Cas de la recherche dans un établissement
@@ -157,7 +157,7 @@ public class PersonneController {
                                                              @RequestParam List<Long> ids,
                                                              @RequestParam Long etab,
                                                              @RequestParam List<String> columns){
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GLC);
         List<PersonneExportDto> personnesExport = new ArrayList<>();
         for(Long id : ids){
             APersonne personne = personneService.getPersonne(id);
@@ -181,7 +181,7 @@ public class PersonneController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         // Vérifier qu'on a les droits de voir la personne = que sur une des structures dans laquelle est la personne on a les droits de visualisation
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GLC);
         boolean canRead = false;
         // Booléen qui indique si on affiche l'uid ou non
         boolean showUid = false;
@@ -210,7 +210,7 @@ public class PersonneController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         // Vérifier qu'on a les droits de modifier la personne = que sur une des structures dans laquelle est la personne on a les droits de modification
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         boolean canModify = false;
         for (AStructure aStructure : personne.getListeStructures()) {
             if (allowedSiren.contains(aStructure.getSiren())) {
@@ -249,7 +249,7 @@ public class PersonneController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         // Vérifier qu'on a les droits de modifier la personne = que sur une des structures dans laquelle est la personne on a les droits de modification
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         boolean canRead = false;
         // ok pour cette boucle for car quand la personne est cachée on ne va pas recharger la liste des structures dans la base
         for (AStructure aStructure : personne.getListeStructures()) {
@@ -288,7 +288,7 @@ public class PersonneController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         // Vérifier qu'on a les droits de modifier la personne = que sur une des structures dans laquelle est la personne on a les droits de modification
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         boolean canRead = false;
         // ok pour cette boucle for car quand la personne est cachée on ne va pas recharger la liste des structures dans la base
         for (AStructure aStructure : personne.getListeStructures()) {
@@ -323,7 +323,7 @@ public class PersonneController {
     @PutMapping("/unlock")
     public ResponseEntity<Void> unlockPersons(@AuthenticationPrincipal AppUser principal, @RequestParam List<Long> ids){
         // TODO : débloquage de masse en une seule requête pour être plus efficace
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         for(Long id : ids){
             APersonne personne = personneService.getPersonne(id);
             if (personne == null) {
@@ -361,7 +361,7 @@ public class PersonneController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> putInDeleteState(@AuthenticationPrincipal AppUser principal, @PathVariable Long id){
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         APersonne personne = personneService.getPersonne(id);
         if (personne == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -399,7 +399,7 @@ public class PersonneController {
 
     @DeleteMapping("/{id}/force")
     public ResponseEntity<Void> forceDelete(@AuthenticationPrincipal AppUser principal, @PathVariable Long id) {
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         APersonne personne = personneService.getPersonne(id);
         if (personne == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -437,7 +437,7 @@ public class PersonneController {
 
     @DeleteMapping("/{id}/undo")
     public ResponseEntity<Etat> undoDelete(@AuthenticationPrincipal AppUser principal, @PathVariable Long id){
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         APersonne personne = personneService.getPersonne(id);
         if (personne == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -477,7 +477,7 @@ public class PersonneController {
     public ResponseEntity<String> addPersonne(@AuthenticationPrincipal AppUser principal, @RequestBody UserCreation userCreation) {
         // Vérifier qu'on a les droits d'ajouter la personne = que sur la structure sur laquelle on veut l'ajouter on a les droits d'écriture
         AStructure aStructure = structureService.getStructureDBFromId(userCreation.getStructureRattachement());
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         if (allowedSiren.contains(aStructure.getSiren())) {
             try {
                 APersonne apersonne = addPersonneService.addPersonne(userCreation);
@@ -507,7 +507,7 @@ public class PersonneController {
     public ResponseEntity<Void> setPersonneAdditionalFonctions(@AuthenticationPrincipal AppUser principal, @PathVariable Long id, @RequestBody JsonAdditionalFonctionBody body) {
         // Vérifier qu'on a les droits de modifier la personne = que sur la structure dans laquelle on veut modifier la fonction on a les droits d'écriture
         AStructure aStructure = structureService.getStructureDBFromId(body.getStructureId());
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         if (allowedSiren.contains(aStructure.getSiren())) {
             if(body.getRequiredAction().equals(FonctionAction.attach) && !principal.getGlobalRights().contains(AppRole.ATTACH)){
                 log.warn("User {} is not authorized to attach funtion for user {} in {}", principal.getUsername(), id, body.getStructureId());
@@ -547,7 +547,7 @@ public class PersonneController {
     @PostMapping(value = "/{id}/enseignement")
     public ResponseEntity<Void> setPersonneEnseignements(@AuthenticationPrincipal AppUser principal, @PathVariable Long id, @RequestBody EnseignementModifyRequest body) {
         AStructure aStructure = structureService.getStructureDBFromId(body.getStructure());
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         if (allowedSiren.contains(aStructure.getSiren())) {
             boolean success = addPersonneService.modifyEnseignements(id, body);
             // Log Audit
@@ -576,7 +576,7 @@ public class PersonneController {
     @PostMapping(value = "/{id}/formation")
     public ResponseEntity<Void> setFormations(@AuthenticationPrincipal AppUser principal, @PathVariable Long id, @RequestBody FormationModifyRequest body) {
         AStructure aStructure = structureService.getStructureDBFromId(body.getStructure());
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GLC);
         if (allowedSiren.contains(aStructure.getSiren())) {
             boolean success = addPersonneService.modifyFormation(id, body);
             // Log Audit

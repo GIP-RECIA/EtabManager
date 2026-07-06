@@ -146,8 +146,15 @@ public class SecurityConfiguration {
             // Calcul dynamique des authorities en fonction des groupes
             // TODO : rôle dans le nom du groupe
             Map<AppRole, Set<String>> rightsForEtabs = new HashMap<>();
-            rightsForEtabs.put(AppRole.WRITE, new HashSet<>());
-            rightsForEtabs.put(AppRole.READ, new HashSet<>());
+            rightsForEtabs.put(AppRole.WRITE_GLC, new HashSet<>());
+            rightsForEtabs.put(AppRole.READ_GLC, new HashSet<>());
+            rightsForEtabs.put(AppRole.WRITE_GROUP, new HashSet<>());
+            rightsForEtabs.put(AppRole.READ_GROUP, new HashSet<>());
+            rightsForEtabs.put(AppRole.WRITE_PARAMETAB, new HashSet<>());
+            rightsForEtabs.put(AppRole.READ_PARAMETAB, new HashSet<>());
+            rightsForEtabs.put(AppRole.WRITE_RENTREE, new HashSet<>());
+            rightsForEtabs.put(AppRole.READ_RENTREE, new HashSet<>());
+            rightsForEtabs.put(AppRole.ESIDOC, new HashSet<>());
             rightsForEtabs.put(AppRole.VIEW_UID, new HashSet<>());
             rightsForEtabs.put(AppRole.ADMIN_FONCTIONS, new HashSet<>());
             Set<AppRole> globalRights = new HashSet<>();
@@ -163,22 +170,43 @@ public class SecurityConfiguration {
                     if (matcherAdminLocal.matches()) {
                         final String uai = matcherAdminLocal.group(2);
                         final String siren = structureLoader.getSirenByUai(uai);
-                        rightsForEtabs.get(AppRole.WRITE).add(siren);
-                        rightsForEtabs.get(AppRole.READ).add(siren);
+                        rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
+                        rightsForEtabs.get(AppRole.READ_GLC).add(siren);
+                        rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
+                        rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
+                        rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
+                        rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
+                        rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
+                        rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
+                        rightsForEtabs.get(AppRole.ESIDOC).add(siren);
                     }
                     if (matcherAdminSarapisLocal.matches()) {
                         final String uai = matcherAdminSarapisLocal.group(2);
                         final String siren = structureLoader.getSirenByUai(uai);
-                        rightsForEtabs.get(AppRole.WRITE).add(siren);
-                        rightsForEtabs.get(AppRole.READ).add(siren);
+                        rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
+                        rightsForEtabs.get(AppRole.READ_GLC).add(siren);
+                        rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
+                        rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
+                        rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
+                        rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
+                        rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
+                        rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
+                        rightsForEtabs.get(AppRole.ESIDOC).add(siren);
                     }
                     // Droits sur les branches
                     if (matcherAdminCentral.matches()) {
                         for (StructureFromGroup structureFromGroup : structureLoader.getStructuresOfBranch(matcherAdminCentral.group(1))) {
                             final String uai = structureFromGroup.getUAI();
                             final String siren = structureLoader.getSirenByUai(uai);
-                            rightsForEtabs.get(AppRole.WRITE).add(siren);
-                            rightsForEtabs.get(AppRole.READ).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
+                            rightsForEtabs.get(AppRole.READ_GLC).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
+                            rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
+                            rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
+                            rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
+                            rightsForEtabs.get(AppRole.ESIDOC).add(siren);
                             rightsForEtabs.get(AppRole.VIEW_UID).add(siren);
                             rightsForEtabs.get(AppRole.ADMIN_FONCTIONS).add(siren);
                         }
@@ -192,8 +220,15 @@ public class SecurityConfiguration {
                         for (StructureFromGroup structureFromGroup : structureLoader.getStructuresOfBranch(matcherEscolan.group(1))) {
                             final String uai = structureFromGroup.getUAI();
                             final String siren = structureLoader.getSirenByUai(uai);
-                            rightsForEtabs.get(AppRole.WRITE).add(siren);
-                            rightsForEtabs.get(AppRole.READ).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
+                            rightsForEtabs.get(AppRole.READ_GLC).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
+                            rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
+                            rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
+                            rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
+                            rightsForEtabs.get(AppRole.ESIDOC).add(siren);
                             rightsForEtabs.get(AppRole.VIEW_UID).add(siren);
                             rightsForEtabs.get(AppRole.ADMIN_FONCTIONS).add(siren);
                         }
@@ -205,9 +240,17 @@ public class SecurityConfiguration {
                     // Droits sur les collectivités
                     if (matcherAdminCentralColl.matches()) {
                         for(StructureSirenDomain collectivite : structureLoader.getAllCollectivites()){
-                            rightsForEtabs.get(AppRole.WRITE).add(collectivite.getSiren());
-                            rightsForEtabs.get(AppRole.READ).add(collectivite.getSiren());
-                            rightsForEtabs.get(AppRole.VIEW_UID).add(collectivite.getSiren());
+                            final String siren = collectivite.getSiren();
+                            rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
+                            rightsForEtabs.get(AppRole.READ_GLC).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
+                            rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
+                            rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
+                            rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
+                            rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
+                            rightsForEtabs.get(AppRole.ESIDOC).add(siren);
+                            rightsForEtabs.get(AppRole.VIEW_UID).add(siren);
                         }
                         // Si admin de branche = autorisation à faire de la recherche par UID
                         globalRights.add(AppRole.SEARCH_UID);

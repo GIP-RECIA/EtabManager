@@ -60,7 +60,7 @@ public class EditRestrictionController {
     @PostMapping("/etab/{id}")
     public ResponseEntity<Void> editRestriction(@AuthenticationPrincipal AppUser principal, @PathVariable Long id, @RequestBody RestrictionEtab request) {
         final AStructure aStructure = aStructureRepository.findById(id).orElseThrow();
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_RENTREE);
         if (allowedSiren.contains(aStructure.getSiren())) {
             // TODO : gérer le cas des collectivités
             restrictionService.setNewRestriction(((Etablissement) aStructure).getUai(), request);
@@ -86,7 +86,7 @@ public class EditRestrictionController {
     @GetMapping("/etab/{id}")
     public ResponseEntity<RestrictionEtab> listRestrictions(@AuthenticationPrincipal AppUser principal, @PathVariable Long id) {
         final AStructure aStructure = aStructureRepository.findById(id).orElseThrow();
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_RENTREE);
         if (allowedSiren.contains(aStructure.getSiren())) {
             // TODO : gérer le cas des collectivités
             return ResponseEntity.ok(restrictionService.getRestrictions(((Etablissement) aStructure).getUai()));
