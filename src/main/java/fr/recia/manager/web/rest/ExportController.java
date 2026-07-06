@@ -59,7 +59,7 @@ public class ExportController {
     @GetMapping("/esidoc/{id}")
     public ResponseEntity<EsidocWSResponse> exportEsidoc(@AuthenticationPrincipal AppUser principal, @PathVariable Long id) {
         final AStructure aStructure = structureService.getStructureDBFromId(id);
-        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.ESIDOC);
         if (allowedSiren.contains(aStructure.getSiren())) {
             final EsidocWSResponseInfo esidocWSResponseInfo = esidocExportService.exportForEtab(((Etablissement) aStructure).getUai());
             auditService.log(

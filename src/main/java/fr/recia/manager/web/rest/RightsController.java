@@ -63,7 +63,7 @@ public class RightsController {
                                                           @RequestParam(required = false, defaultValue = "true") boolean showAdmin) {
         log.debug("Listing rights for structure {}", id);
         final AStructure aStructure = structureService.getStructureDBFromId(id);
-        final Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ);
+        final Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GROUP);
         if (allowedSiren.contains(aStructure.getSiren())) {
             final String etabGroup = rightsService.deductGroupNameFromStructure(aStructure);
             final String branch = rightsService.deductBranchFromStructure(aStructure);
@@ -82,7 +82,7 @@ public class RightsController {
                                              @RequestBody AddOrDeleteMemberRequest request) {
         log.debug("Updating rights for structure {}", id);
         final AStructure aStructure = structureService.getStructureDBFromId(id);
-        final Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE);
+        final Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.WRITE_GROUP);
         if (allowedSiren.contains(aStructure.getSiren())) {
             final String etabGroup = rightsService.deductGroupNameFromStructure(aStructure);
             final String branch = rightsService.deductBranchFromStructure(aStructure);
