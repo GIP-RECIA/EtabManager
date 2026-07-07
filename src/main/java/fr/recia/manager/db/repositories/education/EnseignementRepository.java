@@ -16,6 +16,7 @@
 
 package fr.recia.manager.db.repositories.education;
 
+import fr.recia.manager.db.dto.groupe.EnseignementDto;
 import fr.recia.manager.db.dto.groupe.EnseignementEtabDto;
 import fr.recia.manager.db.entities.education.Enseignement;
 import fr.recia.manager.db.repositories.AbstractRepository;
@@ -48,4 +49,9 @@ public interface EnseignementRepository<T extends Enseignement> extends Abstract
         "join enseignement e on e.id=aae.ENSEIGNEMENT_ID where agc.etablissement_fk=:etabId",
         nativeQuery = true)
     List<EnseignementEtabDto> findEnseignementsByEtab(Long etabId);
+
+    @Query(value = "select matiere from apersonnes_agroupes_enseignements aae join enseignement e on aae.ENSEIGNEMENT_ID=e.id "+
+        "join agroupeoffoncclassegroupe a on aae.AGROUPEOFFONCCLASSEGROUPE_ID=a.id where aae.APERSONNE_ID=:personneId and a.etablissement_fk=:etabId",
+        nativeQuery = true)
+    List<EnseignementDto> findEnseignementsByEtabAndPersonne(Long etabId, Long personneId);
 }

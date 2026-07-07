@@ -23,6 +23,7 @@ import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
 import fr.recia.manager.db.entities.APersonneAStructure;
 import fr.recia.manager.db.entities.common.ExternalId;
 import fr.recia.manager.db.entities.education.Discipline;
+import fr.recia.manager.db.entities.education.Enseignement;
 import fr.recia.manager.db.entities.fonction.TypeFonctionFiliere;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.structure.AStructure;
@@ -30,6 +31,7 @@ import fr.recia.manager.db.enums.Etat;
 import fr.recia.manager.db.enums.ExternalIdSource;
 import fr.recia.manager.db.enums.ForceEtat;
 import fr.recia.manager.db.repositories.APersonneAStructureRepository;
+import fr.recia.manager.db.repositories.education.EnseignementRepository;
 import fr.recia.manager.db.repositories.personne.APersonneRepository;
 import fr.recia.manager.ldap.LdapUser;
 import fr.recia.manager.ldap.repository.LdapPeopleDao;
@@ -72,6 +74,8 @@ public class PersonneService {
     private FonctionService fonctionService;
     @Autowired
     private RelationService relationService;
+    @Autowired
+    private EnseignementService enseignementService;
     @Autowired
     private AppProperties appProperties;
     @Autowired
@@ -284,6 +288,7 @@ public class PersonneService {
             }
             structureForUserDto.setClasses(groupeService.getClassesOfPersonne(personne.getId(), personne.getCategorie(), aStructure.getId()));
             structureForUserDto.setGroupesPedagogiques(groupeService.getGroupesOfPersonne(personne.getId(), personne.getCategorie(), aStructure.getId()));
+            structureForUserDto.setEnseignements(enseignementService.getEnseignementsByEtabAndPersonne(aStructure.getId(), personne.getId()));
         }
         // Affichage de l'id pronote uniquement si la personne est dans un groupe pronote
         if(ldapUser != null){
