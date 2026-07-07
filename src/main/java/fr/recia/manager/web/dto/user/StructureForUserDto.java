@@ -41,6 +41,7 @@ public class StructureForUserDto {
     private boolean structureCourante;
     private List<String> classes;
     private List<String> groupesPedagogiques;
+    private List<String> enseignements;
     private boolean authorizedForPrincipal;
 
     public StructureForUserDto(AStructure aStructure) {
