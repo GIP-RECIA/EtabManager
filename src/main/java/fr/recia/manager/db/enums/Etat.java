@@ -49,5 +49,12 @@ public enum Etat {
      * Objet dans un état incertain suite à une erreur d'export lors de l'ajout.
      */
     Incertain_Export_Add,
-    Deleting
+    /**
+     * Etat custom dans glc+ qui indique un compte en cours de suppression
+     */
+    Deleting,
+    /**
+     * Etat custom dans glc+ qui indique un compte non alimenté (dans le BDD mais pas dans le LDAP)
+     */
+    Non_alimente
 }
