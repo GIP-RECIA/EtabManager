@@ -245,7 +245,7 @@ public class FonctionService {
                     aPersonneAStructureRepository2.insertInStructure(personneId, structureId);
                     break;
                 case detach:
-                    if (!isInStructure || toDeleteAdditional.isEmpty() || officialFonctionsInStructure > 0) {
+                    if (!isInStructure || toDeleteAdditional.isEmpty() || officialFonctionsInStructure > 0 || aPersonne.getListeStructures().size()==1) {
                         log.error("Unable to detach user {} of structure {}", aPersonne.getId(), aStructure.getId());
                         break;
                     }
