@@ -57,6 +57,8 @@ public class DatabasePersonneDto {
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
             this.dateSuppression = dateModification;
+        } else if (dateAcquittement==null){
+            this.etat = Etat.Non_alimente;
         }
         this.uid = uid;
         this.dateModification = dateModification;
@@ -78,6 +80,8 @@ public class DatabasePersonneDto {
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
             this.dateSuppression = dateModification;
+        } else if (dateAcquittement==null){
+            this.etat = Etat.Non_alimente;
         }
         this.uid = uid;
         this.dateModification = dateModification;
@@ -98,6 +102,8 @@ public class DatabasePersonneDto {
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
             this.dateSuppression = dateModification;
+        } else if (dateAcquittement==null){
+            this.etat = Etat.Non_alimente;
         }
         this.uid = "";
         this.dateModification = dateModification;
@@ -119,6 +125,8 @@ public class DatabasePersonneDto {
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
             this.dateSuppression = dateModification;
+        } else if (dateAcquittement==null){
+            this.etat = Etat.Non_alimente;
         }
         this.uid = "";
         this.dateModification = dateModification;
@@ -138,6 +146,8 @@ public class DatabasePersonneDto {
         if (aPersonne.getEtat() == Etat.Delete && aPersonne.getDateModification().equals(aPersonne.getDateAcquittement())) {
             this.etat = Etat.Deleting;
             this.dateSuppression = aPersonne.getDateModification();
+        } else if (aPersonne.getDateAcquittement()==null){
+            this.etat = Etat.Non_alimente;
         }
         this.dateModification = aPersonne.getDateModification();
         this.dateAcquittement = aPersonne.getDateAcquittement();

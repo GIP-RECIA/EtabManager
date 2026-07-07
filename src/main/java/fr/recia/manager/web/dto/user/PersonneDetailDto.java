@@ -99,6 +99,8 @@ public class PersonneDetailDto {
             this.etat = Etat.Deleting;
             final LocalDateTime dateSuppression = aPersonne.getDateModification().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(20);
             this.dateSuppression = Date.from(dateSuppression.atZone(ZoneId.systemDefault()).toInstant());
+        } else if (aPersonne.getDateAcquittement()==null){
+            this.etat = Etat.Non_alimente;
         }
         this.photo = aPersonne.getPhoto();
         this.idPronote = null;
