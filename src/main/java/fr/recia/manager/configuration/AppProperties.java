@@ -36,6 +36,7 @@ import fr.recia.manager.configuration.bean.RestrictionRentreeProperties;
 import fr.recia.manager.configuration.bean.RightsProperties;
 import fr.recia.manager.configuration.bean.ServiceConfigProperties;
 import fr.recia.manager.configuration.bean.UIDFactoryProperties;
+import fr.recia.manager.security.AdminRule;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -48,6 +49,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -79,6 +81,9 @@ public class AppProperties {
 
     @PostConstruct
     private void init() {
+        for(AdminRule rule : admin.getRules()){
+            rule.setCompiledPattern(Pattern.compile(rule.getPattern()));
+        }
         rights.setDeclaredGroupsMap(rights.getDeclaredGroups().stream()
             .collect(Collectors.toUnmodifiableMap(
                 GroupProperties::getGrouperPath,

@@ -56,12 +56,11 @@ app:
         display-name:
 
   admin:
-    local:
-    sarapis-local:
-    central:
-    escolan:
-    central-coll:
-    direction:
+    rules:
+      - pattern:
+        extract:
+        roles:
+          -
     groups-attribute:
 
   cas:
