@@ -22,6 +22,7 @@ import fr.recia.manager.configuration.cas.CustomCasSuccessHandler;
 import fr.recia.manager.configuration.cas.CustomSessionMappingStorage;
 import fr.recia.manager.ldap.StructureFromGroup;
 import fr.recia.manager.ldap.StructureSirenDomain;
+import fr.recia.manager.security.AdminRule;
 import fr.recia.manager.security.AppUser;
 import fr.recia.manager.security.AppRole;
 import fr.recia.manager.services.structure.StructureLoader;
@@ -133,18 +134,10 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationUserDetailsService<CasAssertionAuthenticationToken> customUserDetailsService() {
         return (CasAssertionAuthenticationToken token) -> {
-            Assertion assertion = token.getAssertion();
-            Map<String, Object> attributes = assertion.getPrincipal().getAttributes();
-            List<String> groups = (List<String>) attributes.get(appProperties.getAdmin().getGroupsAttribute());
-            String username = assertion.getPrincipal().getName();
-            Pattern patternAdminLocal = Pattern.compile(appProperties.getAdmin().getLocal());
-            Pattern patternAdminSarapisLocal = Pattern.compile(appProperties.getAdmin().getSarapisLocal());
-            Pattern patternAdminCentral = Pattern.compile(appProperties.getAdmin().getCentral());
-            Pattern patternEscolan = Pattern.compile(appProperties.getAdmin().getEscolan());
-            Pattern patternAdminCentralColl = Pattern.compile(appProperties.getAdmin().getCentralColl());
-            Pattern patternDirection = Pattern.compile(appProperties.getAdmin().getDirection());
-            // Calcul dynamique des authorities en fonction des groupes
-            // TODO : rôle dans le nom du groupe
+            final Assertion assertion = token.getAssertion();
+            final Map<String, Object> attributes = assertion.getPrincipal().getAttributes();
+            final List<String> groups = (List<String>) attributes.get(appProperties.getAdmin().getGroupsAttribute());
+            final String username = assertion.getPrincipal().getName();
             Map<AppRole, Set<String>> rightsForEtabs = new HashMap<>();
             rightsForEtabs.put(AppRole.WRITE_GLC, new HashSet<>());
             rightsForEtabs.put(AppRole.READ_GLC, new HashSet<>());
@@ -155,119 +148,56 @@ public class SecurityConfiguration {
             rightsForEtabs.put(AppRole.WRITE_RENTREE, new HashSet<>());
             rightsForEtabs.put(AppRole.READ_RENTREE, new HashSet<>());
             rightsForEtabs.put(AppRole.ESIDOC, new HashSet<>());
-            rightsForEtabs.put(AppRole.VIEW_UID, new HashSet<>());
             rightsForEtabs.put(AppRole.ADMIN_FONCTIONS, new HashSet<>());
+            rightsForEtabs.put(AppRole.VIEW_UID, new HashSet<>());
             Set<AppRole> globalRights = new HashSet<>();
             if(groups != null){
                 for (String group : groups) {
-                    Matcher matcherAdminLocal = patternAdminLocal.matcher(group);
-                    Matcher matcherAdminSarapisLocal = patternAdminSarapisLocal.matcher(group);
-                    Matcher matcherAdminCentral = patternAdminCentral.matcher(group);
-                    Matcher matcherEscolan = patternEscolan.matcher(group);
-                    Matcher matcherAdminCentralColl = patternAdminCentralColl.matcher(group);
-                    Matcher matcherDirection = patternDirection.matcher(group);
-                    // Droits sur les établissements
-                    if (matcherAdminLocal.matches()) {
-                        final String uai = matcherAdminLocal.group(2);
-                        final String siren = structureLoader.getSirenByUai(uai);
-                        rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
-                        rightsForEtabs.get(AppRole.READ_GLC).add(siren);
-                        rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
-                        rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
-                        rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
-                        rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
-                        rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
-                        rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
-                        rightsForEtabs.get(AppRole.ESIDOC).add(siren);
-                    }
-                    if (matcherAdminSarapisLocal.matches()) {
-                        final String uai = matcherAdminSarapisLocal.group(2);
-                        final String siren = structureLoader.getSirenByUai(uai);
-                        rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
-                        rightsForEtabs.get(AppRole.READ_GLC).add(siren);
-                        rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
-                        rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
-                        rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
-                        rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
-                        rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
-                        rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
-                        rightsForEtabs.get(AppRole.ESIDOC).add(siren);
-                    }
-                    // Droits sur les branches
-                    if (matcherAdminCentral.matches()) {
-                        for (StructureFromGroup structureFromGroup : structureLoader.getStructuresOfBranch(matcherAdminCentral.group(1))) {
-                            final String uai = structureFromGroup.getUAI();
-                            final String siren = structureLoader.getSirenByUai(uai);
-                            rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
-                            rightsForEtabs.get(AppRole.READ_GLC).add(siren);
-                            rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
-                            rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
-                            rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
-                            rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
-                            rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
-                            rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
-                            rightsForEtabs.get(AppRole.ESIDOC).add(siren);
-                            rightsForEtabs.get(AppRole.VIEW_UID).add(siren);
-                            rightsForEtabs.get(AppRole.ADMIN_FONCTIONS).add(siren);
+                    for (AdminRule rule : appProperties.getAdmin().getRules()) {
+                        final Matcher matcher = rule.getCompiledPattern().matcher(group);
+                        if (matcher.matches()) {
+                            if (matcher.matches()) {
+                                switch (rule.getExtract()) {
+                                    // Droit global qui s'applique à tout l'applicatif
+                                    case GLOBAL:
+                                        globalRights.addAll(rule.getRoles());
+                                        break;
+                                    // Droit sur un UAI spécifique
+                                    case UAI:
+                                        final String siren = structureLoader.getSirenByUai(matcher.group(1));
+                                        for (AppRole role : rule.getRoles()) {
+                                            rightsForEtabs.get(role).add(siren);
+                                        }
+                                        break;
+                                    // Droit sur tous les étabs d'une branche
+                                    case BRANCH:
+                                        for (StructureFromGroup structure : structureLoader.getStructuresOfBranch(matcher.group(1))) {
+                                            final String sirenFromUai = structureLoader.getSirenByUai(structure.getUAI());
+                                            for (AppRole role : rule.getRoles()) {
+                                                rightsForEtabs.get(role).add(sirenFromUai);
+                                            }
+                                        }
+                                        break;
+                                    // Seul droit un peu fait à la main, si on est admin de branch coll alors on a les droits sur toutes les collectivités
+                                    case COLLECTIVITY:
+                                        for (StructureSirenDomain collectivite : structureLoader.getAllCollectivites()) {
+                                            final String collectiviteSiren = collectivite.getSiren();
+                                            for (AppRole role : rule.getRoles()) {
+                                                rightsForEtabs.get(role).add(collectiviteSiren);
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        log.warn("Unknown extraction type : {}", rule.getExtract());
+                                }
+                            }
                         }
-                        // Si admin de branche = autorisation à faire de la recherche par UID
-                        globalRights.add(AppRole.SEARCH_UID);
-                        // Si admin de branche = autorisation à faire des rattachements
-                        globalRights.add(AppRole.ATTACH);
-                    }
-                    // Droits sur les branches
-                    if (matcherEscolan.matches()) {
-                        for (StructureFromGroup structureFromGroup : structureLoader.getStructuresOfBranch(matcherEscolan.group(1))) {
-                            final String uai = structureFromGroup.getUAI();
-                            final String siren = structureLoader.getSirenByUai(uai);
-                            rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
-                            rightsForEtabs.get(AppRole.READ_GLC).add(siren);
-                            rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
-                            rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
-                            rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
-                            rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
-                            rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
-                            rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
-                            rightsForEtabs.get(AppRole.ESIDOC).add(siren);
-                            rightsForEtabs.get(AppRole.VIEW_UID).add(siren);
-                            rightsForEtabs.get(AppRole.ADMIN_FONCTIONS).add(siren);
-                        }
-                        // Si admin de branche = autorisation à faire de la recherche par UID
-                        globalRights.add(AppRole.SEARCH_UID);
-                        // Si admin de branche = autorisation à faire des rattachements
-                        globalRights.add(AppRole.ATTACH);
-                    }
-                    // Droits sur les collectivités
-                    if (matcherAdminCentralColl.matches()) {
-                        for(StructureSirenDomain collectivite : structureLoader.getAllCollectivites()){
-                            final String siren = collectivite.getSiren();
-                            rightsForEtabs.get(AppRole.WRITE_GLC).add(siren);
-                            rightsForEtabs.get(AppRole.READ_GLC).add(siren);
-                            rightsForEtabs.get(AppRole.WRITE_PARAMETAB).add(siren);
-                            rightsForEtabs.get(AppRole.READ_PARAMETAB).add(siren);
-                            rightsForEtabs.get(AppRole.WRITE_GROUP).add(siren);
-                            rightsForEtabs.get(AppRole.READ_GROUP).add(siren);
-                            rightsForEtabs.get(AppRole.WRITE_RENTREE).add(siren);
-                            rightsForEtabs.get(AppRole.READ_RENTREE).add(siren);
-                            rightsForEtabs.get(AppRole.ESIDOC).add(siren);
-                            rightsForEtabs.get(AppRole.VIEW_UID).add(siren);
-                        }
-                        // Si admin de branche = autorisation à faire de la recherche par UID
-                        globalRights.add(AppRole.SEARCH_UID);
-                        // Si admin de branche = autorisation à faire des rattachements
-                        globalRights.add(AppRole.ATTACH);
-                    }
-                    // Droits spécifiques sur certaines fonctions
-                    if (matcherDirection.matches()) {
-                        final String uai = matcherDirection.group(1);
-                        final String siren = structureLoader.getSirenByUai(uai);
-                        rightsForEtabs.get(AppRole.ADMIN_FONCTIONS).add(siren);
                     }
                 }
             } else {
                 log.warn("No groups for user {} !", username);
             }
-
+            log.trace("User {} logged in with rights {} and {}", username, rightsForEtabs, globalRights);
             return new AppUser(username, "", new ArrayList<>(), rightsForEtabs, globalRights);
         };
     }

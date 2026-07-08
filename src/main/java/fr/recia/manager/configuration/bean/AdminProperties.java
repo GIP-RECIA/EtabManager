@@ -16,15 +16,13 @@
 
 package fr.recia.manager.configuration.bean;
 
+import fr.recia.manager.security.AdminRule;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class AdminProperties {
-    private String local;
-    private String sarapisLocal;
-    private String central;
-    private String escolan;
-    private String centralColl;
-    private String direction;
+    private List<AdminRule> rules;
     private String groupsAttribute;
 }
