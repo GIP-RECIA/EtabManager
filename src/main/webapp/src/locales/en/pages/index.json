@@ -6,7 +6,7 @@
     "access": "Manage service access",
     "restriction": "Configure back-to-school period",
     "settings": "Configure institution",
-    "esidocexports": "Export to esidoc",
+    "esidocexports": "Export to e-sidoc",
     "link": {
       "ESCO-ParamEtab": "@:page.index.settings",
       "I2Grouper-UI": "Manage groups"

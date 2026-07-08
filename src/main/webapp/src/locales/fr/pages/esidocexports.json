@@ -1,13 +1,13 @@
 {
   "esidocexports": {
-    "h1": "Export vers esidoc",
+    "h1": "Export vers e-sidoc",
     "info": {
       "desc": "Les données seront extraites de l'annuaire puis transférées via un canal sécurisé au portail e-sidoc de votre établissement. Ces données seront ensuite disponibles en téléchargement pour le professeur-documentaliste pendant 72h. Elles permettront la gestion des prêts et l'authentification. Une fois le transfert terminé, n'hésitez pas à inviter le professeur-documentaliste à effectuer ce téléchargement dans le délai imparti. \n\n Si votre établissement fait parti d'un regroupement de structures, l'export se fera pour toutes ces structures."
     },
     "message": {
       "export-exception": "Une erreur est survenue lors de l'exportation de l'établissement {etab}.",
       "export-already-done": "L'établissement {etab} a déjà été exporté recemment, veuillez réessayer plus tard.",
-      "success": "L'exporation des données de l'établissement {etab} a été réalisée avec succès."
+      "success": "L'exportation des données de l'établissement {etab} a été réalisée avec succès."
     },
     "btn": {
       "export": "Exporter vers e-sidoc"

@@ -1,6 +1,6 @@
 {
   "esidocexports": {
-    "h1": "Export to esidoc",
+    "h1": "Export to e-sidoc",
     "info": {
       "desc": "The data will be extracted from the directory and then transferred via a secure channel to your institution's e-sidoc portal. This data will then be available for download to the teacher-librarian for 72 hours. It allows for loan management and authentication. Once the transfer is complete, please encourage the teacher-librarian to perform this download within the allotted time.\n\n If your institution is part of a group of structures, the export will be done for all of these structures."
     },

@@ -6,7 +6,7 @@
     "access": "Gérer les accès aux services",
     "restriction": "Paramétrer la rentrée",
     "settings": "Paramétrer l'établissement",
-    "esidocexports": "Exporter vers esidoc",
+    "esidocexports": "Exporter vers e-sidoc",
     "link": {
       "ESCO-ParamEtab": "@:page.index.settings",
       "I2Grouper-UI": "Gérer les groupes"
