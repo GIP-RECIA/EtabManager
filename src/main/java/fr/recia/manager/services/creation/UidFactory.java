@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 @Data
 public class UidFactory {
 
-    private String codeRegion;
     private String nomSource;
     private int nbLettreAnn;
     private int nbLettreTotal;
@@ -32,7 +31,6 @@ public class UidFactory {
     private int baseConvertion;
 
     public UidFactory(AppProperties appProperties) {
-        this.codeRegion = appProperties.getUidFactory().getCodeRegion();
         this.nomSource = appProperties.getUidFactory().getNomSource();
         this.nbLettreAnn = appProperties.getUidFactory().getNbLettreAnn();
         this.nbLettreTotal = appProperties.getUidFactory().getNbLettreTotal();
@@ -53,21 +51,21 @@ public class UidFactory {
         return annee.substring(idx - nbLettreAnn, idx);
     }
 
-    private boolean calculNbLettreInc(final String codeGenerateur) {
+    private boolean calculNbLettreInc(final String codeGenerateur, final String codeRegion) {
         if (nbLettreInc > 0) {
             return true;
         }
         if (codeRegion != null && codeGenerateur != null) {
-            nbLettreInc = nbLettreTotal - nbLettreAnn - getCodeRegion().length() - codeGenerateur.length();
+            nbLettreInc = nbLettreTotal - nbLettreAnn - codeRegion.length() - codeGenerateur.length();
         } else {
             nbLettreInc = 0;
         }
         return nbLettreInc > 0;
     }
 
-    public String uid(final String annee, final int increment, final String codeGenerateur) {
+    public String uid(final String annee, final int increment, final String codeGenerateur, final String codeRegion) {
         String uidS;
-        if (calculNbLettreInc(codeGenerateur)) {
+        if (calculNbLettreInc(codeGenerateur, codeRegion)) {
             if (nbLettreAnn > 0) {
                 String codeAnnee = codeAnnee(annee);
                 if (codeAnnee == null) {

@@ -169,21 +169,24 @@ public class AddPersonneService {
         // 4.1. Récupération du genUID correspondant en fonction du domaine de l'établissement
         List<String> domainsOfStructure = structureLoader.getDomainsOfStructure(aStructure.getSiren());
         String codeGenerateur;
+        String codeRegion;
         if (domainsOfStructure.size() == 1) {
             codeGenerateur = appProperties.getUidFactory().getDomainToCodeGenerateur().get(domainsOfStructure.get(0));
+            codeRegion = appProperties.getUidFactory().getDomainToCodeRegion().get(domainsOfStructure.get(0));
         } else {
             codeGenerateur = appProperties.getUidFactory().getDefaultCodeGenerateur();
+            codeRegion = appProperties.getUidFactory().getDefaultCodeRegion();
         }
         log.debug("codeGenerateur : {}", codeGenerateur);
         // 4.2. Créer un nouveau genUID si il n'y a pas encore de genUID pour le codeGenerateur cette année
-        GenUID genUID = genUIDRepository.findByCAndLAndXx(codeGenerateur, uidFactory.getCodeRegion(), codeAnnee).orElseGet(() -> {
+        GenUID genUID = genUIDRepository.findByCAndLAndXx(codeGenerateur, codeRegion, codeAnnee).orElseGet(() -> {
             log.debug("No genUID : creating a new one");
             GenUID newGenUID = new GenUID();
             newGenUID.setDateCreation(Date.from(date));
             newGenUID.setDateModification(Date.from(date));
             newGenUID.setIiii(0);
             newGenUID.setXx(codeAnnee);
-            newGenUID.setL(uidFactory.getCodeRegion());
+            newGenUID.setL(codeRegion);
             newGenUID.setC(codeGenerateur);
             return genUIDRepository.saveAndFlush(newGenUID);
         });
@@ -191,7 +194,7 @@ public class AddPersonneService {
         // 4.3. Création de l'uid
         final int increment = genUID.getIiii() + 1;
         log.debug("increment {}", increment);
-        String uid = uidFactory.uid(anneeEnCours, increment, codeGenerateur);
+        String uid = uidFactory.uid(anneeEnCours, increment, codeGenerateur, codeRegion);
         log.debug("uid generated : {}", uid);
         // 4.4. Récupération de la clé de jointure créée
         String cle = uidFactory.clee(uid);
