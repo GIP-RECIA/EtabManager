@@ -24,7 +24,8 @@ import java.util.Map;
 public class UIDFactoryProperties {
     private String defaultCodeGenerateur;
     private Map<String, String> domainToCodeGenerateur;
-    private String codeRegion;
+    private String defaultCodeRegion;
+    private Map<String, String> domainToCodeRegion;
     private String nomSource;
     private int nbLettreAnn;
     private int nbLettreTotal;
