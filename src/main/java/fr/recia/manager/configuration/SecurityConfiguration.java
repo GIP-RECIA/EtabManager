@@ -45,6 +45,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.Filter;
@@ -319,7 +320,7 @@ public class SecurityConfiguration {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             )
             // Filtre pour le logout à mettre avant tout
-            .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
+            .addFilterBefore(singleSignOutFilter(), CsrfFilter.class)
             // La partie exceptionHandling permet de rediriger sur le CAS si on a un 403
             .exceptionHandling(e -> e
                 .authenticationEntryPoint(casAuthenticationEntryPoint(serviceProperties()))
