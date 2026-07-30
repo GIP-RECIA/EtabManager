@@ -21,6 +21,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import fr.recia.manager.configuration.bean.AdminProperties;
 import fr.recia.manager.configuration.bean.CASProperties;
 import fr.recia.manager.configuration.bean.CorsProperties;
+import fr.recia.manager.configuration.bean.CreateUserProperties;
 import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.configuration.bean.CustomLdapProperties;
 import fr.recia.manager.configuration.bean.CustomMailProperties;
@@ -74,6 +75,7 @@ public class AppProperties {
     private UIDFactoryProperties uidFactory;
     private RedisProperties redis;
     private RedisSessionCleanupProperties session;
+    private CreateUserProperties create;
 
     @PostConstruct
     private void init() {

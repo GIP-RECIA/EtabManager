@@ -99,10 +99,8 @@ public class StructureService {
 
     public StructureConfigDto getConfig(Long id){
         StructureConfigDto structureConfigDto = new StructureConfigDto();
-        // TODO : liste des profils depuis la conf en fonction du type de structure
-        List<CategoriePersonne> categoriesPersonne = List.of(CategoriePersonne.Eleve, CategoriePersonne.Enseignant,
-            CategoriePersonne.Non_enseignant_etablissement, CategoriePersonne.Non_enseignant_service_academique, CategoriePersonne.Non_enseignant_collectivite_locale);
-        structureConfigDto.setCategoriesPersonne(categoriesPersonne);
+        AStructure aStructure = structureRepository.findById(id).orElse(null);
+        structureConfigDto.setCategoriesPersonne(appProperties.getCreate().getLibelleTypeStructureToCategories().get(aStructure.getType().getLibelle()));
         return structureConfigDto;
     }
 
