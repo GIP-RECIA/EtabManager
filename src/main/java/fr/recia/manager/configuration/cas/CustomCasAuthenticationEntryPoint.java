@@ -17,6 +17,7 @@
 package fr.recia.manager.configuration.cas;
 
 import fr.recia.manager.configuration.AppProperties;
+import fr.recia.manager.exceptions.InvalidDomainException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
@@ -41,8 +42,7 @@ public class CustomCasAuthenticationEntryPoint extends CasAuthenticationEntryPoi
         if(appProperties.getCas().getAuthorizedDomains().contains(domain)){
             return domain + appProperties.getCas().getCasServiceId();
         } else {
-            // TODO : custom exception
-            throw new RuntimeException("Domain is not authorized !");
+            throw new InvalidDomainException("Domain is not authorized !");
         }
     }
 
