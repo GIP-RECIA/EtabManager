@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package fr.recia.manager.services.exceptions;
+package fr.recia.manager.exceptions;
 
-public class UnauthorizedPeopleModificationException extends RuntimeException {
-    public UnauthorizedPeopleModificationException(String message) {
+public class LoginTooHighException extends RuntimeException {
+    public LoginTooHighException(String message) {
         super(message);
     }
 }
