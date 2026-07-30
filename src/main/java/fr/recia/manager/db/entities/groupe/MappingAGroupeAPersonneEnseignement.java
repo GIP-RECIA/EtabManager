@@ -63,6 +63,10 @@ public class MappingAGroupeAPersonneEnseignement implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateFin;
 
+    /** Donne l'information de la date de début de l'objet. */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateDebut;
+
     /**
      * The pk
      */

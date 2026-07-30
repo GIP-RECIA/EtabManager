@@ -30,6 +30,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 
 @Embeddable
 @Getter
@@ -63,6 +66,14 @@ public class MappingFonctionMEFMEF {
     @OneToOne
     @JoinColumn(name = "MEF_ID", nullable = false)
     private MEF mef;
+
+    /** Donne l'information de la date de debut de la fonction lors de l'export. */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateDebut;
+
+    /** Donne l'information de la date de debut de la fonction lors de l'export. */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateFin;
 
     /**
      * Contructor of the object MappingFonctionMEFMEF.java.
