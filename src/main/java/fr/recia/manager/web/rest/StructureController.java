@@ -17,9 +17,6 @@
 package fr.recia.manager.web.rest;
 
 import fr.recia.manager.configuration.AppProperties;
-import fr.recia.manager.db.dto.education.DisciplineDto;
-import fr.recia.manager.db.dto.fonction.FonctionDto;
-import fr.recia.manager.db.dto.fonction.TypeFonctionFiliereDto;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
 import fr.recia.manager.db.dto.structure.SimpleStructureDto;
 import fr.recia.manager.db.dto.structure.StructureDto;
@@ -49,10 +46,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -175,11 +169,7 @@ public class StructureController {
         List<DatabasePersonneDto> etabPersonnes = personneService.getPersonnes(id, showUid);
         List<DatabasePersonneDto> withoutFunction = fonctionService.getPersonnesWithoutFunctions(id, showUid);
 
-        // Récupération des filières (fonctions, typesFonctionFiliere et disciplines)
-        List<FonctionDto> fonctions = fonctionService.getStructureFonctions(id);
-
         // Liste des personnes de l'établissement
-        // TODO : externaliser la logique dans un service
         etablissement.setListePersonnes(etabPersonnes, appProperties.getCustomConfig().getLoginOffices());
 
         // Liste des personnes sans fonction
@@ -191,27 +181,8 @@ public class StructureController {
         // Récupération des incertains
         etablissement.setIncertains(incertainService.getIncertains(etablissement.getId()));
 
-        // On créé des maps pour pouvoir récupérer les objets par leur id en O(1)
-        List<TypeFonctionFiliereDto> typesFonctionFiliereList = fonctionService.getTypesFonctionFiliere(etablissement.getSource());
-        Map<Long, TypeFonctionFiliereDto> typesFonctionFiliereMap = typesFonctionFiliereList.stream()
-            .collect(Collectors.toMap(
-                TypeFonctionFiliereDto::getId,
-                Function.identity()
-            ));
-        List<DisciplineDto> disciplinesList = fonctionService.getDisciplines(etablissement.getSource());
-        Map<Long, DisciplineDto> disciplinesMap = disciplinesList.stream()
-            .collect(Collectors.toMap(
-                DisciplineDto::getId,
-                Function.identity()
-            ));
-        Map<Long, DatabasePersonneDto> personnesMap = etabPersonnes.stream()
-            .collect(Collectors.toMap(
-                DatabasePersonneDto::getId,
-                Function.identity()
-            ));
-
         // Logique d'assemblage de l'objet à envoyer au font pour les fillières
-        etablissement.setComposition(fonctions, typesFonctionFiliereMap, disciplinesMap, personnesMap);
+        etablissement.setFilieres(structureService.getComposition(etablissement, etabPersonnes));
 
         return new ResponseEntity<>(etablissement, HttpStatus.OK);
     }

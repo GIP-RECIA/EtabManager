@@ -19,7 +19,9 @@ package fr.recia.manager.services.db;
 import fr.recia.manager.configuration.AppProperties;
 import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.db.dto.education.DisciplineDto;
+import fr.recia.manager.db.dto.fonction.FonctionDto;
 import fr.recia.manager.db.dto.fonction.TypeFonctionFiliereDto;
+import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
 import fr.recia.manager.db.dto.structure.SimpleStructureDto;
 import fr.recia.manager.db.dto.structure.StructureDto;
 import fr.recia.manager.db.entities.education.Discipline;
@@ -41,6 +43,7 @@ import fr.recia.manager.web.dto.function.DisciplinesInFillierePossiblesDto;
 import fr.recia.manager.web.dto.function.FiliereDisplayDto;
 import fr.recia.manager.web.dto.function.FonctionPossibleDto;
 import fr.recia.manager.web.dto.structure.StructureConfigDto;
+import fr.recia.manager.web.dto.user.CardPersonneDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IteratorUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +57,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -74,6 +78,9 @@ public class StructureService {
 
     @Autowired
     private DisciplineRepository<Discipline> disciplineRepository;
+
+    @Autowired
+    private FonctionService fonctionService;
 
     @Autowired
     private AppProperties appProperties;
@@ -164,5 +171,92 @@ public class StructureService {
         }
 
         return dtoListMap.values().stream().sorted(Comparator.comparing(DisciplinesInFillierePossiblesDto::getLibelle)).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public List<TypeFonctionFiliereDto> getComposition(StructureDto etablissement, List<DatabasePersonneDto> etabPersonnes) {
+
+        // Récupération des filières (fonctions, typesFonctionFiliere et disciplines)
+        List<FonctionDto> fonctions = fonctionService.getStructureFonctions(etablissement.getId());
+
+        // On créé des maps pour pouvoir récupérer les objets par leur id en O(1)
+        List<TypeFonctionFiliereDto> typesFonctionFiliereList = fonctionService.getTypesFonctionFiliere(etablissement.getSource());
+        Map<Long, TypeFonctionFiliereDto> typesFonctionFiliere = typesFonctionFiliereList.stream()
+            .collect(Collectors.toMap(
+                TypeFonctionFiliereDto::getId,
+                Function.identity()
+            ));
+        List<DisciplineDto> disciplinesList = fonctionService.getDisciplines(etablissement.getSource());
+        Map<Long, DisciplineDto> disciplines = disciplinesList.stream()
+            .collect(Collectors.toMap(
+                DisciplineDto::getId,
+                Function.identity()
+            ));
+        Map<Long, DatabasePersonneDto> personnesMap = etabPersonnes.stream()
+            .collect(Collectors.toMap(
+                DatabasePersonneDto::getId,
+                Function.identity()
+            ));
+
+        // Si pas de fonctions dans l'établissement on retourne une map vide
+        if (fonctions.isEmpty()) {
+            return List.of();
+        }
+
+        // Maps indexées qu'on garde à côté pour pouvoir accéder facilement aux objets
+        Map<Long, TypeFonctionFiliereDto> filieresMap = new HashMap<>();
+        Map<Long, Map<Long, DisciplineDto>> disciplinesMap = new HashMap<>();
+
+        // Liste finale qu'on va retourner au front
+        List<TypeFonctionFiliereDto> filieresWithDisciplines = new ArrayList<>();
+
+        for (FonctionDto fonctionDto : fonctions) {
+            // Ajout de la filière si elle n'existe pas
+            Long filiereId = fonctionDto.getFiliere();
+            if(typesFonctionFiliere.containsKey(filiereId)){
+                TypeFonctionFiliereDto typeFonctionFiliereDto;
+                if (!filieresMap.containsKey(filiereId)) {
+                    typeFonctionFiliereDto = new TypeFonctionFiliereDto(typesFonctionFiliere.get(filiereId));
+                    filieresMap.put(filiereId, typeFonctionFiliereDto);
+                    disciplinesMap.put(filiereId, new HashMap<>());
+                    filieresWithDisciplines.add(typeFonctionFiliereDto);
+                } else {
+                    typeFonctionFiliereDto = filieresMap.get(filiereId);
+                }
+
+                // Ajout de la discipline si elle n'existe pas
+                Long disciplineId = fonctionDto.getDiscipline();
+                // Cas spécial pour les CFA
+                if (disciplineId == null) {
+                    DatabasePersonneDto databasePersonneDto = personnesMap.get(fonctionDto.getPersonne());
+                    typeFonctionFiliereDto.getPersonnesWithoutDiscipline().add(databasePersonneDto);
+                } else {
+                    if (disciplines.containsKey(disciplineId)) {
+                        DisciplineDto disciplineDto;
+                        if (!disciplinesMap.get(filiereId).containsKey(disciplineId)) {
+                            disciplineDto = new DisciplineDto(disciplines.get(disciplineId));
+                            disciplinesMap.get(filiereId).put(disciplineId, disciplineDto);
+                            typeFonctionFiliereDto.getDisciplines().add(disciplineDto);
+                        } else {
+                            disciplineDto = disciplinesMap.get(filiereId).get(disciplineId);
+                        }
+                        // Ajout de la personne dans la discipline
+                        if (personnesMap.containsKey(fonctionDto.getPersonne())) {
+                            DatabasePersonneDto databasePersonneDto = personnesMap.get(fonctionDto.getPersonne());
+                            disciplineDto.getPersonnes().add(new CardPersonneDto(databasePersonneDto));
+                            disciplineDto.getCategories().add(databasePersonneDto.getCategorie());
+                        } else {
+                            // TODO : que faire dans ce cas si on se retrouve avec une discipline sans personne dedans ?
+                            log.warn("person in functions but not in structure for {} : {}", disciplineDto.getId(), fonctionDto.getPersonne());
+                        }
+                    } else {
+                        log.warn("discipline {} is not in known in disciplines for {}", disciplineId, etablissement.getSource());
+                    }
+                }
+            } else {
+                log.warn("filiere {} is not in known in filieres for {}", filiereId, etablissement.getSource());
+            }
+        }
+
+        return filieresWithDisciplines;
     }
 }
