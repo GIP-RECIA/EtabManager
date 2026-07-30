@@ -135,6 +135,11 @@ app:
           Service_academique: ''
         uai-pattern: ''
 
+  create:
+    libelle-type-structure-to-categories:
+      "":
+        -
+
   front:
     default-structure-image:
     default-user-image:
