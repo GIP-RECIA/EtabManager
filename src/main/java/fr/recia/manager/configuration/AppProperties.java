@@ -24,12 +24,10 @@ import fr.recia.manager.configuration.bean.CorsProperties;
 import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.configuration.bean.CustomLdapProperties;
 import fr.recia.manager.configuration.bean.CustomMailProperties;
-import fr.recia.manager.configuration.bean.CustomMetricsProperties;
 import fr.recia.manager.configuration.bean.ExportEsidocProperties;
 import fr.recia.manager.configuration.bean.FrontProperties;
 import fr.recia.manager.configuration.bean.GroupProperties;
 import fr.recia.manager.configuration.bean.GrouperProperties;
-import fr.recia.manager.configuration.bean.IpRangeProperties;
 import fr.recia.manager.configuration.bean.RedisProperties;
 import fr.recia.manager.configuration.bean.RedisSessionCleanupProperties;
 import fr.recia.manager.configuration.bean.RestrictionRentreeProperties;
@@ -67,9 +65,7 @@ public class AppProperties {
     private CustomConfigProperties customConfig;
     private CustomLdapProperties ldap;
     private CustomMailProperties mail;
-    private CustomMetricsProperties metrics;
     private FrontProperties front;
-    private IpRangeProperties authorizedServices;
     private RightsProperties rights;
     private AdminProperties admin;
     private GrouperProperties grouper;
@@ -107,27 +103,6 @@ public class AppProperties {
         }
         customConfig.loadAdminFonctions();
         log.info("Loaded properties: {}", this);
-    }
-
-    @Override
-    public String toString() {
-        return "{\n" +
-            cas + ",\n" +
-            cors + ",\n" +
-            customConfig + ",\n" +
-            ldap + ",\n" +
-            mail + ",\n" +
-            metrics + ",\n" +
-            front + ",\n" +
-            authorizedServices + ",\n" +
-            rights + ",\n" +
-            restrictionRentree + ",\n" +
-            exportEsidoc + ",\n" +
-            admin + ",\n" +
-            grouper + ",\n" +
-            redis + ",\n" +
-            session + ",\n" +
-            "\n}";
     }
 
 }

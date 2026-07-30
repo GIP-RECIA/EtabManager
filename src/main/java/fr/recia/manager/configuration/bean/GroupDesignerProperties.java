@@ -39,13 +39,4 @@ public class GroupDesignerProperties {
     @NotEmpty
     private List<String> groupToAttachEndPattern;
 
-    @Override
-    public String toString() {
-        return "{" +
-            "\n\t\t\t\t\"groupRootPattern\": \"" + groupRootPattern + "\"," +
-            "\n\t\t\t\t\"groupAttachEndMatch\": \"" + groupAttachEndMatch + "\"," +
-            "\n\t\t\t\t\"groupToAttachEndPattern\": " + ListUtil.toStringList(groupToAttachEndPattern, JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) +
-            "\n\t\t\t}";
-    }
-
 }

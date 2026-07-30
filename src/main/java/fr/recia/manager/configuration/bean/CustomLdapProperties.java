@@ -67,18 +67,6 @@ public class CustomLdapProperties {
         private String password;
         private boolean anonymousReadOnly = false;
         private boolean nativePooling = false;
-
-        @Override
-        public String toString() {
-            return "{" +
-                "\n\t\t\"urls\": " + ListUtil.toStringList(Arrays.asList(urls), JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) + "," +
-                "\n\t\t\"base\": \"" + base + "\"," +
-                "\n\t\t\"username\": \"" + username + "\"," +
-                "\n\t\t\"password\": \"*******\"," +
-                "\n\t\t\"anonymousReadOnly\": \"" + anonymousReadOnly + "\"," +
-                "\n\t\t\"nativePooling\": \"" + nativePooling + "\"" +
-                "\n\t}";
-        }
     }
 
     @Data
@@ -89,18 +77,6 @@ public class CustomLdapProperties {
         private int searchScope = SearchControls.SUBTREE_SCOPE;
         private int timeLimit = 0;
         private int countLimit = 0;
-
-        @Override
-        public String toString() {
-            return "{" +
-                "\n\t\t\"ignorePartialResultException\": \"" + ignorePartialResultException + "\"," +
-                "\n\t\t\"ignoreNameNotFoundException\": \"" + ignoreNameNotFoundException + "\"," +
-                "\n\t\t\"ignoreSizeLimitExceededException\": \"" + ignoreSizeLimitExceededException + "\"," +
-                "\n\t\t\"searchScope\": \"" + searchScope + "\"," +
-                "\n\t\t\"timeLimit\": \"" + timeLimit + "\"," +
-                "\n\t\t\"countLimit\": \"" + countLimit + "\"" +
-                "\n\t}";
-        }
     }
 
     @Data
@@ -129,20 +105,6 @@ public class CustomLdapProperties {
         private Set<String> otherDisplayedAttributes = new HashSet<>();
         @NotNull
         private Set<String> otherBackendAttributes = new HashSet<>();
-
-        @Override
-        public String toString() {
-            return "{" +
-                "\n\t\t\"baseDN\": \"" + baseDN + "\"," +
-                "\n\t\t\"idAttribute\": \"" + idAttribute + "\"," +
-                "\n\t\t\"displayNameAttribute\": \"" + displayNameAttribute + "\"," +
-                "\n\t\t\"mailAttribute\": \"" + mailAttribute + "\"," +
-                "\n\t\t\"searchAttribute\": \"" + searchAttribute + "\"," +
-                "\n\t\t\"groupAttribute\": \"" + groupAttribute + "\"," +
-                "\n\t\t\"otherDisplayedAttributes\": " + (otherDisplayedAttributes != null ? ListUtil.toStringList(otherDisplayedAttributes, JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) : null) + "," +
-                "\n\t\t\"otherBackendAttributes\": " + (otherBackendAttributes != null ? ListUtil.toStringList(otherBackendAttributes, JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) : null) +
-                "\n\t}";
-        }
     }
 
     @Getter
@@ -180,45 +142,7 @@ public class CustomLdapProperties {
             private Map<CategorieStructure, Pattern> structureCategoriesPatterns;
             private Pattern uaiPattern;
 
-            @Override
-            public String toString() {
-                return "{" +
-                    "\n\t\t\t\"structureFromGroupPattern\": \"" + structureFromGroupPattern + "\"," +
-                    "\n\t\t\t\"filterGroupsOfStructure\": \"" + filterGroupsOfStructure + "\"," +
-                    "\n\t\t\t\"structureCategoriesPatterns\": " + structureCategoriesPatterns.keySet().stream()
-                    .map(key -> "\"" + key + "\": \"" + structureCategoriesPatterns.get(key) + "\"")
-                    .collect(Collectors.joining(",\n\t\t\t\t", "{\n\t\t\t\t", "\n\t\t\t}")) + "," +
-                    "\n\t\t\t\"uaiPattern\": \"" + uaiPattern + "\"" +
-                    "\n\t\t}";
-            }
-
         }
-
-        @Override
-        public String toString() {
-            return "{" +
-                "\n\t\t\"groupMemberKeyPattern\": \"" + groupMemberKeyPattern + "\"," +
-                "\n\t\t\"groupMemberKeyPatternIndex\": \"" + groupMemberKeyPatternIndex + "\"," +
-                "\n\t\t\"userMemberKeyPattern\": \"" + userMemberKeyPattern + "\"," +
-                "\n\t\t\"userMemberKeyPatternIndex\": \"" + userMemberKeyPatternIndex + "\"," +
-                "\n\t\t\"groupDisplayNamePattern\": \"" + groupDisplayNamePattern + "\"," +
-                "\n\t\t\"DNContainsDisplayName\": \"" + DNContainsDisplayName + "\"," +
-                "\n\t\t\"resolveUserMembers\": \"" + resolveUserMembers + "\"," +
-                "\n\t\t\"resolveUserMembersByUserAttributes\": \"" + resolveUserMembersByUserAttributes + "\"," +
-                "\n\t\t\"dontResolveMembersWithGroupPattern\": \"" + dontResolveMembersWithGroupPattern + "\"," +
-                "\n\t\t\"structureProperties\": " + structureProperties +
-                "\n\t}";
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "CustomLdapProperties\": {" +
-            "\n\t\"contextSource\": " + contextSource + "," +
-            "\n\t\"ldapTemplate\": " + ldapTemplate + "," +
-            "\n\t\"userBranch\": " + userBranch + "," +
-            "\n\t\"groupBranch\": " + groupBranch +
-            "\n}";
     }
 
 }

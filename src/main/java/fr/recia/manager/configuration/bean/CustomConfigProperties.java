@@ -51,7 +51,6 @@ public class CustomConfigProperties {
         private String source;
         private List<FonctionAlertProperties> fonctionAlerts;
 
-
         @Data
         public static class FonctionAlertProperties {
 
@@ -67,34 +66,8 @@ public class CustomConfigProperties {
                 private AlertType type;
                 private boolean action;
 
-                @Override
-                public String toString() {
-                    return "{ " +
-                        "\"value\": " + value + ", " +
-                        "\"type\": \"" + type + "\", " +
-                        "\"action\": \"" + action +
-                        "\" }";
-                }
             }
 
-            @Override
-            public String toString() {
-                return "{" +
-                    "\n\t\t\t\t\t\"filiere\": \"" + filiere + "\"," +
-                    "\n\t\t\t\t\t\"discipline\": \"" + discipline + "\"," +
-                    "\n\t\t\t\t\t\"min\": " + min + "," +
-                    "\n\t\t\t\t\t\"max\": " + max +
-                    "\n\t\t\t\t}";
-            }
-
-        }
-
-        @Override
-        public String toString() {
-            return "{" +
-                "\n\t\t\t\"source\": \"" + source + "\"," +
-                "\n\t\t\t\"fonctionAlerts\": " + ListUtil.toStringList(fonctionAlerts, ",\n\t\t\t\t", "[\n\t\t\t\t", "\n\t\t\t]") +
-                "\n\t\t}";
         }
 
     }
@@ -107,26 +80,8 @@ public class CustomConfigProperties {
 
         @Data
         public static class GuichetProperties {
-
             private String nom;
             private List<CategoriePersonne> categoriesPersonne;
-
-            @Override
-            public String toString() {
-                return "\t\t\t\t{" +
-                    "\n\t\t\t\t\t\"nom\": \"" + nom + "\"," +
-                    "\n\t\t\t\t\t\"categoriesPersonne\": " + ListUtil.toStringList(categoriesPersonne) +
-                    "\n\t\t\t\t}";
-            }
-
-        }
-
-        @Override
-        public String toString() {
-            return "\t\t{" +
-                "\n\t\t\t\"source\": \"" + source + "\"," +
-                "\n\t\t\t\"guichets\": " + ListUtil.toStringList(guichets, ",\n", "[\n", "\n\t\t\t]") +
-                "\n\t\t}";
         }
 
     }
@@ -145,36 +100,8 @@ public class CustomConfigProperties {
             private List<String> disciplines;
             private boolean admin;
 
-            @Override
-            public String toString() {
-                return "{" +
-                    "\n\t\t\t\t\t\"code\": \"" + code + "\"," +
-                    "\n\t\t\t\t\t\"admin\": \"" + admin + "\"," +
-                    "\n\t\t\t\t\t\"disciplines\": " + ListUtil.toStringList(disciplines, JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) +
-                    "\n\t\t\t\t}";
-            }
-
         }
 
-        @Override
-        public String toString() {
-            return "{" +
-                "\n\t\t\t\"source\": \"" + source + "\"," +
-                "\n\t\t\t\"filieres\": " + ListUtil.toStringList(filieres, ",\n\t\t\t\t", "[\n\t\t\t\t", "\n\t\t\t]") + "," +
-                "\n\t\t\t\"disciplines\": " + ListUtil.toStringList(disciplines, JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) +
-                "\n\t\t}";
-        }
-
-    }
-
-    @Override
-    public String toString() {
-        return "CustomConfigProperties\": {" +
-            "\n\t\"suppressDays\": " + suppressDays + "," +
-            "\n\t\"alerts\": " + ListUtil.toStringList(alerts, ",\n\t\t", "[\n\t\t", "\n\t]") +
-            "\n\t\"fonctions\": " + ListUtil.toStringList(fonctions, ",\n\t\t", "[\n\t\t", "\n\t]") +
-            "\n\t\"adminFonctionsBySource\": " + adminFonctionsBySource.toString() +
-            "\n}";
     }
 
     public void loadAdminFonctions(){

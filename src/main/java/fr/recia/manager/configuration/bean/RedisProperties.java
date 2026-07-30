@@ -50,16 +50,4 @@ public class RedisProperties {
         log.info("RedisProperties {}", this);
     }
 
-    @Override
-    public String toString() {
-        return "RedisProperties{" +
-            "hostName='" + hostName + '\'' +
-            ", port=" + port +
-            ", userName='" + userName + '\'' +
-            ", password='" + password + '\'' +
-            ", databaseIndex=" + databaseIndex +
-            ", mappingPrefix='" + mappingPrefix + '\'' +
-            ", indexPrefix='" + indexPrefix + '\'' +
-            '}';
-    }
 }
