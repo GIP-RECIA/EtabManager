@@ -26,7 +26,6 @@ import java.util.Date;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class FonctionDto {
@@ -60,6 +59,15 @@ public class FonctionDto {
         this.dateFin = dateFin;
     }
 
+    public FonctionDto(Long filiere, Long discipline, String source, Long structure, Date dateFin, Date dateDebut) {
+        this.filiere = filiere;
+        this.discipline = discipline;
+        this.source = source;
+        this.structure = structure;
+        this.dateFin = dateFin;
+        this.dateDebut = dateDebut;
+    }
+
     public FonctionDto(Long personne, Long filiere, Long discipline, String source) {
         this.personne = personne;
         this.filiere = filiere;
@@ -82,6 +90,16 @@ public class FonctionDto {
         this.source = source;
         this.structure = structure;
         this.dateFin = dateFin;
+    }
+
+    public FonctionDto(Long personne, Long filiere, Long discipline, String source, Long structure, Date dateFin, Date dateDebut) {
+        this.personne = personne;
+        this.filiere = filiere;
+        this.discipline = discipline;
+        this.source = source;
+        this.structure = structure;
+        this.dateFin = dateFin;
+        this.dateDebut = dateDebut;
     }
 
     public FonctionDto(FonctionDto fonctionDto) {

@@ -166,12 +166,12 @@ public class FonctionService {
                 if(adminFilieres != null && adminFilieres.contains(typeFonctionFiliere.getCodeFiliere())){
                     log.debug("Admin fonction add : check user rights");
                     if(isAdmin){
-                        toAddAdditional.add(new FonctionDto(personneId, fonctionToAdd.getFiliere(), fonctionToAdd.getDiscipline(), source, structureId, fonctionToAdd.getDateFin()));
+                        toAddAdditional.add(new FonctionDto(personneId, fonctionToAdd.getFiliere(), fonctionToAdd.getDiscipline(), source, structureId, fonctionToAdd.getDateFin(), fonctionToAdd.getDateDebut()));
                     } else {
                         log.warn("Can't add filiere {} because user is not authorized", typeFonctionFiliere.getLibelleFiliere());
                     }
                 } else {
-                    toAddAdditional.add(new FonctionDto(personneId, fonctionToAdd.getFiliere(), fonctionToAdd.getDiscipline(), source, structureId, fonctionToAdd.getDateFin()));
+                    toAddAdditional.add(new FonctionDto(personneId, fonctionToAdd.getFiliere(), fonctionToAdd.getDiscipline(), source, structureId, fonctionToAdd.getDateFin(), fonctionToAdd.getDateDebut()));
                 }
             }
         }
@@ -201,15 +201,15 @@ public class FonctionService {
                 if(nbExistingFonctions == 0){
                     TypeFonctionFiliere filiere = typeFonctionFiliereRepository.findById(fonctionDto.getFiliere()).orElse(null);
                     Discipline discipline = disciplineRepository.findById(fonctionDto.getDiscipline()).orElse(null);
-                    fonctions.add(new Fonction(discipline, filiere, aStructure, aPersonne, source, fonctionDto.getDateFin()));
+                    fonctions.add(new Fonction(discipline, filiere, aStructure, aPersonne, source, fonctionDto.getDateFin(), fonctionDto.getDateDebut()));
                     ok = true;
                 } else if (nbExistingFonctions == 1){
                     // Par contre si on a une date de début/fin il faut mettre à jour la fonction avec les nouvelles dates
                     Fonction fonction = fonctionRepository.findSameFonctionsInStructure(fonctionDto.getPersonne(), fonctionDto.getStructure(), fonctionDto.getDiscipline(), fonctionDto.getFiliere()).get(0);
-                    // TODO : date de début sur les fonctions
-                    if(fonctionDto.getDateFin() != null && !fonctionDto.getDateFin().equals(fonction.getDateFin())){
+                    if((fonctionDto.getDateFin() != null && !fonctionDto.getDateFin().equals(fonction.getDateFin())) || (fonctionDto.getDateDebut() != null && !fonctionDto.getDateDebut().equals(fonction.getDateDebut()))){
                         log.debug("Function {}-{} already added for user {} in etab {}, updating dates...", fonctionDto.getFiliere(), fonctionDto.getDiscipline(), fonctionDto.getPersonne(), fonctionDto.getStructure());
                         fonction.setDateFin(fonctionDto.getDateFin());
+                        fonction.setDateDebut(fonctionDto.getDateDebut());
                         fonctions.add(fonction);
                         ok = true;
                     } else {

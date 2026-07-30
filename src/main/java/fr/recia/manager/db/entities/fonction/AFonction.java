@@ -68,8 +68,9 @@ public abstract class AFonction extends AbstractTimedEntity {
     @JoinColumn(name = "personne_fk")
     private APersonne personne;
 
-    @Temporal(TemporalType.DATE)
-    private Date dateFin;
+    /** Donne l'information de la date de debut de la fonction lors de l'export. */
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateDebut;
 
     /**
      * Constructeur de l'objet AFonction.java.
@@ -93,11 +94,12 @@ public abstract class AFonction extends AbstractTimedEntity {
      * @param source    Source d'alimentation gérant cette fonction.
      * @param dateFin   Date de fin de la fonction.
      */
-    public AFonction(final CategorieFonction categorie, final APersonne personne, final String source, final Date dateFin) {
+    public AFonction(final CategorieFonction categorie, final APersonne personne, final String source, final Date dateFin, final Date dateDebut) {
         this.categorie = categorie;
         this.source = source;
         this.personne = personne;
-        this.dateFin = dateFin;
+        super.setDateFin(dateFin);
+        this.dateDebut = dateDebut;
     }
 
 }
