@@ -35,16 +35,4 @@ public class CorsProperties {
     private List<String> allowedHeaders;
     private List<String> allowedMethods;
 
-    @Override
-    public String toString() {
-        return "CorsProperties\": {" +
-            "\n\t\"enable\": " + enable + "," +
-            "\n\t\"allowCredentials\": " + allowCredentials + "," +
-            "\n\t\"allowedOrigins\": " + ListUtil.toStringList(allowedOrigins, JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) + "," +
-            "\n\t\"exposedHeaders\": " + ListUtil.toStringList(exposedHeaders, JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) + "," +
-            "\n\t\"allowedHeaders\": " + ListUtil.toStringList(allowedHeaders, JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) + "," +
-            "\n\t\"allowedMethods\": " + ListUtil.toStringList(allowedMethods, JSON_ARRAY_DELIMITER, JSON_ARRAY_PREFIX, JSON_ARRAY_SUFFIX) +
-            "\n}";
-    }
-
 }

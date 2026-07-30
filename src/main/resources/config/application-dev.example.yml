@@ -79,15 +79,6 @@ app:
     base-url: http://localhost:8080
     from: etab-manager@localhost
 
-  authorized-services:
-    ip-ranges:
-      -
-
-  metrics:
-    prometeus-authorized-acess:
-      ip-ranges:
-        -
-
   uid-factory:
     default-code-generateur:
     domain-to-code-generateur:
@@ -97,6 +88,9 @@ app:
     nb-lettre-ann:
     nb-lettre-total:
     nb-lettre-inc:
+    default-code-region:
+    domain-to-code-region:
+      '':
 
   ldap:
     context-source:

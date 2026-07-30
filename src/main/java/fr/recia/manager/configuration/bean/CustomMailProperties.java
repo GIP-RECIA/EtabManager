@@ -29,12 +29,4 @@ public class CustomMailProperties {
     @NotBlank
     private String from;
 
-    @Override
-    public String toString() {
-        return "CustomMailProperties\": {" +
-            "\n\t\"baseUrl\": \"" + baseUrl + "\"," +
-            "\n\t\"from\": \"" + from + "\"" +
-            "\n}";
-    }
-
 }

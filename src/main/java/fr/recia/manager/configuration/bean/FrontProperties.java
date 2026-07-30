@@ -16,9 +16,7 @@
 
 package fr.recia.manager.configuration.bean;
 
-import fr.recia.manager.db.enums.CategoriePersonne;
 import fr.recia.manager.db.enums.Etat;
-import fr.recia.manager.utils.ListUtil;
 import lombok.Data;
 
 import java.util.List;
@@ -37,18 +35,8 @@ public class FrontProperties {
 
     @Data
     public static class HomeLinkProperties{
-
         private String fname;
         private String url;
-
-
-        @Override
-        public String toString() {
-            return "{" +
-                "\n\t\t\"fname\": \n" + fname + "\n," +
-                "\n\t\t\"url\": \n" + url + "\"" +
-                "\n\t}";
-        }
     }
 
     @Data
@@ -57,43 +45,12 @@ public class FrontProperties {
         private ComponentProperties header;
         private ComponentProperties footer;
 
-        @Override
-        public String toString() {
-            return "{" +
-                "\n\t\t\"header\": " + header + "," +
-                "\n\t\t\"footer\": " + footer +
-                "\n\t}";
-        }
-
         @Data
         public static class ComponentProperties {
-
             private String componentPath;
             private Map<String, String> props;
-
-            @Override
-            public String toString() {
-                return "{" +
-                    "\n\t\t\t\"componentPath\": \"" + componentPath + "\"," +
-                    "\n\t\t\t\"props\": " + props +
-                    "\n\t\t}";
-            }
-
         }
 
-    }
-
-    @Override
-    public String toString() {
-        return "\"FrontProperties\": {" +
-            "\n\t\"defaultStructureImage\": \"" + defaultStructureImage + "\"," +
-            "\n\t\"defaultUserImage\": \"" + defaultUserImage + "\"," +
-            "\n\t\"endFunctionWarning\": " + endFunctionWarning + "," +
-            "\n\t\"homeLinks\": " + ListUtil.toStringList(homeLinks) + "," +
-            "\n\t\"editAllowedStates\": " + ListUtil.toStringList(editAllowedStates) + "," +
-            "\n\t\"filterAccountStates\": " + ListUtil.toStringList(filterAccountStates) + "," +
-            "\n\t\"extendedUportal\": " + extendedUportal +
-            "\n}";
     }
 
 }
