@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package fr.recia.manager.services.exceptions;
+package fr.recia.manager.exceptions;
 
-public class LoginTooHighException extends RuntimeException {
-    public LoginTooHighException(String message) {
+public class EmailAlreadyExistsException extends RuntimeException {
+    public EmailAlreadyExistsException(String message) {
         super(message);
     }
 }

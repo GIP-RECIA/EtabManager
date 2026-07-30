@@ -62,7 +62,7 @@ import fr.recia.manager.services.cache.CacheInvalidationService;
 import fr.recia.manager.services.creation.NameCalculator;
 import fr.recia.manager.services.creation.PasswordGenerator;
 import fr.recia.manager.services.creation.UidFactory;
-import fr.recia.manager.services.exceptions.EmailAlreadyExistsException;
+import fr.recia.manager.exceptions.EmailAlreadyExistsException;
 import fr.recia.manager.services.structure.StructureLoader;
 import fr.recia.manager.web.dto.enseignement.ClasseFormationPossibleDto;
 import fr.recia.manager.web.dto.enseignement.EnseignementModifyRequest;

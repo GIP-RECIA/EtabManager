@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package fr.recia.manager.services.exceptions;
+package fr.recia.manager.exceptions;
 
-public class EmailAlreadyExistsException extends RuntimeException {
-    public EmailAlreadyExistsException(String message) {
+public class UnauthorizedGroupModificationException extends RuntimeException {
+    public UnauthorizedGroupModificationException(String message) {
         super(message);
     }
 }

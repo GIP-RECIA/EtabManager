@@ -19,7 +19,7 @@ package fr.recia.manager.services.db;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.personne.Login;
 import fr.recia.manager.db.repositories.personne.LoginRepository;
-import fr.recia.manager.services.exceptions.LoginTooHighException;
+import fr.recia.manager.exceptions.LoginTooHighException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
