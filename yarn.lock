@@ -1967,10 +1967,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pinia/colada-devtools@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@pinia/colada-devtools@npm:1.1.0"
-  checksum: 10/ec02f63f8786188f9e646ee9930e43be4616db4340f949e52be5c5ca2c999fb4239decd5061ac3a9c463199fac59019ccae0f23ab169813ab94c6eb3bcf36a6e
+"@pinia/colada-devtools@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@pinia/colada-devtools@npm:1.1.2"
+  checksum: 10/8c3b3b680edf1cdc5e2a127b1e194a4051480cd8f5074e10c540d4a9ec15b217f1860e991ffca5c9df2db9e8149a1c3a74ddce07c2f61a012f406081ed431a63
   languageName: node
   linkType: hard
 
@@ -5200,7 +5200,7 @@ __metadata:
     "@intlify/unplugin-vue-i18n": "npm:^11.2.4"
     "@juggle/resize-observer": "npm:^3.4.0"
     "@pinia/colada": "npm:^1.4.2"
-    "@pinia/colada-devtools": "npm:^1.1.0"
+    "@pinia/colada-devtools": "npm:^1.1.2"
     "@pinia/testing": "npm:^2.0.1"
     "@playwright/test": "npm:^1.62.0"
     "@tanstack/vue-table": "npm:^8.21.3"
