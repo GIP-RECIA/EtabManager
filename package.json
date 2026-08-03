@@ -19,7 +19,7 @@
     "@pinia/colada": "^1.4.2",
     "@tanstack/vue-table": "^8.21.3",
     "@vueuse/core": "^14.4.0",
-    "axios": "^1.18.1",
+    "axios": "^1.19.0",
     "pinia": "^3.0.4",
     "vue": "^3.5.40",
     "vue-i18n": "^11.4.8",
