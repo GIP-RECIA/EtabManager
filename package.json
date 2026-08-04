@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@pinia/colada": "^1.4.2",
-    "@tanstack/vue-table": "^8.21.3",
+    "@tanstack/vue-table": "^9.0.0",
     "@vueuse/core": "^14.4.0",
     "axios": "^1.19.0",
     "pinia": "^4.0.2",

@@ -2217,21 +2217,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/table-core@npm:8.21.3":
-  version: 8.21.3
-  resolution: "@tanstack/table-core@npm:8.21.3"
-  checksum: 10/aa05e5f80110f0f56d66161e950668ea6ef3e2ea4f3a2ccd5d5980b39b4feea987245b20531aee2c6743e6edd12c0361503413b63090c807f88a61b19bfd04f3
+"@tanstack/store@npm:^0.11.0":
+  version: 0.11.0
+  resolution: "@tanstack/store@npm:0.11.0"
+  checksum: 10/f83291e570f7a66768b77aa9c1c30606c78640da8426c7d1cae4dc6454e790885b362243547c09a543e88dc0581d6622ec3c5ee08a33682779ea066492949573
   languageName: node
   linkType: hard
 
-"@tanstack/vue-table@npm:^8.21.3":
-  version: 8.21.3
-  resolution: "@tanstack/vue-table@npm:8.21.3"
+"@tanstack/table-core@npm:9.0.0":
+  version: 9.0.0
+  resolution: "@tanstack/table-core@npm:9.0.0"
   dependencies:
-    "@tanstack/table-core": "npm:8.21.3"
+    "@tanstack/store": "npm:^0.11.0"
+  checksum: 10/e86fb5a46f45c5721864879218d74e6222bfe32204a6842d68c9e6bc102c6f16e51bd370e56baa3f8c7ca0caf6295c4b848540bcf22855d9b3ec97a70fb4307b
+  languageName: node
+  linkType: hard
+
+"@tanstack/vue-table@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "@tanstack/vue-table@npm:9.0.0"
+  dependencies:
+    "@tanstack/store": "npm:^0.11.0"
+    "@tanstack/table-core": "npm:9.0.0"
   peerDependencies:
     vue: ">=3.2"
-  checksum: 10/8e62a2ef329b629b1e49182f56ef8cdd30d9ac6294f40c082f668e8102f11f07ff4e25d1def0efba4be280145cf217ee7eaf507eee48c5f1e68b64eb426e092b
+  checksum: 10/ea016de9bbfa617e6fe66caf6cfe08d08cc003d3bce2e4b3ff2ec39289aecea7f5b076950973d04ed982933abeee46830f79a9b80cef6a9961caac1288518aa7
   languageName: node
   linkType: hard
 
@@ -5094,7 +5104,7 @@ __metadata:
     "@pinia/colada-devtools": "npm:^1.1.2"
     "@pinia/testing": "npm:^2.0.1"
     "@playwright/test": "npm:^1.62.1"
-    "@tanstack/vue-table": "npm:^8.21.3"
+    "@tanstack/vue-table": "npm:^9.0.0"
     "@tsconfig/node24": "npm:^24.0.4"
     "@types/jsdom": "npm:^28"
     "@types/lodash-es": "npm:^4"

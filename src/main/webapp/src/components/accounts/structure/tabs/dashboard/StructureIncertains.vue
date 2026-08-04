@@ -19,6 +19,7 @@ import type {
   ExpandedState,
   Row,
   SortingState,
+  VueTable,
 } from '@tanstack/vue-table'
 import type { Incertain, Structure } from '@/types/index.ts'
 import {
@@ -28,16 +29,22 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
+  columnFilteringFeature,
+  columnVisibilityFeature,
   createColumnHelper,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
   FlexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useVueTable,
+  globalFilteringFeature,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  rowSortingFeature,
+  tableFeatures,
+  useTable,
 } from '@tanstack/vue-table'
 import { format } from 'date-fns'
-import { computed, h, ref, watch } from 'vue'
+import { computed, Fragment, h, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
 import Pagination from '@/components/Pagination.vue'
@@ -62,7 +69,19 @@ watch(
   { immediate: true },
 )
 
-function renderEtat(row: Row<Incertain>) {
+const features = tableFeatures({
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  globalFilteringFeature,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  rowSortingFeature,
+  filteredRowModel: createFilteredRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+  sortedRowModel: createSortedRowModel(),
+})
+
+function renderEtat(row: Row<typeof features, Incertain>) {
   const etat = {
     icon: getIconDefinition(row.original.personne.local),
     ...etatMap[row.original.personne.etat],
@@ -70,11 +89,13 @@ function renderEtat(row: Row<Incertain>) {
   const suppressDate = row.original.personne.dateSuppression
     ? format(row.original.personne.dateSuppression, 'P')
     : undefined
-  const title = getStateLabel(
-    etat.i18n,
-    suppressDate,
-    t,
-  )
+  const title = etat.i18n
+    ? getStateLabel(
+        etat.i18n,
+        suppressDate,
+        t,
+      )
+    : undefined
 
   return h(
     'span',
@@ -93,61 +114,64 @@ function renderEtat(row: Row<Incertain>) {
   )
 }
 
-function renderActions(row: Row<Incertain>) {
-  return [
-    h(
-      RouterLink,
-      {
-        to: {
-          name: 'user',
-          params: { userId: row.original.personne.id },
+function renderActions(row: Row<typeof features, Incertain>) {
+  return h(
+    Fragment,
+    [
+      h(
+        RouterLink,
+        {
+          to: {
+            name: 'user',
+            params: { userId: row.original.personne.id },
+          },
+          class: 'btn-secondary small circle',
         },
-        class: 'btn-secondary small circle',
-      },
-      () => [
-        h(
-          'span',
-          {
-            title: 'Consulter',
-          },
-          [
-            h(FontAwesomeIcon, {
-              icon: faEye,
-            }),
-          ],
-        ),
-      ],
-    ),
-    h(
-      'button',
-      {
-        type: 'button',
-        ariaExpanded: row.getIsExpanded(),
-        ariaControls: `user-menu-${row.original.personne.id}`,
-        class: 'btn-secondary small circle',
-        onClick: row.getToggleExpandedHandler(),
-      },
-      [
-        h(
-          'span',
-          {
-            title: 'Développer',
-          },
-          [
-            h(FontAwesomeIcon, {
-              icon: faAngleDown,
-              style: {
-                rotate: row.getIsExpanded() ? '180deg' : undefined,
-              },
-            }),
-          ],
-        ),
-      ],
-    ),
-  ]
+        () => [
+          h(
+            'span',
+            {
+              title: 'Consulter',
+            },
+            [
+              h(FontAwesomeIcon, {
+                icon: faEye,
+              }),
+            ],
+          ),
+        ],
+      ),
+      h(
+        'button',
+        {
+          type: 'button',
+          ariaExpanded: row.getIsExpanded(),
+          ariaControls: `user-menu-${row.original.personne.id}`,
+          class: 'btn-secondary small circle',
+          onClick: row.getToggleExpandedHandler(),
+        },
+        [
+          h(
+            'span',
+            {
+              title: 'Développer',
+            },
+            [
+              h(FontAwesomeIcon, {
+                icon: faAngleDown,
+                style: {
+                  rotate: row.getIsExpanded() ? '180deg' : undefined,
+                },
+              }),
+            ],
+          ),
+        ],
+      ),
+    ],
+  )
 }
 
-const columnHelper = createColumnHelper<Incertain>()
+const columnHelper = createColumnHelper<typeof features, Incertain>()
 const globalFilter = ref<string>()
 const columns = computed(() => [
   columnHelper.accessor('personne.etat', {
@@ -170,13 +194,10 @@ const columns = computed(() => [
 const sorting = ref<SortingState>([])
 const expanded = ref<ExpandedState>({})
 
-const table = useVueTable({
-  get data() {
-    return accounts.value
-  },
-  get columns() {
-    return columns.value
-  },
+const table = useTable({
+  features,
+  columns,
+  data: accounts,
   state: {
     get globalFilter() {
       return globalFilter.value
@@ -188,17 +209,13 @@ const table = useVueTable({
       return expanded.value
     },
   },
-  getCoreRowModel: getCoreRowModel(),
-  getFilteredRowModel: getFilteredRowModel(),
-  getPaginationRowModel: getPaginationRowModel(),
-  getSortedRowModel: getSortedRowModel(),
   getRowCanExpand: () => true,
   initialState: {
     pagination: {
+      pageIndex: 0,
       pageSize: 20,
     },
   },
-  enableRowSelection: true,
   onGlobalFilterChange: (val) => {
     globalFilter.value = val as string
   },
@@ -268,8 +285,7 @@ const table = useVueTable({
             >
               <FlexRender
                 v-if="!header.isPlaceholder"
-                :render="header.column.columnDef.header"
-                :props="header.getContext()"
+                :header="header"
               />
 
               <FontAwesomeIcon
@@ -295,8 +311,7 @@ const table = useVueTable({
                 :class="cell.column.columnDef.id"
               >
                 <FlexRender
-                  :render="cell.column.columnDef.cell"
-                  :props="cell.getContext()"
+                  :cell="cell"
                 />
               </td>
             </tr>
@@ -317,7 +332,7 @@ const table = useVueTable({
     </div>
 
     <Pagination
-      :table="table"
+      :table="table as VueTable<any, any>"
     />
   </div>
 </template>

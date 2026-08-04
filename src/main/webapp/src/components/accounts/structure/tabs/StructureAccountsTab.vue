@@ -20,6 +20,7 @@ import type {
   Row,
   RowSelectionState,
   SortingState,
+  VueTable,
 } from '@tanstack/vue-table'
 import type { AccountUser, Structure } from '@/types/index.ts'
 import {
@@ -31,17 +32,24 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
+  columnFilteringFeature,
+  columnVisibilityFeature,
   createColumnHelper,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
   FlexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useVueTable,
+  globalFilteringFeature,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  tableFeatures,
+  useTable,
 } from '@tanstack/vue-table'
 import { useBreakpoints } from '@vueuse/core'
 import { format } from 'date-fns'
-import { computed, h, ref, watch, watchEffect } from 'vue'
+import { computed, Fragment, h, ref, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
 import Pagination from '@/components/Pagination.vue'
@@ -214,7 +222,20 @@ const hasUid = computed<boolean>(() =>
   accounts.value.some(row => row.uid != null),
 )
 
-function renderEtat(row: Row<AccountUser>) {
+const features = tableFeatures({
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  globalFilteringFeature,
+  rowExpandingFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  filteredRowModel: createFilteredRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+  sortedRowModel: createSortedRowModel(),
+})
+
+function renderEtat(row: Row<typeof features, AccountUser>) {
   const etat = {
     icon: getIconDefinition(row.original.local),
     ...etatMap[row.original.etat],
@@ -222,11 +243,13 @@ function renderEtat(row: Row<AccountUser>) {
   const suppressDate = row.original.dateSuppression
     ? format(row.original.dateSuppression, 'P')
     : undefined
-  const title = getStateLabel(
-    etat.i18n,
-    suppressDate,
-    t,
-  )
+  const title = etat.i18n
+    ? getStateLabel(
+        etat.i18n,
+        suppressDate,
+        t,
+      )
+    : undefined
 
   return h(
     'span',
@@ -245,7 +268,7 @@ function renderEtat(row: Row<AccountUser>) {
   )
 }
 
-function renderActions(row: Row<AccountUser>) {
+function renderActions(row: Row<typeof features, AccountUser>) {
   const userName = concatenate([row.original.nom, row.original.prenom], ' ')
   const viewTitle = t('page.structure.accounts.table.action.view')
   const expendCollapseTitle = t(
@@ -256,73 +279,76 @@ function renderActions(row: Row<AccountUser>) {
     }`,
   )
 
-  return [
-    h(
-      RouterLink,
-      {
-        to: {
-          name: 'user',
-          params: { userId: row.original.id },
+  return h(
+    Fragment,
+    [
+      h(
+        RouterLink,
+        {
+          to: {
+            name: 'user',
+            params: { userId: row.original.id },
+          },
+          class: 'btn-secondary small circle',
         },
-        class: 'btn-secondary small circle',
-      },
-      () => [
-        h(
-          'span',
-          {
-            title: viewTitle,
-            ariaLabel: `${viewTitle} - ${userName}`,
-          },
-          [
-            h(FontAwesomeIcon, {
-              icon: faEye,
-            }),
-          ],
-        ),
-      ],
-    ),
-    h(
-      'button',
-      {
-        type: 'button',
-        ariaExpanded: row.getIsExpanded(),
-        ariaControls: `user-menu-${row.original.id}`,
-        class: 'btn-secondary small circle',
-        onClick: row.getToggleExpandedHandler(),
-      },
-      [
-        h(
-          'span',
-          {
-            title: expendCollapseTitle,
-            ariaLabel: `${expendCollapseTitle} - ${userName}`,
-          },
-          [
-            h(FontAwesomeIcon, {
-              icon: faAngleDown,
-              style: {
-                rotate: row.getIsExpanded() ? '180deg' : undefined,
-              },
-            }),
-          ],
-        ),
-      ],
-    ),
-  ]
+        () => [
+          h(
+            'span',
+            {
+              title: viewTitle,
+              ariaLabel: `${viewTitle} - ${userName}`,
+            },
+            [
+              h(FontAwesomeIcon, {
+                icon: faEye,
+              }),
+            ],
+          ),
+        ],
+      ),
+      h(
+        'button',
+        {
+          type: 'button',
+          ariaExpanded: row.getIsExpanded(),
+          ariaControls: `user-menu-${row.original.id}`,
+          class: 'btn-secondary small circle',
+          onClick: row.getToggleExpandedHandler(),
+        },
+        [
+          h(
+            'span',
+            {
+              title: expendCollapseTitle,
+              ariaLabel: `${expendCollapseTitle} - ${userName}`,
+            },
+            [
+              h(FontAwesomeIcon, {
+                icon: faAngleDown,
+                style: {
+                  rotate: row.getIsExpanded() ? '180deg' : undefined,
+                },
+              }),
+            ],
+          ),
+        ],
+      ),
+    ],
+  )
 }
 
-const columnHelper = createColumnHelper<AccountUser>()
+const columnHelper = createColumnHelper<typeof features, AccountUser>()
 const globalFilter = ref<string>()
 const columns = computed(() => [
   columnHelper.display({
     id: 'select',
-    header: ({ table }: { table: any }) => h(IndeterminateCheckbox, {
+    header: ({ table }) => h(IndeterminateCheckbox, {
       checked: table.getIsAllPageRowsSelected(),
-      indeterminate: table.getIsSomePageRowsSelected(),
+      indeterminate: table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected(),
       onChange: table.getToggleAllPageRowsSelectedHandler(),
       ariaLabel: t('page.structure.accounts.table.selectAll'),
     }),
-    cell: ({ row }: { row: any }) => h(IndeterminateCheckbox, {
+    cell: ({ row }) => h(IndeterminateCheckbox, {
       checked: row.getIsSelected(),
       disabled: !row.getCanSelect(),
       onChange: row.getToggleSelectedHandler(),
@@ -366,13 +392,10 @@ const rowSelection = ref<RowSelectionState>({})
 const sorting = ref<SortingState>([])
 const expanded = ref<ExpandedState>({})
 
-const table = useVueTable({
-  get data() {
-    return filteredAccounts.value
-  },
-  get columns() {
-    return columns.value
-  },
+const table = useTable({
+  features,
+  columns,
+  data: filteredAccounts,
   state: {
     get rowSelection() {
       return rowSelection.value
@@ -387,13 +410,10 @@ const table = useVueTable({
       return expanded.value
     },
   },
-  getCoreRowModel: getCoreRowModel(),
-  getFilteredRowModel: getFilteredRowModel(),
-  getPaginationRowModel: getPaginationRowModel(),
-  getSortedRowModel: getSortedRowModel(),
   getRowCanExpand: () => true,
   initialState: {
     pagination: {
+      pageIndex: 0,
       pageSize: 20,
     },
   },
@@ -569,8 +589,7 @@ function onExport(): void {
             >
               <FlexRender
                 v-if="!header.isPlaceholder"
-                :render="header.column.columnDef.header"
-                :props="header.getContext()"
+                :header="header"
               />
 
               <FontAwesomeIcon
@@ -596,8 +615,7 @@ function onExport(): void {
                 :class="cell.column.columnDef.id"
               >
                 <FlexRender
-                  :render="cell.column.columnDef.cell"
-                  :props="cell.getContext()"
+                  :cell="cell"
                 />
               </td>
             </tr>
@@ -665,7 +683,7 @@ function onExport(): void {
     </div>
 
     <Pagination
-      :table="table"
+      :table="table as VueTable<any, any>"
     />
   </div>
 </template>

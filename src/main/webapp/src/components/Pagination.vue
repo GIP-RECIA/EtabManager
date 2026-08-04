@@ -15,7 +15,7 @@
 -->
 
 <script setup lang="ts">
-import type { Table } from '@tanstack/vue-table'
+import type { VueTable } from '@tanstack/vue-table'
 import {
   faAngleLeft,
   faAngleRight,
@@ -25,7 +25,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 defineProps<{
-  table: Table<any>
+  table: VueTable<any, any>
 }>()
 </script>
 
@@ -58,7 +58,7 @@ defineProps<{
 
     <p>
       <span class="sr-only">page</span>
-      {{ table.getState().pagination.pageIndex + 1 }}
+      {{ table.atoms.pagination.get().pageIndex + 1 }}
       <span class="sr-only">sur</span>
       <span aria-hidden="true">/</span>
       {{ table.getPageCount() }}

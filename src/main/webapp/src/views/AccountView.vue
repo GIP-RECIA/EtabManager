@@ -15,13 +15,16 @@
 -->
 
 <script setup lang="ts">
-import type { FilterFn } from '@tanstack/vue-table'
+import type { VueTable } from '@tanstack/vue-table'
 import type { SearchStructure } from '@/types/index.ts'
 import {
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useVueTable,
+  columnFilteringFeature,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  globalFilteringFeature,
+  rowPaginationFeature,
+  tableFeatures,
+  useTable,
 } from '@tanstack/vue-table'
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -38,6 +41,14 @@ const userSearch = ref<string>()
 /* Table */
 
 const { data: structures } = useStructuresQuery()
+
+const features = tableFeatures({
+  columnFilteringFeature,
+  globalFilteringFeature,
+  rowPaginationFeature,
+  filteredRowModel: createFilteredRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+})
 
 const globalFilter = ref<string>()
 const columns = [
@@ -63,34 +74,31 @@ const columns = [
   },
 ]
 
-const fuzzyFilter: FilterFn<any> = (row, columnId, value) => {
-  const rowValue = row.getValue<string>(columnId)
-
-  return normalize(rowValue).includes(normalize(value))
-}
-
-const table = useVueTable({
+const table = useTable({
+  features,
+  columns,
   get data() {
     return structures.value ?? []
   },
-  columns,
   state: {
     get globalFilter() {
       return globalFilter.value
     },
   },
-  getCoreRowModel: getCoreRowModel(),
-  getFilteredRowModel: getFilteredRowModel(),
-  getPaginationRowModel: getPaginationRowModel(),
   initialState: {
     pagination: {
+      pageIndex: 0,
       pageSize: 20,
     },
+  },
+  globalFilterFn: (row, columnId, value) => {
+    const rowValue = row.getValue<string>(columnId)
+
+    return normalize(rowValue).includes(normalize(value))
   },
   onGlobalFilterChange: (val) => {
     globalFilter.value = val as string
   },
-  globalFilterFn: fuzzyFilter,
 })
 </script>
 
@@ -181,7 +189,7 @@ const table = useVueTable({
         </ul>
 
         <Pagination
-          :table="table"
+          :table="table as VueTable<any, any>"
         />
       </div>
     </PageLayout>
