@@ -24,7 +24,8 @@ defineProps<{
 <template>
   <input
     type="checkbox"
-    :class="`${className} cursor-pointer`"
+    class="cursor-pointer"
+    :class="className"
     :indeterminate="indeterminate"
     v-bind="$attrs"
   >

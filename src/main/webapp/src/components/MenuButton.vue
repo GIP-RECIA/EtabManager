@@ -15,7 +15,14 @@
 -->
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, useId, useTemplateRef } from 'vue'
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  ref,
+  useId,
+  useTemplateRef,
+} from 'vue'
 
 withDefaults(
   defineProps<{
@@ -34,7 +41,7 @@ withDefaults(
 )
 
 const emit = defineEmits<{
-  'update:model-value': [uid: string | number]
+  'update:modelValue': [uid: string | number]
 }>()
 
 const self = useTemplateRef<HTMLElement>('dropdown')
@@ -82,7 +89,10 @@ function toggle(): void {
   isExpanded.value = !isExpanded.value
 }
 
-function close(_: Event | undefined = undefined, resetFocus: boolean = true): void {
+function close(
+  _: Event | undefined = undefined,
+  resetFocus: boolean = true,
+): void {
   isExpanded.value = false
   if (resetFocus)
     dropdownButton.value?.focus()
@@ -90,7 +100,7 @@ function close(_: Event | undefined = undefined, resetFocus: boolean = true): vo
 
 function handleItemClick(key: string | number) {
   close()
-  emit('update:model-value', key)
+  emit('update:modelValue', key)
 }
 </script>
 
