@@ -12,7 +12,7 @@ import { slugify } from './src/main/webapp/src/utils/stringUtils.ts'
 
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv) => {
-  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
+  const env = loadEnv(mode, process.cwd())
 
   const {
     VITE_APP_NAME,
@@ -20,7 +20,7 @@ export default ({ mode }: ConfigEnv) => {
     VITE_BASE_URI,
     VITE_ALLOWED_HOSTS,
     VITE_PROXY_API_URL,
-  } = process.env
+  } = env
 
   const appName = JSON.stringify(VITE_APP_NAME)
 
