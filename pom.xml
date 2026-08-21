@@ -44,6 +44,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>fr.recia.notifications</groupId>
+      <artifactId>event-rest-client-kafka</artifactId>
+      <version>1.0.12-java-11</version>
+    </dependency>
+    <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
     </dependency>

@@ -20,12 +20,12 @@
   <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
   <!--  <logger name="org.springframework.boot" level="DEBUG"/>-->
-  <logger name="org.springframework.web" level="DEBUG"/>
+  <logger name="org.springframework.web" level="INFO"/>
   <logger name="org.springframework.security" level="DEBUG"/>
   <logger name="org.springframework.security.web" level="DEBUG"/>
   <logger name="org.springframework.security.cas" level="DEBUG"/>
   <logger name="org.apereo.cas.client" level="DEBUG"/>
-  <logger name="fr.recia" level="DEBUG"/>
+  <logger name="fr.recia" level="INFO"/>
 
   <appender name="AUDIT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>audit.log</file>

@@ -47,6 +47,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import fr.recia.notifications.event_rest_client_kafka.HttpNotificationClient;
+import fr.recia.notifications.model_kafka.model.Channel;
+import fr.recia.notifications.model_kafka.model.Priority;
+import fr.recia.notifications.model_kafka.model.TargetType;
+
+import fr.recia.manager.configuration.NotificationConfiguration;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -77,6 +84,10 @@ public class FonctionService {
     private AppProperties appProperties;
     @Autowired
     private CacheInvalidationService cacheInvalidationService;
+    @Autowired
+    private NotificationConfiguration notificationConfiguration;
+    @Autowired
+    private HttpNotificationClient notificationClient;
 
     @Cacheable(value = "typeFonctionFiliere")
     public TypeFonctionFiliere getTypeFonctionFiliere(Long id){
@@ -203,6 +214,21 @@ public class FonctionService {
                     Discipline discipline = disciplineRepository.findById(fonctionDto.getDiscipline()).orElse(null);
                     fonctions.add(new Fonction(discipline, filiere, aStructure, aPersonne, source, fonctionDto.getDateFin(), fonctionDto.getDateDebut()));
                     ok = true;
+                    try {
+                        String messageTemplate = notificationConfiguration.getMessageFonction();
+                        String fonctionConcat = filiere.getLibelleFiliere() + " " + discipline.getDisciplinePoste();
+
+                        String finalMessage = messageTemplate.replace("{fonction}", fonctionConcat);
+                        String title = notificationConfiguration.getTitleFonction();
+                        String uid = aPersonne.getUid();
+
+                        notificationClient.sendNotification(title, finalMessage, "", uid, List.of(Channel.WEB, Channel.MAIL, Channel.PUSH), Priority.HIGH, TargetType.UID);
+
+                        log.info("La notification a été envoyée à l'utilisateur {}", uid);
+
+                    } catch (Exception e) {
+                        log.warn("Problème");
+                    }
                 } else if (nbExistingFonctions == 1){
                     // Par contre si on a une date de début/fin il faut mettre à jour la fonction avec les nouvelles dates
                     Fonction fonction = fonctionRepository.findSameFonctionsInStructure(fonctionDto.getPersonne(), fonctionDto.getStructure(), fonctionDto.getDiscipline(), fonctionDto.getFiliere()).get(0);

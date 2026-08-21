@@ -46,6 +46,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import fr.recia.notifications.event_rest_client_kafka.HttpNotificationClient;
+import fr.recia.notifications.model_kafka.model.Channel;
+import fr.recia.notifications.model_kafka.model.Priority;
+import fr.recia.notifications.model_kafka.model.TargetType;
+import fr.recia.manager.configuration.NotificationConfiguration;
+
+
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -80,6 +87,10 @@ public class PersonneService {
     private AppProperties appProperties;
     @Autowired
     private PasswordGenerator passwordGenerator;
+    @Autowired
+    private NotificationConfiguration notificationConfiguration;
+    @Autowired
+    private HttpNotificationClient notificationClient;
 
 
     public List<DatabasePersonneDto> searchPersonne(String name, boolean admin) {
@@ -155,6 +166,15 @@ public class PersonneService {
             ldapPeopleDao.resetPersonne(aPersonne.getUid(), appProperties.getCustomConfig().getLdapResetPassword());
             // Invalidation du dache
             cacheInvalidationService.evictPersonneAndAssociatedStructures(aPersonne.getId(), aPersonne.getStructRattachement().getId());
+            try {
+                String title = notificationConfiguration.getTitlePassword();
+                String message = notificationConfiguration.getMessagePassword();
+                String uid = aPersonne.getUid();
+
+                notificationClient.sendNotification(title, message, "", uid, List.of(Channel.WEB, Channel.MAIL, Channel.PUSH), Priority.HIGH, TargetType.UID);
+            } catch (Exception e) {
+                log.warn("La notification n'a pas pu être envoyée {}", e.getMessage());
+            }
             return true;
         } else {
             log.warn("Try to reset not local or invalid account {}", aPersonne.getId());
