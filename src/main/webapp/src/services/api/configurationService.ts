@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import type { AppRole } from '@/types/enums/index.ts'
 import type { Configuration } from '@/types/index.ts'
 import { instance as axios } from '@/utils/index.ts'
 
@@ -25,6 +26,24 @@ async function getConfiguration() {
   ).data
 }
 
+async function getPrincipalRights() {
+  return (
+    await axios.get<AppRole[]>(
+      '/api/config/principal',
+    )
+  ).data
+}
+
+async function getPrincipalRightsForEtab(id: number) {
+  return (
+    await axios.get<AppRole[]>(
+      `/api/config/principal/${id}`,
+    )
+  ).data
+}
+
 export {
   getConfiguration,
+  getPrincipalRights,
+  getPrincipalRightsForEtab,
 }

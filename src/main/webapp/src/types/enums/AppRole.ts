@@ -14,8 +14,18 @@
  * limitations under the License.
  */
 
-export * from './AppRole.ts'
-export * from './CategoriePersonne.ts'
-export * from './CategorieRelation.ts'
-export * from './Etat.ts'
-export * from './Theme.ts'
+export enum AppRole {
+  READ_GLC = 'READ_GLC',
+  WRITE_GLC = 'WRITE_GLC',
+  READ_RENTREE = 'READ_RENTREE',
+  WRITE_RENTREE = 'WRITE_RENTREE',
+  READ_PARAMETAB = 'READ_PARAMETAB',
+  WRITE_PARAMETAB = 'WRITE_PARAMETAB',
+  READ_GROUP = 'READ_GROUP',
+  WRITE_GROUP = 'WRITE_GROUP',
+  ESIDOC = 'ESIDOC',
+  VIEW_UID = 'VIEW_UID',
+  SEARCH_UID = 'SEARCH_UID',
+  ADMIN_FONCTIONS = 'ADMIN_FONCTIONS',
+  ATTACH = 'ATTACH',
+}

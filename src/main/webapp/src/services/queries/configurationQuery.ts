@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
+import type { Ref } from 'vue'
 import { useQuery } from '@pinia/colada'
-import { getConfiguration } from '@/services/api/index.ts'
+import {
+  getConfiguration,
+  getPrincipalRights,
+  getPrincipalRightsForEtab,
+} from '@/services/api/index.ts'
 
 function useConfigurationQuery() {
   return useQuery({
@@ -25,6 +30,25 @@ function useConfigurationQuery() {
   })
 }
 
+function usePrincipalRightsQuery() {
+  return useQuery({
+    key: ['rights'],
+    query: () => getPrincipalRights(),
+    staleTime: Infinity,
+  })
+}
+
+function usePrincipalRightsForEtabQuery(id: Ref<number>) {
+  return useQuery({
+    key: ['right', id.value],
+    query: () => getPrincipalRightsForEtab(id.value),
+    enabled: !!id.value && id.value !== -1,
+    staleTime: 1000 * 60 * 10,
+  })
+}
+
 export {
   useConfigurationQuery,
+  usePrincipalRightsForEtabQuery,
+  usePrincipalRightsQuery,
 }

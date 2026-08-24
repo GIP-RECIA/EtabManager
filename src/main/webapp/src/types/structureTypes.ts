@@ -15,6 +15,7 @@
  */
 
 import type { Alert } from './alertTypes.ts'
+import type { AppRole } from './enums/AppRole.ts'
 import type { Composition, UserFunction } from './functionTypes.ts'
 import type { Incertain } from './incertainTypes.ts'
 import type { AccountUser, FunctionUser } from './userTypes.ts'
@@ -64,5 +65,5 @@ export type Structure = CommonStructure & {
   withoutFunctions?: FunctionUser[]
   alerts: Alert[]
   incertains: Incertain[]
-  permission?: string
+  permissions: AppRole[]
 }
