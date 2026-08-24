@@ -37,7 +37,7 @@ const { t } = useI18n()
     </h2>
 
     <ul
-      v-if="structure?.alerts"
+      v-if="structure?.alerts && structure.alerts.length > 0"
     >
       <li
         v-for="(alert, index) in structure.alerts"
@@ -120,6 +120,9 @@ const { t } = useI18n()
         </div>
       </li>
     </ul>
+    <p v-else>
+      {{ t('page.structure.dashboard.alert.empty') }}
+    </p>
   </div>
 </template>
 

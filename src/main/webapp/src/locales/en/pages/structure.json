@@ -19,7 +19,8 @@
         "withoutFunctions": {
           "title": "User without functions | Users without functions",
           "text": "One user has no functions. | {count} users have no functions."
-        }
+        },
+        "empty": "There are no alerts."
       },
       "accountsStatuses": "Account statuses",
       "incertains": "Sarapis alerts"

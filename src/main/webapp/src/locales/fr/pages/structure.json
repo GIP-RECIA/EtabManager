@@ -19,7 +19,8 @@
         "withoutFunctions": {
           "title": "Utilisateur sans fonction | Utilisateurs sans fonction",
           "text": "Un utilisateur est sans fonction. | {count} utilisateurs sont sans fonction."
-        }
+        },
+        "empty": "Il n'y a aucune alerte."
       },
       "accountsStatuses": "États des comptes",
       "incertains": "Alertes Sarapis"
