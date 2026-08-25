@@ -25,9 +25,14 @@ Controlleur utilisé pour rediriger vers /ui/index.html afin de servir le front 
 @Controller
 public class StaticRedirectionController {
 
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/ui";
+    }
+
     // Un mapping ou on exclu les assets serait mieux mais aucun ne semble fonctionner correctement
     @GetMapping({
-        "/", "/ui", "/ui/",
+        "/ui", "/ui/",
         "/ui/account", "/ui/account/**",
         "/ui/access", "/ui/access/**",
         "/ui/restriction", "/ui/restriction/**",
