@@ -72,8 +72,6 @@ export function useAppRights(
   const canAttach = hasRole(AppRole.ATTACH)
 
   return {
-    hasRole,
-    hasAnyRole,
     canReadGLC,
     canWriteGLC,
     canGLC,
