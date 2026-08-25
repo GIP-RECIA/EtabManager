@@ -13,7 +13,8 @@
       "uncertain": "Uncertain",
       "uncertainExportAdd": "Export error",
       "uncertainExportDelete": "Deletion error",
-      "uncertainExportModify": "Update error"
+      "uncertainExportModify": "Update error",
+      "unpowered": "Unpowered"
     },
     "category": {
       "header": "Category",

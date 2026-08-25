@@ -15,7 +15,12 @@
  */
 
 import type { enumValues } from '../enumValuesTypes'
-import { faUserClock, faUserLock, faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import {
+  faUserClock,
+  faUserGear,
+  faUserLock,
+  faUserNinja,
+} from '@fortawesome/free-solid-svg-icons'
 
 export enum Etat {
   Inconnu = 'Inconnu',
@@ -29,6 +34,7 @@ export enum Etat {
   Incertain_Export_Add = 'Incertain_Export_Add',
   Incertain_Export_Delete = 'Incertain_Export_Delete',
   Incertain_Export_Modify = 'Incertain_Export_Modify',
+  Non_alimente = 'Non_alimente',
 }
 
 export const etatFilters: Etat[] = [
@@ -38,13 +44,14 @@ export const etatFilters: Etat[] = [
   Etat.Delete,
   Etat.Deleting,
   Etat.Incertain,
+  Etat.Non_alimente,
 ]
 
 export const etatMap: Record<Etat, enumValues> = {
   [Etat.Inconnu]: {
     i18n: 'page.user.status.inconnu',
     color: '#9E9E9E',
-    icon: faUserSecret,
+    icon: faUserNinja,
   },
   [Etat.Invalide]: {
     i18n: 'page.user.status.invalid',
@@ -87,5 +94,10 @@ export const etatMap: Record<Etat, enumValues> = {
   [Etat.Incertain_Export_Modify]: {
     i18n: 'page.user.status.uncertainExportModify',
     color: '#FFEB3B',
+  },
+  [Etat.Non_alimente]: {
+    i18n: 'page.user.status.unpowered',
+    color: '#9E9E9E',
+    icon: faUserGear,
   },
 }
