@@ -54,12 +54,7 @@ function useStructureQuery() {
   const route = useRoute()
   const structureId = computed(() => Number(route.params.structureId))
 
-  return useQuery(() => ({
-    key: ['structure', structureId.value],
-    query: () => getStructure(structureId.value),
-    enabled: !Number.isNaN(structureId.value),
-    staleTime: 1000 * 60 * 60,
-  }))
+  return useQuery(useStructureQueryOptions(structureId.value))
 }
 
 function useStructureQueryOptions(structureId: number) {

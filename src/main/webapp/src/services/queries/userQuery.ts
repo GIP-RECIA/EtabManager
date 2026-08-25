@@ -49,12 +49,7 @@ function useUserQuery() {
   const route = useRoute()
   const userId = computed(() => Number(route.params.userId))
 
-  return useQuery(() => ({
-    key: ['user', userId.value],
-    query: () => getUser(userId.value),
-    enabled: !Number.isNaN(userId.value),
-    staleTime: 1000 * 60 * 30,
-  }))
+  return useQuery(useUserQueryOptions(userId.value))
 }
 
 function useUserQueryOptions(userId: number) {
