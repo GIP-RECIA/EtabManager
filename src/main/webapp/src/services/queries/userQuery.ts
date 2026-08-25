@@ -49,7 +49,7 @@ function useUserQuery() {
   const route = useRoute()
   const userId = computed(() => Number(route.params.userId))
 
-  return useQuery(useUserQueryOptions(userId.value))
+  return useQuery(() => useUserQueryOptions(userId.value))
 }
 
 function useUserQueryOptions(userId: number) {

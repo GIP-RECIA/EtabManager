@@ -54,7 +54,7 @@ function useStructureQuery() {
   const route = useRoute()
   const structureId = computed(() => Number(route.params.structureId))
 
-  return useQuery(useStructureQueryOptions(structureId.value))
+  return useQuery(() => useStructureQueryOptions(structureId.value))
 }
 
 function useStructureQueryOptions(structureId: number) {
