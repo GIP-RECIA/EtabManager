@@ -2,13 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
-## [0.0.2](https://github.com/GIP-RECIA/EtabManager/compare/0.0.1...0.0.2) (2026-06-23)
+## [0.1.0](https://github.com/GIP-RECIA/EtabManager/compare/0.0.2...0.1.0) (2026-08-25)
 
+### Features
+
+* codeRegion dynamique en fonction du domaine ([dddf6a5](https://github.com/GIP-RECIA/EtabManager/commit/dddf6a5e9c68318ca4f72fced7b249b75cb7874f))
+* custom exception invalid domain ([427a53b](https://github.com/GIP-RECIA/EtabManager/commit/427a53bcc8675479d802d47fcba337f828fe751e))
+* élargissement des roles ([4097b4a](https://github.com/GIP-RECIA/EtabManager/commit/4097b4ab84c486c9888d217b670f1010b813668f))
+* enseignements d'un enseignant dans la partie détails d'une personne ([34a91db](https://github.com/GIP-RECIA/EtabManager/commit/34a91dbeafebaffb1c6fa4caac78f387cad87626))
+* etat non alimenté ([38b3881](https://github.com/GIP-RECIA/EtabManager/commit/38b3881d5bc87dac5d7f36434e72930803421fb9))
+* éviction des caches quand on ajoute des enseignements ou des formations ([7511931](https://github.com/GIP-RECIA/EtabManager/commit/751193107e6f4b1d760dcdd00514f4c85845d139))
+* gestion dates de début sur les fonctions ([b54fd6b](https://github.com/GIP-RECIA/EtabManager/commit/b54fd6b371fa87d2a07bf80ce1d7f82de1078b9b))
+* liste des profils à créer en fonction du type de structure ([bb95614](https://github.com/GIP-RECIA/EtabManager/commit/bb956141d95a5a19b1338fc901bae866b7b9c392))
+* maj modèle sarapis ([eabdda7](https://github.com/GIP-RECIA/EtabManager/commit/eabdda78866ec8c033a48a95171ec07e1e4bd2f2))
+* redirect root to /ui ([ece58cc](https://github.com/GIP-RECIA/EtabManager/commit/ece58cc3dc54a17a6595f693859d16163c3182b1))
+* refonte du calcul des droits en anticipation de la nouvelle arborescence ([fe98954](https://github.com/GIP-RECIA/EtabManager/commit/fe989545c7290a575db7f9c2bce8eb08b3ddbe02))
+* réponse 201 + id sur la création de personne ([447d754](https://github.com/GIP-RECIA/EtabManager/commit/447d754f950220a2309b9000db05b63cd393bf84))
+* routes pour informer des permissions du principal ([1ee2415](https://github.com/GIP-RECIA/EtabManager/commit/1ee24153e32f0b81efdd6ccc2d68e16256c6573a))
+* suppression des doublons de formation + tri par ordre alphabétique ([3dfee25](https://github.com/GIP-RECIA/EtabManager/commit/3dfee25c7a2ba630ac85bdf97f08f2e43ccb6dbe))
+* suppression des doublons et tri par ordre alphabétique sur les enseignements ([5b547d7](https://github.com/GIP-RECIA/EtabManager/commit/5b547d7e421da4f2e393ba5f4af35cbfad87a20c))
+* tri des classes et niveaux de formation par ordre alphabétique ([e551ee7](https://github.com/GIP-RECIA/EtabManager/commit/e551ee70481c19c26d200c00479b5c6d340b152c))
+* **ui:** add empty alert message ([cc35b99](https://github.com/GIP-RECIA/EtabManager/commit/cc35b99bae6a7af0828b33fa0864bebdac3a9032))
+* **ui:** implement app role ([7555c9f](https://github.com/GIP-RECIA/EtabManager/commit/7555c9fdc8043619bfdebe3dc5e046616178513e))
+* **ui:** prepare app role ([130100e](https://github.com/GIP-RECIA/EtabManager/commit/130100ebdda11408d457041741d27869af6b50e9))
+* **WIP:** ajout route structure config pour récupérer les profils possibles à créer localement ([f9e7a51](https://github.com/GIP-RECIA/EtabManager/commit/f9e7a51de92aff518c623b013987dc8118df12ea))
+* **WIP:** récupération de tous les enseignements d'un établissement ([6b09969](https://github.com/GIP-RECIA/EtabManager/commit/6b099691180b29b70fa13e90880b3102f5b2a8bf))
+* **WIP:** récupération de tous les formations d'un établissement ([924c5eb](https://github.com/GIP-RECIA/EtabManager/commit/924c5ebe6c9c27f3b4b1b55b4aa20cfbdf14e289))
+* **WIP:** séparation de la création de personnes en plusieurs étapes ([96a5155](https://github.com/GIP-RECIA/EtabManager/commit/96a5155f41714a4e0bfbe506742cf80859049f5d))
+
+### Bug Fixes
+
+* correction de plusieurs bugs ([a8baec7](https://github.com/GIP-RECIA/EtabManager/commit/a8baec73496a1d356ae953aa152b1d1e03561956))
+* doublons sur tous les types de recherche de personne ([8a3c14f](https://github.com/GIP-RECIA/EtabManager/commit/8a3c14ffe418e83c1b6909ea2f848b1ad6fdad74))
+* pas possible de détacher quelqu'un d'une structure s'il n'a qu'une seule structure ([867e477](https://github.com/GIP-RECIA/EtabManager/commit/867e47725fe6d8cf5192f6c212aeb9a5ca3cb88e))
+* SLO position du filtre ([23370b9](https://github.com/GIP-RECIA/EtabManager/commit/23370b9f6e047b68db542fcbb049f809310f3bb4))
+* **ui:** enable restriction enable checkbox ([213c623](https://github.com/GIP-RECIA/EtabManager/commit/213c62377b0f98fa330b7b0e61f63372f11239d7))
+* **ui:** fix typo and rename esidoc to e-sidoc ([69e3be8](https://github.com/GIP-RECIA/EtabManager/commit/69e3be884d5cdd771d93650524578b146b995714))
+* **ui:** rename Référentiel to Affectations ([f7168bb](https://github.com/GIP-RECIA/EtabManager/commit/f7168bb50c45ba556a39383770dae21065c8dc28))
+
+## [0.0.2](https://github.com/GIP-RECIA/EtabManager/compare/0.0.1...0.0.2) (2026-06-23)
 
 ### Features
 
 * localDateTime au lieu de zonedDateTime pour les restrictions de rentree ([eef071c](https://github.com/GIP-RECIA/EtabManager/commit/eef071c87780e3cb2da482824190705be53dad85))
-
 
 ### Bug Fixes
 
@@ -16,28 +52,25 @@ All notable changes to this project will be documented in this file. See [commit
 
 ## [0.0.1](https://github.com/GIP-RECIA/EtabManager/compare/04ba4bd58fce0aae6fa8d14aaf033354575c93ae...0.0.1) (2026-06-22)
 
-
 ### ⚠ BREAKING CHANGES
 
-* use properties for custom mapping
-* move alert properties
-* use generic extended uportal properties
-* split alert function in service
-* replace disciplinePoste with discipline
-* new additional function management
 * add `s` to modal and layout components folder
-* uid and uuid can be undefined | move SearchPersonne to /search/PersonneSearch
+* move alert properties
+* new additional function management
+* replace disciplinePoste with discipline
 * replace soffit with cas
+* split alert function in service
+* uid and uuid can be undefined | move SearchPersonne to /search/PersonneSearch
+* use generic extended uportal properties
+* use properties for custom mapping
 
 * add `s` to modal and layout components folder ([33afc2e](https://github.com/GIP-RECIA/EtabManager/commit/33afc2ef6bc4b6619a8765f883cb82c3a135a3be))
 * replace disciplinePoste with discipline ([f2509df](https://github.com/GIP-RECIA/EtabManager/commit/f2509df9cd99520ebadf3b854188a173f05eecdf))
 * uid and uuid can be undefined | move SearchPersonne to /search/PersonneSearch ([5f28d3c](https://github.com/GIP-RECIA/EtabManager/commit/5f28d3cf1574195a5199d18be99c433215dea402))
 
-
 ### build
 
 * replace soffit with cas ([e1a173a](https://github.com/GIP-RECIA/EtabManager/commit/e1a173a0c926612eab59458251171af60824a082))
-
 
 ### Features
 
@@ -526,7 +559,6 @@ All notable changes to this project will be documented in this file. See [commit
 * **WIP:** refonte de la recherche de personne ([33b544e](https://github.com/GIP-RECIA/EtabManager/commit/33b544e1804fa8bcec98529002f441faa8862831))
 * **WIP:** request grouper API to list/add/delete member from groups ([8a9a192](https://github.com/GIP-RECIA/EtabManager/commit/8a9a19268b539479f3904b1ee20681eea835f3bc))
 * **WIP:** session applicative stockée dans redis ([3f94b6e](https://github.com/GIP-RECIA/EtabManager/commit/3f94b6e66a5ed7d57482bd4eade557d6bb2425b2))
-
 
 ### Bug Fixes
 
