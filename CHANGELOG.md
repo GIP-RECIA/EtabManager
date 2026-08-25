@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.1.1](https://github.com/GIP-RECIA/EtabManager/compare/0.1.0...0.1.1) (2026-08-25)
+
+### Bug Fixes
+
+* **ui:** add Non_alimente state ([5b33675](https://github.com/GIP-RECIA/EtabManager/commit/5b33675bc33e4cf7902de36e0e47b2bd6de8a1b1))
+* **ui:** not refresh tabs ([98f4cf5](https://github.com/GIP-RECIA/EtabManager/commit/98f4cf55fb704e179e92a55f43da99e3a9ca9e3b))
+
 ## [0.1.0](https://github.com/GIP-RECIA/EtabManager/compare/0.0.2...0.1.0) (2026-08-25)
 
 ### Features
