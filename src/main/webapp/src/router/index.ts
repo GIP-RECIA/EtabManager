@@ -15,6 +15,13 @@
  */
 
 import { createRouter, createWebHistory } from 'vue-router'
+import { AppRole } from '@/types/enums/index.ts'
+
+declare module 'vue-router' {
+  interface RouteMeta {
+    roles?: AppRole[]
+  }
+}
 
 const isDev = import.meta.env.DEV
 
@@ -23,11 +30,22 @@ const devRoutes = [
     path: '/settings',
     name: 'settings',
     component: () => import('@/views/SettingsView.vue'),
+    meta: {
+      roles: [
+        AppRole.READ_PARAMETAB,
+        AppRole.WRITE_PARAMETAB,
+      ],
+    },
   },
   {
     path: '/esidocexports',
     name: 'esidocexports',
     component: () => import('@/views/EsidocExportView.vue'),
+    meta: {
+      roles: [
+        AppRole.ESIDOC,
+      ],
+    },
   },
 ]
 
@@ -67,16 +85,34 @@ const router = createRouter({
           },
         },
       ],
+      meta: {
+        roles: [
+          AppRole.READ_GLC,
+          AppRole.WRITE_GLC,
+        ],
+      },
     },
     {
       path: '/access',
       name: 'access',
       component: () => import('@/views/AccessView.vue'),
+      meta: {
+        roles: [
+          AppRole.READ_GROUP,
+          AppRole.WRITE_GROUP,
+        ],
+      },
     },
     {
       path: '/restriction',
       name: 'restriction',
       component: () => import('@/views/RestrictionView.vue'),
+      meta: {
+        roles: [
+          AppRole.READ_RENTREE,
+          AppRole.WRITE_RENTREE,
+        ],
+      },
     },
     {
       path: '/:pathName(.*)',

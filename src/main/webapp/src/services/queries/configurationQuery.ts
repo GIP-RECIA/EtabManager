@@ -15,7 +15,7 @@
  */
 
 import type { Ref } from 'vue'
-import { useQuery } from '@pinia/colada'
+import { defineQueryOptions, useQuery } from '@pinia/colada'
 import {
   getConfiguration,
   getPrincipalRights,
@@ -31,24 +31,29 @@ function useConfigurationQuery() {
 }
 
 function usePrincipalRightsQuery() {
-  return useQuery({
-    key: ['rights'],
+  return useQuery(usePrincipalRightsQueryOptions)
+}
+
+function usePrincipalRightsQueryOptions() {
+  return defineQueryOptions({
+    key: ['app-rights'],
     query: () => getPrincipalRights(),
     staleTime: Infinity,
   })
 }
 
 function usePrincipalRightsForEtabQuery(id: Ref<number>) {
-  return useQuery({
-    key: ['right', id.value],
+  return useQuery(() => ({
+    key: ['structure-rights', id.value],
     query: () => getPrincipalRightsForEtab(id.value),
     enabled: !!id.value && id.value !== -1,
-    staleTime: 1000 * 60 * 10,
-  })
+    staleTime: Infinity,
+  }))
 }
 
 export {
   useConfigurationQuery,
   usePrincipalRightsForEtabQuery,
   usePrincipalRightsQuery,
+  usePrincipalRightsQueryOptions,
 }

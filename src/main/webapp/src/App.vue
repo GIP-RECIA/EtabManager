@@ -15,6 +15,8 @@
 -->
 
 <script setup lang="ts">
+import type { AppRole } from '@/types/enums/index.ts'
+import { useQueryCache } from '@pinia/colada'
 import { PiniaColadaDevtools } from '@pinia/colada-devtools'
 import { watchOnce } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -22,7 +24,11 @@ import { computed, onBeforeMount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import AccountToolbar from '@/components/accounts/toolbar/AccountToolbar.vue'
-import { useKeepSession, useNavigationTabs } from '@/composables/index.ts'
+import {
+  useKeepSession,
+  useNavigationTabs,
+} from '@/composables/index.ts'
+import { usePrincipalRightsQueryOptions } from '@/services/queries/index.ts'
 import { useConfigurationStore } from '@/stores/index.ts'
 import { errorHandler } from '@/utils/index.ts'
 
@@ -38,6 +44,19 @@ const {
 } = storeToRefs(configurationStore)
 
 init()
+
+async function hasAnyRole(roles: AppRole[]): Promise<boolean> {
+  const queryCache = useQueryCache()
+  const { data, error } = await queryCache.refresh(
+    queryCache.ensure(
+      usePrincipalRightsQueryOptions(),
+    ),
+  )
+  if (error)
+    throw error
+
+  return roles.some(role => new Set(data ?? []).has(role))
+}
 
 watchOnce(isInit, (newValue) => {
   if (!newValue || !configuration.value?.front.extendedUportal)
@@ -67,8 +86,6 @@ const isAccountSection = computed(() => (
 
 const appName = __APP_NAME__
 
-useNavigationTabs()
-
 const router = useRouter()
 
 const {
@@ -77,7 +94,21 @@ const {
 } = useNavigationTabs()
 
 router.beforeEach(async (to, from) => {
-  const { structureId, userId } = to.params
+  const {
+    params: {
+      structureId,
+      userId,
+    },
+    meta: {
+      roles,
+    },
+  } = to
+
+  if (roles && !await hasAnyRole(roles)) {
+    return {
+      name: 'index',
+    }
+  }
 
   if (structureId || userId) {
     if (

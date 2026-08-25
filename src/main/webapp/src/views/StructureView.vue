@@ -24,12 +24,16 @@ import StructureInfo from '@/components/accounts/structure/StructureInfo.vue'
 import StructureAccountsTab from '@/components/accounts/structure/tabs/StructureAccountsTab.vue'
 import StructureCompTab from '@/components/accounts/structure/tabs/StructureCompTab.vue'
 import StructureDashboardTab from '@/components/accounts/structure/tabs/StructureDashboardTab.vue'
-import { useNavigationTabs, useTabs } from '@/composables/index.ts'
+import { useAppRights, useNavigationTabs, useTabs } from '@/composables/index.ts'
 import { useStructureQuery } from '@/services/queries/index.ts'
 
 const { t } = useI18n()
 
 const { data: structure } = useStructureQuery()
+
+const structureRights = computed(() => structure.value?.permissions)
+
+const { canWriteGLC, canAttach } = useAppRights(structureRights)
 
 /* Tabs */
 
@@ -95,13 +99,16 @@ function onCreate(): void {
         :structure="structure"
       />
 
-      <div class="structure-actions">
+      <div
+        v-if="canWriteGLC"
+        class="structure-actions"
+      >
         <h2 class="sr-only">
           {{ t('page.structure.actions') }}
         </h2>
 
         <ul>
-          <li>
+          <li v-if="canAttach">
             <button
               type="button"
               class="btn-primary small"

@@ -27,10 +27,12 @@ const props = withDefaults(
     restrictions?: StructureRestriction
     canEdit?: boolean
     disableEdit?: boolean
+    edit?: boolean
   }>(),
   {
     canEdit: true,
     disableEdit: false,
+    edit: false,
   },
 )
 
@@ -78,7 +80,7 @@ function save(): void {
 <template>
   <div class="item">
     <div
-      v-if="!isEdit"
+      v-if="edit && !isEdit"
     >
       <input
         id="enabled"

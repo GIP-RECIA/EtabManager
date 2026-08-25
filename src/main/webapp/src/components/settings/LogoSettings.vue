@@ -25,10 +25,12 @@ withDefaults(
     structure?: Structure
     canEdit?: boolean
     disableEdit?: boolean
+    edit?: boolean
   }>(),
   {
     canEdit: true,
     disableEdit: false,
+    edit: false,
   },
 )
 
@@ -42,7 +44,7 @@ const { t } = useI18n()
       :alt="t('page.settings.info.logo')"
     >
     <footer
-      v-if="structure && canEdit"
+      v-if="edit && structure && canEdit"
     >
       <button
         type="button"

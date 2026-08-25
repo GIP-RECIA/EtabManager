@@ -39,10 +39,12 @@ const props = withDefaults(
     restrictions?: StructureRestriction
     canEdit?: boolean
     disableEdit?: boolean
+    edit?: boolean
   }>(),
   {
     canEdit: true,
     disableEdit: false,
+    edit: false,
   },
 )
 
@@ -282,7 +284,7 @@ function deleteCustom(): void {
     </div>
 
     <footer
-      v-if="restrictions && canEdit"
+      v-if="edit && restrictions && canEdit"
     >
       <MenuButton
         v-show="isEdit"

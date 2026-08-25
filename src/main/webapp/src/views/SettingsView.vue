@@ -24,9 +24,11 @@ import IdentitySettings from '@/components/settings/IdentitySettings.vue'
 import LocalisationSettings from '@/components/settings/LocalisationSettings.vue'
 import LogoSettings from '@/components/settings/LogoSettings.vue'
 import StructureSearch from '@/components/StructureSearch.vue'
+import { useAppRights } from '@/composables/index.ts'
 import {
   useEtablissementQuery,
   useEtablissementsQuery,
+  usePrincipalRightsForEtabQuery,
 } from '@/services/queries/index.ts'
 
 const { t } = useI18n()
@@ -50,6 +52,10 @@ watch(
 )
 
 const { data: structure } = useEtablissementQuery(selectedStructure)
+
+const { data: structureRights } = usePrincipalRightsForEtabQuery(selectedStructure)
+
+const { canWriteParamEtab } = useAppRights(structureRights)
 
 /* Edit state */
 
@@ -80,11 +86,13 @@ function setChildEditState(state: boolean): void {
           <LogoSettings
             :structure="structure"
             :disable-edit="isChildEdit"
+            :edit="canWriteParamEtab"
           />
 
           <IdentitySettings
             :structure="structure"
             :disable-edit="isChildEdit"
+            :edit="canWriteParamEtab"
             @edit="setChildEditState"
           />
 
@@ -95,6 +103,7 @@ function setChildEditState(state: boolean): void {
           <ContactSettings
             :structure="structure"
             :disable-edit="isChildEdit"
+            :edit="canWriteParamEtab"
             @edit="setChildEditState"
           />
 

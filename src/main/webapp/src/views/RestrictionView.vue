@@ -22,8 +22,10 @@ import CloseRestrictions from '@/components/restrictions/CloseRestrictions.vue'
 import GlobalRestrictions from '@/components/restrictions/GlobalRestrictions.vue'
 import OpenRestrictions from '@/components/restrictions/OpenRestrictions.vue'
 import StructureSearch from '@/components/StructureSearch.vue'
+import { useAppRights } from '@/composables/index.ts'
 import {
   useEtablissementsQuery,
+  usePrincipalRightsForEtabQuery,
   useRestrictionsQuery,
 } from '@/services/queries/index.ts'
 
@@ -48,6 +50,10 @@ watch(
 )
 
 const { data: restrictions } = useRestrictionsQuery(selectedStructure)
+
+const { data: structureRights } = usePrincipalRightsForEtabQuery(selectedStructure)
+
+const { canWriteRentree } = useAppRights(structureRights)
 
 /* Edit state */
 
@@ -79,6 +85,7 @@ function setChildEditState(state: boolean): void {
             :structure-id="selectedStructure"
             :restrictions="restrictions"
             :disable-edit="isChildEdit"
+            :edit="canWriteRentree"
             class="full-width"
             @edit="setChildEditState"
           />
@@ -92,6 +99,7 @@ function setChildEditState(state: boolean): void {
               :structure-id="selectedStructure"
               :restrictions="restrictions"
               :disable-edit="isChildEdit"
+              :edit="canWriteRentree"
               class="full-width"
               @edit="setChildEditState"
             />

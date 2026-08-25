@@ -29,6 +29,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import PageLayout from '@/components/PageLayout.vue'
+import { useAppRights } from '@/composables/index.ts'
+import { usePrincipalRightsQuery } from '@/services/queries/index.ts'
 import { useConfigurationStore } from '@/stores/index.ts'
 
 const { t } = useI18n()
@@ -37,6 +39,16 @@ const isDev = import.meta.env.DEV
 
 const configurationStore = useConfigurationStore()
 const { configuration } = storeToRefs(configurationStore)
+
+const { data: globalRights } = usePrincipalRightsQuery()
+
+const {
+  canGLC,
+  canGroup,
+  canRentree,
+  canParamEtab,
+  canEsidoc,
+} = useAppRights(globalRights)
 
 const homeLinksIcons: Record<string, IconDefinition> = {
   'I2Grouper-UI': faUsersGear,
@@ -68,7 +80,7 @@ const homeLinksIcons: Record<string, IconDefinition> = {
         </h2>
 
         <ul>
-          <li>
+          <li v-if="canGLC">
             <router-link
               :to="{ name: 'account' }"
               class="btn-tertiary"
@@ -79,7 +91,7 @@ const homeLinksIcons: Record<string, IconDefinition> = {
               {{ t('page.index.account') }}
             </router-link>
           </li>
-          <li>
+          <li v-if="canGroup">
             <router-link
               :to="{ name: 'access' }"
               class="btn-tertiary"
@@ -90,7 +102,7 @@ const homeLinksIcons: Record<string, IconDefinition> = {
               {{ t('page.index.access') }}
             </router-link>
           </li>
-          <li>
+          <li v-if="canRentree">
             <router-link
               :to="{ name: 'restriction' }"
               class="btn-tertiary"
@@ -101,7 +113,7 @@ const homeLinksIcons: Record<string, IconDefinition> = {
               {{ t('page.index.restriction') }}
             </router-link>
           </li>
-          <li v-if="isDev">
+          <li v-if="isDev && canParamEtab">
             <router-link
               :to="{ name: 'settings' }"
               class="btn-tertiary"
@@ -112,7 +124,7 @@ const homeLinksIcons: Record<string, IconDefinition> = {
               {{ t('page.index.settings') }}
             </router-link>
           </li>
-          <li v-if="isDev">
+          <li v-if="isDev && canEsidoc">
             <router-link
               :to="{ name: 'esidocexports' }"
               class="btn-tertiary"

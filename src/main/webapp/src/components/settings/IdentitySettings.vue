@@ -27,10 +27,12 @@ const props = withDefaults(
     structure?: Structure
     canEdit?: boolean
     disableEdit?: boolean
+    edit?: boolean
   }>(),
   {
     canEdit: true,
     disableEdit: false,
+    edit: false,
   },
 )
 
@@ -157,7 +159,7 @@ watch(
     </div>
 
     <footer
-      v-if="structure && canEdit"
+      v-if="edit && structure && canEdit"
     >
       <button
         type="button"

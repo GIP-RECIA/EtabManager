@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+export * from './useAppRights.ts'
 export * from './useKeepSession.ts'
 export * from './useNavigationTabs.ts'
 export * from './useTabs.ts'

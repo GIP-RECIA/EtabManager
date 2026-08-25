@@ -22,8 +22,10 @@ import ManageServiceRightsDialog from '@/components/access/dialogs/ManageService
 import ServiceRightsCard from '@/components/access/ServiceRightsCard.vue'
 import PageLayout from '@/components/PageLayout.vue'
 import StructureSearch from '@/components/StructureSearch.vue'
+import { useAppRights } from '@/composables/index.ts'
 import {
   useEtablissementsQuery,
+  usePrincipalRightsForEtabQuery,
   useRightsQuery,
   useUpdateRightMutation,
 } from '@/services/queries/index.ts'
@@ -49,6 +51,10 @@ watch(
 )
 
 const { data: servicesRights } = useRightsQuery(selectedStructure)
+
+const { data: structureRights } = usePrincipalRightsForEtabQuery(selectedStructure)
+
+const { canWriteGroup } = useAppRights(structureRights)
 
 const { mutate } = useUpdateRightMutation()
 
@@ -108,6 +114,7 @@ async function save(
             v-for="serviceRights in servicesRights"
             :key="serviceRights.service"
             :service-rights="serviceRights"
+            :edit="canWriteGroup"
             @edit="edit"
           />
         </div>
@@ -116,6 +123,7 @@ async function save(
   </div>
 
   <ManageServiceRightsDialog
+    v-if="canWriteGroup"
     v-model="dialogState"
     :service-right="serviceRight"
     @update:model-value="dialogState = false"

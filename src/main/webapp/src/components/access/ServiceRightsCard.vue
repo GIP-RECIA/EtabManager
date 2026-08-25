@@ -24,6 +24,7 @@ import { alphaSort } from '@/utils/index.ts'
 
 const props = defineProps<{
   serviceRights: ServiceRights
+  edit: boolean
 }>()
 
 defineEmits<{
@@ -113,7 +114,7 @@ const extendedServiceRights = computed<{
           </li>
         </ul>
 
-        <footer>
+        <footer v-if="edit">
           <button
             type="button"
             :aria-label="`${t('button.edit')} - ${right.description}`"
