@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.0](https://github.com/GIP-RECIA/EtabManager/compare/0.1.1...0.2.0) (2026-08-31)
+
+### Features
+
+* **ui:** enable esidoc export ([9486fbe](https://github.com/GIP-RECIA/EtabManager/commit/9486fbe790ff2f97b88c809063e3938b7aad4ef0))
+
 ## [0.1.1](https://github.com/GIP-RECIA/EtabManager/compare/0.1.0...0.1.1) (2026-08-25)
 
 ### Bug Fixes
