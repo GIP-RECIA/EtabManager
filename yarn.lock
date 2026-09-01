@@ -2150,31 +2150,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/store@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "@tanstack/store@npm:0.11.0"
-  checksum: 10/f83291e570f7a66768b77aa9c1c30606c78640da8426c7d1cae4dc6454e790885b362243547c09a543e88dc0581d6622ec3c5ee08a33682779ea066492949573
+"@tanstack/store@npm:^0.11.1":
+  version: 0.11.1
+  resolution: "@tanstack/store@npm:0.11.1"
+  checksum: 10/412d1c9fd6f41657c5f9995672fdb205c048948bf5873dae3028155e2d708bb2319c79f27b59b0f51d0673edb36e2437efc72af83a0c424b0bad05c03ed74393
   languageName: node
   linkType: hard
 
-"@tanstack/table-core@npm:9.0.0":
-  version: 9.0.0
-  resolution: "@tanstack/table-core@npm:9.0.0"
+"@tanstack/table-core@npm:9.2.4":
+  version: 9.2.4
+  resolution: "@tanstack/table-core@npm:9.2.4"
   dependencies:
-    "@tanstack/store": "npm:^0.11.0"
-  checksum: 10/e86fb5a46f45c5721864879218d74e6222bfe32204a6842d68c9e6bc102c6f16e51bd370e56baa3f8c7ca0caf6295c4b848540bcf22855d9b3ec97a70fb4307b
+    "@tanstack/store": "npm:^0.11.1"
+  checksum: 10/a201c7ae585c41f9b4e59950852c4ac86326b1c3fb93295874c61e43772dd8c2df2a7e5ed1fac232ee272922fa84ff26a83c1dec51324a7b405aefc27a53ce26
   languageName: node
   linkType: hard
 
-"@tanstack/vue-table@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@tanstack/vue-table@npm:9.0.0"
+"@tanstack/vue-table@npm:^9.2.4":
+  version: 9.2.4
+  resolution: "@tanstack/vue-table@npm:9.2.4"
   dependencies:
-    "@tanstack/store": "npm:^0.11.0"
-    "@tanstack/table-core": "npm:9.0.0"
+    "@tanstack/store": "npm:^0.11.1"
+    "@tanstack/table-core": "npm:9.2.4"
   peerDependencies:
     vue: ">=3.2"
-  checksum: 10/ea016de9bbfa617e6fe66caf6cfe08d08cc003d3bce2e4b3ff2ec39289aecea7f5b076950973d04ed982933abeee46830f79a9b80cef6a9961caac1288518aa7
+  checksum: 10/c35c7965c63ead7ef06a933cffc91bb04eb1d34748b479f317289a782d84f258841f92df8a914c636fbcf61bac692a9446577cd2c387d6895317557f031c9a76
   languageName: node
   linkType: hard
 
@@ -5008,7 +5008,7 @@ __metadata:
     "@pinia/colada-devtools": "npm:^1.1.2"
     "@pinia/testing": "npm:^2.0.1"
     "@playwright/test": "npm:^1.62.1"
-    "@tanstack/vue-table": "npm:^9.0.0"
+    "@tanstack/vue-table": "npm:^9.2.4"
     "@tsconfig/node24": "npm:^24.0.5"
     "@types/jsdom": "npm:^30"
     "@types/lodash-es": "npm:^4"
