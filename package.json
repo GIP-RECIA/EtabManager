@@ -43,7 +43,7 @@
     "@pinia/testing": "^2.0.1",
     "@playwright/test": "^1.62.1",
     "@tsconfig/node24": "^24.0.5",
-    "@types/jsdom": "^28",
+    "@types/jsdom": "^30",
     "@types/lodash-es": "^4",
     "@types/node": "^24",
     "@types/xml2js": "^0",
