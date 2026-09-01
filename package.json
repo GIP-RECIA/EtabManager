@@ -42,7 +42,7 @@
     "@pinia/colada-devtools": "^1.1.2",
     "@pinia/testing": "^2.0.1",
     "@playwright/test": "^1.62.1",
-    "@tsconfig/node24": "^24.0.4",
+    "@tsconfig/node24": "^24.0.5",
     "@types/jsdom": "^28",
     "@types/lodash-es": "^4",
     "@types/node": "^24",
