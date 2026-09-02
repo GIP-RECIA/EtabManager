@@ -170,6 +170,11 @@ public class SecurityConfiguration {
                                             rightsForEtabs.get(role).add(siren);
                                         }
                                         break;
+                                    // Droits sur un SIREN spécifique
+                                    case SIREN:
+                                        for (AppRole role : rule.getRoles()) {
+                                            rightsForEtabs.get(role).add(matcher.group(1));
+                                        }
                                     // Droit sur tous les étabs d'une branche
                                     case BRANCH:
                                         for (StructureFromGroup structure : structureLoader.getStructuresOfBranch(matcher.group(1))) {

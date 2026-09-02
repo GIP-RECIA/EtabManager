@@ -20,5 +20,6 @@ public enum ExtractType {
     GLOBAL,
     UAI,
     BRANCH,
-    COLLECTIVITY
+    COLLECTIVITY,
+    SIREN
 }
