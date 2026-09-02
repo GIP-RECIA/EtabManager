@@ -43,8 +43,7 @@ public class AlertPersonneDto {
         if (etat == Etat.Delete && aPersonne.getDateModification().equals(aPersonne.getDateAcquittement())) {
             this.etat = Etat.Deleting;
             this.dateSuppression = aPersonne.getDateModification();
-        }
-        else if (aPersonne.getDateAcquittement()==null){
+        } else if (aPersonne.getDateAcquittement()==null && aPersonne.getEtat() != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
     }
@@ -57,7 +56,7 @@ public class AlertPersonneDto {
         if (etat == Etat.Delete && databaseIncertainDto.getDateModification().equals(databaseIncertainDto.getDateAcquittement())) {
             this.etat = Etat.Deleting;
             this.dateSuppression = databaseIncertainDto.getDateModification();
-        } else if (databaseIncertainDto.getDateAcquittement()==null){
+        } else if (databaseIncertainDto.getDateAcquittement()==null && databaseIncertainDto.getEtat() != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
     }

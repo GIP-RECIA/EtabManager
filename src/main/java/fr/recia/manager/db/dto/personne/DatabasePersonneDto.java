@@ -57,7 +57,7 @@ public class DatabasePersonneDto {
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
             this.dateSuppression = dateModification;
-        } else if (dateAcquittement==null){
+        } else if (dateAcquittement==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
         this.uid = uid;
@@ -80,7 +80,7 @@ public class DatabasePersonneDto {
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
             this.dateSuppression = dateModification;
-        } else if (dateAcquittement==null){
+        } else if (dateAcquittement==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
         this.uid = uid;
@@ -102,7 +102,7 @@ public class DatabasePersonneDto {
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
             this.dateSuppression = dateModification;
-        } else if (dateAcquittement==null){
+        } else if (dateAcquittement==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
         this.uid = "";
@@ -125,7 +125,7 @@ public class DatabasePersonneDto {
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
             this.dateSuppression = dateModification;
-        } else if (dateAcquittement==null){
+        } else if (dateAcquittement==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
         this.uid = "";
@@ -146,7 +146,7 @@ public class DatabasePersonneDto {
         if (aPersonne.getEtat() == Etat.Delete && aPersonne.getDateModification().equals(aPersonne.getDateAcquittement())) {
             this.etat = Etat.Deleting;
             this.dateSuppression = aPersonne.getDateModification();
-        } else if (aPersonne.getDateAcquittement()==null){
+        } else if (aPersonne.getDateAcquittement()==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
         this.dateModification = aPersonne.getDateModification();
