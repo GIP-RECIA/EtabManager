@@ -252,6 +252,9 @@ public class PersonneService {
             Date date = new Date();
             if(aPersonne.getDateAcquittement().equals(aPersonne.getDateModification())){
                 aPersonne.setDateAcquittement(date);
+            } else {
+                // Si il n'est plus dans le LDAP, faut mettre la dateAcquittement à null
+                aPersonne.setDateAcquittement(null);
             }
             aPersonne.setDateModification(date);
             aPersonneRepository.saveAndFlush(aPersonne);
