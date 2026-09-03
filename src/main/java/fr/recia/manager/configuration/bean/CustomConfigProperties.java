@@ -44,6 +44,13 @@ public class CustomConfigProperties {
     private List<FonctionsProperties> fonctions;
     private Map<String, Set<String>> adminFonctionsBySource;
     private List<LoginOfficeProperties> loginOffices;
+    private List<PartitionedSourcesProperties> partitionedSources;
+
+    @Data
+    public static class PartitionedSourcesProperties {
+        private String name;
+        private Set<String> sources;
+    }
 
     @Data
     public static class AlertProperties {

@@ -70,6 +70,7 @@ app:
     cas-ticket-callback: /login/cas
     authorized-domains:
       - http://HOST
+    source-attribute:
 
   cors:
     allowed-origins:
@@ -170,6 +171,11 @@ app:
           template-api-path: ''
 
   custom-config:
+    partitionedSources:
+      - name: ''
+        sources:
+          -
+
     pronote-group-regex:
     suppress-days:
 

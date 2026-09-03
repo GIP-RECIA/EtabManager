@@ -22,8 +22,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import fr.recia.manager.audit.AuditEvent;
 import fr.recia.manager.audit.AuditService;
 import fr.recia.manager.audit.EventType;
+import fr.recia.manager.configuration.AppProperties;
+import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
-import fr.recia.manager.db.entities.education.Enseignement;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.structure.AStructure;
 import fr.recia.manager.db.enums.Etat;
@@ -81,6 +82,8 @@ public class PersonneController {
     private StructureService structureService;
     @Autowired
     private AuditService auditService;
+    @Autowired
+    private AppProperties appProperties;
 
     @GetMapping
     public ResponseEntity<List<SearchedPersonneDto>> searchPersonne(@AuthenticationPrincipal AppUser principal,
@@ -93,15 +96,23 @@ public class PersonneController {
         Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GLC);
         boolean canSearchByUid = principal.getGlobalRights().contains(AppRole.SEARCH_UID);
 
+        Set<String> sources = new HashSet<>();
+        // TODO : Cloisonnement aux sources de l'académie de l'utilisateur
+        for(CustomConfigProperties.PartitionedSourcesProperties partitionedSources : appProperties.getCustomConfig().getPartitionedSources()){
+            if(partitionedSources.getSources().contains(principal.getSource())){
+                sources = partitionedSources.getSources();
+            }
+        }
+
         // Cas de la recherche dans un établissement
         if(etabId != null){
             AStructure aStructure = structureService.getStructureDBFromId(etabId);
             if(allowedSiren.contains(aStructure.getSiren())){
                 // Ici pas besoin de revérifier les droits car ils sont déjà véirifiés implicitement comme on recherche uniquement dans l'établissement
                 if(staff){
-                    personnes = personneService.searchPersonneInEtabInStaffCategories(name, Set.of(etabId), canSearchByUid);
+                    personnes = personneService.searchPersonneInEtabInStaffCategories(name, Set.of(etabId), canSearchByUid, sources);
                 } else {
-                    personnes = personneService.searchPersonneInEtab(name, Set.of(etabId), canSearchByUid);
+                    personnes = personneService.searchPersonneInEtab(name, Set.of(etabId), canSearchByUid, sources);
                 }
             } else {
                 log.warn("User {} is not authorized to view etab {}", principal.getUsername(), etabId);
@@ -114,15 +125,15 @@ public class PersonneController {
             // recherche hors d'un établissement sans vérifier les droits = recherche utilisée pour le rattachement
             if(!checkRights){
                 if(staff){
-                    personnes = personneService.searchPersonneNotInEtabInStaffCategories(name, Set.of(notInEtabId), canSearchByUid);
+                    personnes = personneService.searchPersonneNotInEtabInStaffCategories(name, Set.of(notInEtabId), canSearchByUid, sources);
                 } else {
-                    personnes = personneService.searchPersonneNotInEtab(name, Set.of(notInEtabId), canSearchByUid);
+                    personnes = personneService.searchPersonneNotInEtab(name, Set.of(notInEtabId), canSearchByUid, sources);
                 }
             } else {
                 if(staff){
-                    personnes = personneService.searchPersonneNotInEtabButInSirenInStaffCategories(name, Set.of(notInEtabId), allowedSiren, canSearchByUid);
+                    personnes = personneService.searchPersonneNotInEtabButInSirenInStaffCategories(name, Set.of(notInEtabId), allowedSiren, canSearchByUid, sources);
                 } else {
-                    personnes = personneService.searchPersonneNotInEtabButInSiren(name, Set.of(notInEtabId), allowedSiren, canSearchByUid);
+                    personnes = personneService.searchPersonneNotInEtabButInSiren(name, Set.of(notInEtabId), allowedSiren, canSearchByUid, sources);
                 }
             }
         }
@@ -131,16 +142,16 @@ public class PersonneController {
         else {
             if(!checkRights){
                 if(staff){
-                    personnes = personneService.searchPersonneInStaffCategories(name, canSearchByUid);
+                    personnes = personneService.searchPersonneInStaffCategories(name, canSearchByUid, sources);
                 } else {
-                    personnes = personneService.searchPersonne(name, canSearchByUid);
+                    personnes = personneService.searchPersonne(name, canSearchByUid, sources);
                 }
             } else {
                 // On ne cherche que les personnes dans les sirens autorisés
                 if(staff){
-                    personnes = personneService.searchPersonneInEtabBySirenInStaffCategories(name, allowedSiren, canSearchByUid);
+                    personnes = personneService.searchPersonneInEtabBySirenInStaffCategories(name, allowedSiren, canSearchByUid, sources);
                 } else {
-                    personnes = personneService.searchPersonneInEtabBySiren(name, allowedSiren, canSearchByUid);
+                    personnes = personneService.searchPersonneInEtabBySiren(name, allowedSiren, canSearchByUid, sources);
                 }
             }
         }
@@ -175,7 +186,6 @@ public class PersonneController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<PersonneDetailDto> getPersonne(@AuthenticationPrincipal AppUser principal, @PathVariable Long id) {
-        // TODO : la route est aussi appellée lors du rattachement sauf qu'on a pas forcément les droits sur l'étab duquel la personne est de base
         APersonne personne = personneService.getPersonne(id);
         if (personne == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

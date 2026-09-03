@@ -30,5 +30,6 @@ public class CASProperties {
     private String casProviderKey;
     private String casTicketCallback;
     private Set<String> authorizedDomains;
+    private String sourceAttribute;
 
 }

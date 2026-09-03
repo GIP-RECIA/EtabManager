@@ -203,8 +203,9 @@ public class SecurityConfiguration {
             } else {
                 log.warn("No groups for user {} !", username);
             }
-            log.trace("User {} logged in with rights {} and {}", username, rightsForEtabs, globalRights);
-            return new AppUser(username, "", new ArrayList<>(), rightsForEtabs, globalRights);
+            final String source = ((String) attributes.get(appProperties.getCas().getSourceAttribute())).split("\\$")[0];
+            log.debug("User {} logged in with rights {} and {} and source {}", username, rightsForEtabs, globalRights, source);
+            return new AppUser(username, "", new ArrayList<>(), rightsForEtabs, globalRights, source);
         };
     }
 

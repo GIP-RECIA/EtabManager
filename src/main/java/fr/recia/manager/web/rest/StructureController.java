@@ -166,8 +166,8 @@ public class StructureController {
         boolean showUid = principal.getRightsForEtabs().get(AppRole.VIEW_UID).contains(etablissement.getSiren());
 
         // Récupération de la liste des personnes depuis la database
-        List<DatabasePersonneDto> etabPersonnes = personneService.getPersonnes(id, showUid);
-        List<DatabasePersonneDto> withoutFunction = fonctionService.getPersonnesWithoutFunctions(id, showUid);
+        List<DatabasePersonneDto> etabPersonnes = personneService.getPersonnes(id, showUid, Set.of(etablissement.getSource()));
+        List<DatabasePersonneDto> withoutFunction = fonctionService.getPersonnesWithoutFunctions(id, showUid, Set.of(etablissement.getSource()));
 
         // Liste des personnes de l'établissement
         etablissement.setListePersonnes(etabPersonnes, appProperties.getCustomConfig().getLoginOffices());

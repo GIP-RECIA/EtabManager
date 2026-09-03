@@ -31,12 +31,14 @@ public class AppUser extends User {
 
     private Map<AppRole, Set<String>> rightsForEtabs;
     private Set<AppRole> globalRights;
+    private String source;
 
     public AppUser(String username, String password, Collection<? extends GrantedAuthority> authorities,
-                   Map<AppRole, Set<String>> rightsForEtabs, Set<AppRole> globalRights) {
+                   Map<AppRole, Set<String>> rightsForEtabs, Set<AppRole> globalRights, String source) {
         super(username, password, authorities);
         this.rightsForEtabs = rightsForEtabs;
         this.globalRights = globalRights;
+        this.source = source;
     }
 
 }
