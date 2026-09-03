@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.1](https://github.com/GIP-RECIA/EtabManager/compare/0.2.0...0.2.1) (2026-09-03)
+
+### Features
+
+* cloisonnement des académies par groupe de sources ([5cd7499](https://github.com/GIP-RECIA/EtabManager/commit/5cd749952a9db0e81072f9a27473545e2c0b93eb))
+* droits sur un siren spécifique ([6dcb4e6](https://github.com/GIP-RECIA/EtabManager/commit/6dcb4e6dee712adc15c5063ee4fb98989a71e9ce))
+* etat non alimenté pas pour les incertains ([c47d22c](https://github.com/GIP-RECIA/EtabManager/commit/c47d22c83ca6d4fca77d29b76ce1ecfe10564b5b))
+* **ui:** add Réunion and fix external ([21df4fd](https://github.com/GIP-RECIA/EtabManager/commit/21df4fdc6c167e2cb0b02b4a74767f482c9fe384))
+
+### Bug Fixes
+
+* dateAquittement à null pour un compte sorti de la suppression qui n'est plus dans le LDAP ([a4e5cf1](https://github.com/GIP-RECIA/EtabManager/commit/a4e5cf14adac2110e2edf609958fd8129a08eced))
+
 ## [0.2.0](https://github.com/GIP-RECIA/EtabManager/compare/0.1.1...0.2.0) (2026-08-31)
 
 ### Features
