@@ -36,7 +36,7 @@
       "legalGuardian": "Sous responsabilité | Responsable légal"
     },
     "office": {
-      "external": "Identifiant EN",
+      "external": "Identifiant externe",
       "en": "Systèmes d'information des Personnels de l'Éducation Nationale de l'académie Orléans-Tours",
       "eduConnect": "Gestion des comptes EduConnect",
       "eduAgri": "Système d'information des Personnels de l'Enseignement Agricole",
@@ -45,6 +45,7 @@
     "source": {
       "AC-DEMO": "Source de démonstration",
       "AC-ORLEANS-TOURS": "Annuaire Académique Fédérateur (AAF)",
+      "AC-REUNION": "@:page.user.source.AC-ORLEANS-TOURS",
       "CFA-CENTRE": "SI établissement",
       "COLL-CD18": "Département 18",
       "COLL-CD28": "Département 28",
@@ -53,11 +54,13 @@
       "COLL-CD41": "Département 41",
       "COLL-CD45": "Département 45",
       "COLL-CVDL": "Région Centre-Val de Loire",
+      "COLL-RREUNION": "Région Réunion",
       "EF2S-CENTRE": "SI établissement",
       "GIP-RECIA": "GIP RECIA",
       "LA-CENTRE": "Annuaire Enseignement Agricole",
       "SarapisUi_AC-DEMO": "Compte local démonstration",
       "SarapisUi_AC-ORLEANS-TOURS": "Compte local académique",
+      "SarapisUi_AC-REUNION": "@:page.user.source.SarapisUi_AC-ORLEANS-TOURS",
       "SarapisUi_CFA-CENTRE": "Compte local établissement",
       "SarapisUi_COLL-CD18": "Compte local département 18",
       "SarapisUi_COLL-CD28": "Compte local département 28",
@@ -66,6 +69,7 @@
       "SarapisUi_COLL-CD41": "Compte local département 41",
       "SarapisUi_COLL-CD45": "Compte local département 45",
       "SarapisUi_COLL-CVDL": "Compte local région Centre-Val de Loire",
+      "SarapisUi_COLL-RREUNION": "Compte local région Réunion",
       "SarapisUi_EF2S-CENTRE": "Compte local établissement",
       "SarapisUi_GIP-RECIA": "Compte local GIP RECIA",
       "SarapisUi_LA-CENTRE": "Compte local enseignement agricole"

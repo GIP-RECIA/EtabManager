@@ -36,7 +36,7 @@
       "legalGuardian": "Dependent | Legal guardian"
     },
     "office": {
-      "external": "National Education ID",
+      "external": "External ID",
       "en": "National Education staff information system (Orléans-Tours academy)",
       "eduConnect": "EduConnect account management",
       "eduAgri": "Agricultural Education staff information system",
@@ -45,6 +45,7 @@
     "source": {
       "AC-DEMO": "Demo source",
       "AC-ORLEANS-TOURS": "Academic Directory (AAF)",
+      "AC-REUNION": "@:page.user.source.AC-ORLEANS-TOURS",
       "CFA-CENTRE": "Institution information system",
       "COLL-CD18": "Department 18",
       "COLL-CD28": "Departement 28",
@@ -53,11 +54,13 @@
       "COLL-CD41": "Departement 41",
       "COLL-CD45": "Departement 45",
       "COLL-CVDL": "Centre-Val de Loire region",
+      "COLL-RREUNION": "Réunion region",
       "EF2S-CENTRE": "Institution information system",
       "GIP-RECIA": "GIP RECIA",
       "LA-CENTRE": "Agricultural Education Directory",
       "SarapisUi_AC-DEMO": "Local demo account",
       "SarapisUi_AC-ORLEANS-TOURS": "Local academic account",
+      "SarapisUi_AC-REUNION": "@:page.user.source.SarapisUi_AC-ORLEANS-TOURS",
       "SarapisUi_CFA-CENTRE": "Local institution account",
       "SarapisUi_COLL-CD18": "Local account department 18",
       "SarapisUi_COLL-CD28": "Local account department 28",
@@ -66,6 +69,7 @@
       "SarapisUi_COLL-CD41": "Local account department 41",
       "SarapisUi_COLL-CD45": "Local account department 45",
       "SarapisUi_COLL-CVDL": "Local account Centre-Val de Loire region",
+      "SarapisUi_COLL-RREUNION": "Local account Réunion region",
       "SarapisUi_EF2S-CENTRE": "Local institution account",
       "SarapisUi_GIP-RECIA": "Local GIP RECIA account",
       "SarapisUi_LA-CENTRE": "Local agricultural education account"
