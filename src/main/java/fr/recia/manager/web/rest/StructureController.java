@@ -17,6 +17,7 @@
 package fr.recia.manager.web.rest;
 
 import fr.recia.manager.configuration.AppProperties;
+import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
 import fr.recia.manager.db.dto.structure.SimpleStructureDto;
 import fr.recia.manager.db.dto.structure.StructureDto;
@@ -45,6 +46,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -162,12 +164,20 @@ public class StructureController {
             }
         }
 
+        // Cloisonnement aux sources de l'académie de l'établissement
+        Set<String> sources = new HashSet<>();
+        for(CustomConfigProperties.PartitionedSourcesProperties partitionedSources : appProperties.getCustomConfig().getPartitionedSources()){
+            if(partitionedSources.getSources().contains(etablissement.getSource())){
+                sources = partitionedSources.getSources();
+            }
+        }
+
         // Booléen qui indique si on affiche l'uid ou non
         boolean showUid = principal.getRightsForEtabs().get(AppRole.VIEW_UID).contains(etablissement.getSiren());
 
         // Récupération de la liste des personnes depuis la database
-        List<DatabasePersonneDto> etabPersonnes = personneService.getPersonnes(id, showUid, Set.of(etablissement.getSource()));
-        List<DatabasePersonneDto> withoutFunction = fonctionService.getPersonnesWithoutFunctions(id, showUid, Set.of(etablissement.getSource()));
+        List<DatabasePersonneDto> etabPersonnes = personneService.getPersonnes(id, showUid, sources);
+        List<DatabasePersonneDto> withoutFunction = fonctionService.getPersonnesWithoutFunctions(id, showUid, sources);
 
         // Liste des personnes de l'établissement
         etablissement.setListePersonnes(etabPersonnes, appProperties.getCustomConfig().getLoginOffices());

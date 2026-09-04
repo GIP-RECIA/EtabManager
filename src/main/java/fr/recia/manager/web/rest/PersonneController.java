@@ -97,7 +97,7 @@ public class PersonneController {
         boolean canSearchByUid = principal.getGlobalRights().contains(AppRole.SEARCH_UID);
 
         Set<String> sources = new HashSet<>();
-        // TODO : Cloisonnement aux sources de l'académie de l'utilisateur
+        // Cloisonnement aux sources de l'académie de l'utilisateur
         for(CustomConfigProperties.PartitionedSourcesProperties partitionedSources : appProperties.getCustomConfig().getPartitionedSources()){
             if(partitionedSources.getSources().contains(principal.getSource())){
                 sources = partitionedSources.getSources();
