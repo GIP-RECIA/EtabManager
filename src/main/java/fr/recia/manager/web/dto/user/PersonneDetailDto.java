@@ -95,11 +95,16 @@ public class PersonneDetailDto {
         this.login = aPersonne.getLogin().getNom();
         this.dateFin = aPersonne.getDateFin();
         this.dateSourceModification = aPersonne.getDateSourceModification();
+        final LocalDateTime dateSuppression = aPersonne.getDateModification().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(20);
         if (aPersonne.getEtat() == Etat.Delete && aPersonne.getDateModification().equals(aPersonne.getDateAcquittement())) {
             this.etat = Etat.Deleting;
-            final LocalDateTime dateSuppression = aPersonne.getDateModification().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(20);
             this.dateSuppression = Date.from(dateSuppression.atZone(ZoneId.systemDefault()).toInstant());
-        } else if (aPersonne.getDateAcquittement()==null && etat != Etat.Incertain){
+        }
+        if (aPersonne.getEtat() == Etat.Delete && aPersonne.getDateModification().toInstant().isBefore(aPersonne.getDateAcquittement().toInstant())) {
+            this.etat = Etat.Delete;
+            this.dateSuppression = Date.from(dateSuppression.atZone(ZoneId.systemDefault()).toInstant());
+        }
+        if (aPersonne.getDateAcquittement()==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
         this.photo = aPersonne.getPhoto();

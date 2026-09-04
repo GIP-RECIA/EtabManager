@@ -23,6 +23,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Getter
@@ -54,9 +56,11 @@ public class DatabasePersonneDto {
         this.cn = cn;
         this.email = email;
         this.sn = sn;
+        // TODO : date de suppression quand le compte est complètement supprimé
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
-            this.dateSuppression = dateModification;
+            final LocalDateTime dateSuppression = dateModification.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(20);
+            this.dateSuppression = Date.from(dateSuppression.atZone(ZoneId.systemDefault()).toInstant());
         } else if (dateAcquittement==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
@@ -79,7 +83,8 @@ public class DatabasePersonneDto {
         this.login = login;
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
-            this.dateSuppression = dateModification;
+            final LocalDateTime dateSuppression = dateModification.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(20);
+            this.dateSuppression = Date.from(dateSuppression.atZone(ZoneId.systemDefault()).toInstant());
         } else if (dateAcquittement==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
@@ -101,7 +106,8 @@ public class DatabasePersonneDto {
         this.sn = sn;
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
-            this.dateSuppression = dateModification;
+            final LocalDateTime dateSuppression = dateModification.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(20);
+            this.dateSuppression = Date.from(dateSuppression.atZone(ZoneId.systemDefault()).toInstant());
         } else if (dateAcquittement==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
@@ -124,7 +130,8 @@ public class DatabasePersonneDto {
         this.login = login;
         if (etat == Etat.Delete && dateModification.equals(dateAcquittement)) {
             this.etat = Etat.Deleting;
-            this.dateSuppression = dateModification;
+            final LocalDateTime dateSuppression = dateModification.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(20);
+            this.dateSuppression = Date.from(dateSuppression.atZone(ZoneId.systemDefault()).toInstant());
         } else if (dateAcquittement==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
@@ -145,7 +152,8 @@ public class DatabasePersonneDto {
         this.givenName = aPersonne.getGivenName();
         if (aPersonne.getEtat() == Etat.Delete && aPersonne.getDateModification().equals(aPersonne.getDateAcquittement())) {
             this.etat = Etat.Deleting;
-            this.dateSuppression = aPersonne.getDateModification();
+            final LocalDateTime dateSuppression = aPersonne.getDateModification().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().plusDays(20);
+            this.dateSuppression = Date.from(dateSuppression.atZone(ZoneId.systemDefault()).toInstant());
         } else if (aPersonne.getDateAcquittement()==null && etat != Etat.Incertain){
             this.etat = Etat.Non_alimente;
         }
