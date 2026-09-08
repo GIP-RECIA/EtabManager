@@ -16,6 +16,7 @@
 
 package fr.recia.manager.web.dto.user;
 
+import fr.recia.manager.configuration.Constants;
 import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
 import fr.recia.manager.db.enums.CategoriePersonne;
@@ -57,7 +58,7 @@ public class PersonneInListDto {
         this.email = databasePersonneDto.getEmail();
         this.dateModificationSource = databasePersonneDto.getDateModificationSource();
         this.dateSuppression = databasePersonneDto.getDateSuppression();
-        this.local = databasePersonneDto.getSource().startsWith("SarapisUi_");
+        this.local = databasePersonneDto.getSource().startsWith(Constants.SARAPISUI_);
         this.guichet = null;
         for(CustomConfigProperties.LoginOfficeProperties loginOfficeProperty : loginOfficeProperties){
             if(loginOfficeProperty.getSource().equals(databasePersonneDto.getSource())){

@@ -15,6 +15,7 @@
  */
 package fr.recia.manager.web.dto.user;
 
+import fr.recia.manager.configuration.Constants;
 import fr.recia.manager.db.dto.gestion.DatabaseIncertainDto;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.enums.Etat;
@@ -38,7 +39,7 @@ public class AlertPersonneDto {
     public AlertPersonneDto(APersonne aPersonne) {
         this.id = aPersonne.getId();
         this.etat = aPersonne.getEtat();
-        this.local = aPersonne.getCleJointure().getSource().startsWith("SarapisUi_");
+        this.local = aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_);
         this.cn = aPersonne.getCn();
         if (etat == Etat.Delete && aPersonne.getDateModification().equals(aPersonne.getDateAcquittement())) {
             this.etat = Etat.Deleting;
@@ -51,7 +52,7 @@ public class AlertPersonneDto {
     public AlertPersonneDto(DatabaseIncertainDto databaseIncertainDto) {
         this.id = databaseIncertainDto.getId();
         this.etat = databaseIncertainDto.getEtat();
-        this.local = databaseIncertainDto.getSource().startsWith("SarapisUi_");
+        this.local = databaseIncertainDto.getSource().startsWith(Constants.SARAPISUI_);
         this.cn = databaseIncertainDto.getCn();
         if (etat == Etat.Delete && databaseIncertainDto.getDateModification().equals(databaseIncertainDto.getDateAcquittement())) {
             this.etat = Etat.Deleting;

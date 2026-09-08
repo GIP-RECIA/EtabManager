@@ -146,7 +146,7 @@ public class PersonneService {
     public boolean resetPersonne(APersonne aPersonne){
         log.trace("resetPersonne for {}", aPersonne.getId());
         // TODO : de qui on peut réinitialiser les mot de passe ?
-        if(aPersonne.getCleJointure().getSource().startsWith("SarapisUi_") && aPersonne.getEtat().equals(Etat.Valide)){
+        if(aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_) && aPersonne.getEtat().equals(Etat.Valide)){
             // Modifications en base
             aPersonne.setPassword(passwordGenerator.genPassword());
             aPersonne.setEtat(Etat.Invalide);
@@ -217,7 +217,7 @@ public class PersonneService {
      * Le compte passera en suppression au prochain passage de sarapis
      */
     public boolean putInDeleteState(APersonne aPersonne){
-        if(!aPersonne.getEtat().equals(Etat.Delete) && !ForceEtat.Deleted.equals(aPersonne.getForceEtat()) && aPersonne.getCleJointure().getSource().startsWith("SarapisUi_")){
+        if(!aPersonne.getEtat().equals(Etat.Delete) && !ForceEtat.Deleted.equals(aPersonne.getForceEtat()) && aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_)){
             ldapPeopleDao.putInDeleteState(aPersonne.getUid());
             aPersonne.setEtat(Etat.Delete);
             Date date = new Date();
@@ -232,8 +232,10 @@ public class PersonneService {
     }
 
     /**
-     * Permet de retirer un compte de la suppression (temporairement)
+     * Permet de retirer un compte de la suppression
      * Possible pour un compte en suppression (immédiat) ou pour un compte supprimé (à la prochaine synchro)
+     * Pour un compte alimenté depuis les sources officielles, l'annulation est temporaire
+     * Pour un compte local, l'annulation compte pour jusqu'à la prochaine rentrée
      */
     public Optional<Etat> undoDelete(APersonne aPersonne){
         if(aPersonne.getEtat().equals(Etat.Delete)){
@@ -247,8 +249,11 @@ public class PersonneService {
             aPersonne.setEtat(etatToRestore);
             // Si on sort de la suppression juste après l'avoir forcée
             aPersonne.setForceEtat(ForceEtat.NONE);
-            LocalDate localDate = LocalDate.now().plusDays(10);
-            aPersonne.setDateFin(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            // On met une date de fin si la personne est censée arriver depuis les sources officielles
+            if(!aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_)){
+                LocalDate localDate = LocalDate.now().plusDays(10);
+                aPersonne.setDateFin(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            }
             Date date = new Date();
             if(aPersonne.getDateAcquittement().equals(aPersonne.getDateModification())){
                 aPersonne.setDateAcquittement(date);

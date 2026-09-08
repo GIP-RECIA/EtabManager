@@ -16,6 +16,7 @@
 
 package fr.recia.manager.web.dto.user;
 
+import fr.recia.manager.configuration.Constants;
 import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.enums.CategoriePersonne;
@@ -88,7 +89,7 @@ public class PersonneDetailDto {
         if (showUid) {
             this.uid = aPersonne.getUid();
             // TODO : dans quel cas on affiche le mot de passe ?
-            if(aPersonne.getCleJointure().getSource().startsWith("SarapisUi_") && aPersonne.getEtat().equals(Etat.Invalide)){
+            if(aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_) && aPersonne.getEtat().equals(Etat.Invalide)){
                 this.password = aPersonne.getPassword();
             }
         }
@@ -124,7 +125,7 @@ public class PersonneDetailDto {
                 }
             }
         }
-        this.local = aPersonne.getCleJointure().getSource().startsWith("SarapisUi_");
+        this.local = aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_);
     }
 
 }

@@ -16,6 +16,7 @@
 
 package fr.recia.manager.web.dto.user;
 
+import fr.recia.manager.configuration.Constants;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
 import fr.recia.manager.db.enums.Etat;
 import lombok.EqualsAndHashCode;
@@ -38,7 +39,7 @@ public class CardPersonneDto {
     public CardPersonneDto(DatabasePersonneDto databasePersonneDto) {
         this.id = databasePersonneDto.getId();
         this.etat = databasePersonneDto.getEtat();
-        this.local = databasePersonneDto.getSource().startsWith("SarapisUi_");
+        this.local = databasePersonneDto.getSource().startsWith(Constants.SARAPISUI_);
         this.cn = databasePersonneDto.getCn();
         this.dateSuppression = databasePersonneDto.getDateSuppression();
     }
