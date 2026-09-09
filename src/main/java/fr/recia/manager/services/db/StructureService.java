@@ -225,8 +225,12 @@ public class StructureService {
                 Long disciplineId = fonctionDto.getDiscipline();
                 // Cas spécial pour les CFA
                 if (disciplineId == null) {
-                    DatabasePersonneDto databasePersonneDto = personnesMap.get(fonctionDto.getPersonne());
-                    typeFonctionFiliereDto.getPersonnesWithoutDiscipline().add(databasePersonneDto);
+                    if (personnesMap.containsKey(fonctionDto.getPersonne())) {
+                        DatabasePersonneDto databasePersonneDto = personnesMap.get(fonctionDto.getPersonne());
+                        typeFonctionFiliereDto.getPersonnesWithoutDiscipline().add(databasePersonneDto);
+                    } else {
+                        log.warn("person {} in functions {} but not in structure {}", fonctionDto.getPersonne(), typeFonctionFiliereDto.getId(), etablissement.getId());
+                    }
                 } else {
                     if (disciplines.containsKey(disciplineId)) {
                         DisciplineDto disciplineDto;
@@ -244,7 +248,7 @@ public class StructureService {
                             disciplineDto.getCategories().add(databasePersonneDto.getCategorie());
                         } else {
                             // TODO : que faire dans ce cas si on se retrouve avec une discipline sans personne dedans ?
-                            log.warn("person in functions but not in structure for {} : {}", disciplineDto.getId(), fonctionDto.getPersonne());
+                            log.warn("person {} in functions {} but not in structure {}", fonctionDto.getPersonne(), disciplineDto.getId(), etablissement.getId());
                         }
                     } else {
                         log.warn("discipline {} is not in known in disciplines for {}", disciplineId, etablissement.getSource());
