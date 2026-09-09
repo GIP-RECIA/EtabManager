@@ -40,6 +40,7 @@ public class CustomConfigProperties {
     private String ldapResetPassword;
     private String pronoteGroupRegex;
     private Integer suppressDays;
+    private Integer undoSuppressDays;
     private List<AlertProperties> alerts;
     private List<FonctionsProperties> fonctions;
     private Map<String, Set<String>> adminFonctionsBySource;

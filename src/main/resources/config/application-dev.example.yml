@@ -178,6 +178,7 @@ app:
 
     pronote-group-regex:
     suppress-days:
+    undo-suppress-days:
 
     alerts:
       - source: ''
