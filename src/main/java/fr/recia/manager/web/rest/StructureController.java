@@ -93,6 +93,8 @@ public class StructureController {
     public ResponseEntity<List<SimpleStructureDto>> getEtablissements(@AuthenticationPrincipal AppUser principal) {
         // Ne retourner que les établissements que la personne a le droit de lire
         Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GLC);
+        // TODO : fix temporaire pour débloquer les documentalistes en leur permettant de faire des exports esidoc
+        allowedSiren.addAll(principal.getRightsForEtabs().get(AppRole.ESIDOC));
         List<SimpleStructureDto> etablissements = structureService.getEtablissements(allowedSiren);
         if (etablissements.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
