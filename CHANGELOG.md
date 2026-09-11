@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.3](https://github.com/GIP-RECIA/EtabManager/compare/0.2.2...0.2.3) (2026-09-09)
+
+### Bug Fixes
+
+* correctif temporaire pour permettre aux doc les exports esidoc ([2674bc3](https://github.com/GIP-RECIA/EtabManager/commit/2674bc3db6a4f42679d3b40ded91d30d566b6dda))
+* NPE personnes dans les fonctions mais pas dans un etab cas spécifique CFA ([b47e1fe](https://github.com/GIP-RECIA/EtabManager/commit/b47e1fe39cc8b66a8238e6b0d4e702773b11aad7))
+
+## [0.2.2](https://github.com/GIP-RECIA/EtabManager/compare/0.2.1...0.2.2) (2026-09-04)
+
+### Features
+
+* ajout date de suppression quand le compte est complètement supprimé ([3573235](https://github.com/GIP-RECIA/EtabManager/commit/357323514de6036db3bc3c8bce30cd112d70bf7d))
+
+### Bug Fixes
+
+* cloisonnement des sources pour les personnes dans un établissement ([e5ecd77](https://github.com/GIP-RECIA/EtabManager/commit/e5ecd77d64ac3d078bd476dd0a5a25ef26326c73))
+
 ## [0.2.1](https://github.com/GIP-RECIA/EtabManager/compare/0.2.0...0.2.1) (2026-09-03)
 
 ### Features
