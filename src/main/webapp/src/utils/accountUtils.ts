@@ -35,7 +35,7 @@ function getIconDefinition(
     : faUser
 }
 
-function getDateFin(date: string): endInfo {
+function getDateFin(date: string): endInfo | undefined {
   const configurationStore = useConfigurationStore()
   const { configuration } = storeToRefs(configurationStore)
 
@@ -49,6 +49,8 @@ function getDateFin(date: string): endInfo {
     }
   }
   const months: number = differenceInMonths(date, new Date())
+  if (months > 24) // TODO : use configuration
+    return undefined
   if (months < (configuration.value?.front.endFunctionWarning ?? 2)) {
     return {
       date,
