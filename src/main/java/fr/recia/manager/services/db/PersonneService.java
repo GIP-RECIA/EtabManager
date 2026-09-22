@@ -298,8 +298,10 @@ public class PersonneService {
             structureForUserDto.setGroupesPedagogiques(groupeService.getGroupesOfPersonne(personne.getId(), personne.getCategorie(), aStructure.getId()));
             structureForUserDto.setEnseignements(enseignementService.getEnseignementsByEtabAndPersonne(aStructure.getId(), personne.getId()));
         }
-        // Affichage de l'id pronote uniquement si la personne est dans un groupe pronote
+
+        // Complétion de l'utilisateur avec les autres informations dans le LDAP
         if(ldapUser != null){
+            // Affichage de l'id pronote uniquement si la personne est dans un groupe pronote
             List<String> groups = ldapUser.getGroups();
             Pattern patternPronoteGroup = Pattern.compile(appProperties.getCustomConfig().getPronoteGroupRegex());
             if(groups != null){
@@ -313,6 +315,8 @@ public class PersonneService {
                         }
                     }
                 }
+            // isMemberOf
+            personneDetailDto.setGroups(groups);
             } else {
                 log.warn("groupes null pour la personne {} !", personne.getUid());
             }
