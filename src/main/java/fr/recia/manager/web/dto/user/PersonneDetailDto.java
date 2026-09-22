@@ -72,6 +72,7 @@ public class PersonneDetailDto {
     private List<RelationDto> relations;
     private String guichet;
     private boolean local;
+    private List<String> groups;
 
     public PersonneDetailDto(APersonne aPersonne, boolean showUid, List<CustomConfigProperties.LoginOfficeProperties> loginOfficeProperties) {
         this.id = aPersonne.getId();
@@ -126,6 +127,7 @@ public class PersonneDetailDto {
             }
         }
         this.local = aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_);
+        this.groups = new ArrayList<>();
     }
 
 }
