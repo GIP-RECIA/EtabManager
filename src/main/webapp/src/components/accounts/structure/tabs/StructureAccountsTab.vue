@@ -513,7 +513,10 @@ function onExport(): void {
       @update-filters="updateFilters"
     />
 
-    <div v-dev class="accounts-actions">
+    <div
+      v-dev
+      class="accounts-actions"
+    >
       <h2 class="sr-only">
         {{ t('page.structure.actions') }}
       </h2>

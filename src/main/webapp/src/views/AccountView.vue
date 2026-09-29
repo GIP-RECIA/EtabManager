@@ -107,7 +107,10 @@ const table = useTable({
     <PageLayout
       :title="t('page.account.h1')"
     >
-      <div v-dev class="users">
+      <div
+        v-dev
+        class="users"
+      >
         <h2>
           {{ t('page.account.user.header') }}
         </h2>

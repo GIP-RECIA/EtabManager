@@ -192,7 +192,10 @@ watchEffect(
             {{ t('page.access.dialog.people', 2) }}
           </h2>
 
-          <div v-dev class="field">
+          <div
+            v-dev
+            class="field"
+          >
             <div class="field-layout">
               <div class="field-container">
                 <div class="middle">

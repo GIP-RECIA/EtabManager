@@ -73,7 +73,10 @@ const { t } = useI18n()
             }}
           </p>
 
-          <footer v-if="alert.type === 'min'" v-dev>
+          <footer
+            v-if="alert.type === 'min'"
+            v-dev
+          >
             <button
               type="button"
               class="btn-tertiary"
