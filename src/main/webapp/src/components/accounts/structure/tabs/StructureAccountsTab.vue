@@ -642,7 +642,7 @@ function onExport(): void {
               >
                 <div>
                   <p v-if="!breakpoints.greaterOrEqual('md').value">
-                    <span class="sr-only">
+                    <span class="label">
                       {{ t('page.structure.accounts.table.category') }}
                     </span>
                     <SafeEmptyData
@@ -650,7 +650,7 @@ function onExport(): void {
                     />
                   </p>
                   <p v-if="hasUid">
-                    <span class="sr-only">
+                    <span class="label">
                       {{ t('page.structure.accounts.table.uid') }}
                     </span>
                     <SafeEmptyData
@@ -658,7 +658,7 @@ function onExport(): void {
                     />
                   </p>
                   <p>
-                    <span class="sr-only">
+                    <span class="label">
                       {{ t('page.structure.accounts.table.login') }}
                     </span>
                     <SafeEmptyData
@@ -670,7 +670,7 @@ function onExport(): void {
                     />
                   </p>
                   <p>
-                    <span class="sr-only">
+                    <span class="label">
                       {{ t('page.structure.accounts.table.email') }}
                     </span>
                     <SafeEmptyData
@@ -678,7 +678,7 @@ function onExport(): void {
                     />
                   </p>
                   <p>
-                    <span class="sr-only">
+                    <span class="label">
                       {{ t('page.structure.accounts.table.sourceModificationDate') }}
                     </span>
                     <SafeEmptyData
@@ -747,6 +747,7 @@ function onExport(): void {
 
       > tr > th {
         padding: 12px;
+        text-align: start;
       }
     }
 
@@ -814,7 +815,13 @@ function onExport(): void {
             grid-auto-rows: 1fr;
 
             > p {
+              display: flex;
+              flex-direction: column;
               padding: 12px 16px;
+
+              > .label {
+                opacity: 0.6;
+              }
             }
           }
         }
