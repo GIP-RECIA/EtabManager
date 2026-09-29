@@ -42,15 +42,15 @@ const { t } = useI18n()
       </span>
       <span
         :style="{
-          visibility: (structure.type || structure.uai)
+          visibility: (structure.type || structure.uai || structure.siren)
             ? undefined
             : 'hidden',
         }"
         class="description"
       >
         {{ structure.type }}
-        <span v-if="structure.uai">
-          {{ structure.uai }}
+        <span v-if="structure.uai || structure.siren">
+          {{ structure.uai ?? structure.siren }}
         </span>
         <span aria-hidden="true" />
       </span>

@@ -63,10 +63,10 @@ function editFunction(
         <h2>
           {{ structure.nom }}
         </h2>
-        <p v-show="structure.type">
+        <p v-show="structure.type || structure.uai || structure.siren">
           {{ structure.type }}
-          <span v-show="structure.uai">
-            {{ structure.uai }}
+          <span v-show="structure.uai || structure.siren">
+            {{ structure.uai ?? structure.siren }}
           </span>
         </p>
         <p

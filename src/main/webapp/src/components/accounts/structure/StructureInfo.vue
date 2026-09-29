@@ -43,10 +43,10 @@ const { t } = useI18n()
           />
         </h1>
       </li>
-      <li v-if="structure">
+      <li v-if="structure?.type || structure?.uai || structure?.siren">
         {{ structure.type }}
-        <span v-show="structure.uai">
-          {{ structure.uai }}
+        <span v-show="structure.uai || structure.siren">
+          {{ structure.uai ?? structure.siren }}
         </span>
       </li>
     </ul>

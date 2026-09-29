@@ -176,15 +176,15 @@ const table = useTable({
               </span>
               <span
                 :style="{
-                  visibility: (row.original.type || row.original.uai)
+                  visibility: (row.original.type || row.original.uai || row.original.siren)
                     ? undefined
                     : 'hidden',
                 }"
                 class="description"
               >
                 {{ row.original.type }}
-                <span v-if="row.original.uai">
-                  {{ row.original.uai }}
+                <span v-if="row.original.uai || row.original.siren">
+                  {{ row.original.uai ?? row.original.siren }}
                 </span>
               </span>
             </RouterLink>
