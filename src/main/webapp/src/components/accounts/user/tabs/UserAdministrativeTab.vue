@@ -16,6 +16,8 @@
 
 <script setup lang="ts">
 import type { FunctionForm, User, UserStructure } from '@/types/index.ts'
+import { faHouseUser, faLandmark } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useUserRights } from '@/composables/index.ts'
@@ -57,15 +59,44 @@ function editFunction(
       :key="`user-administrative-structure-${structure.id}`"
       class="structure-functions"
     >
-      <h2>
-        {{ structure.nom }}
-        <span v-show="structure.type">
+      <div class="heading">
+        <h2>
+          {{ structure.nom }}
+        </h2>
+        <p v-show="structure.type">
           {{ structure.type }}
           <span v-show="structure.uai">
             {{ structure.uai }}
           </span>
-        </span>
-      </h2>
+        </p>
+        <p
+          v-if="
+            structure.structureRattachement
+              || structure.structureCourante
+          "
+          class="icons"
+        >
+          <span
+            v-show="structure.structureRattachement"
+            :title="t('page.user.structure.admin')"
+          >
+            <FontAwesomeIcon
+              :icon="faLandmark"
+              size="lg"
+            />
+          </span>
+          <span
+            v-show="structure.structureCourante"
+            :title="t('page.user.structure.current')"
+            class="current"
+          >
+            <FontAwesomeIcon
+              :icon="faHouseUser"
+              size="lg"
+            />
+          </span>
+        </p>
+      </div>
 
       <template v-if="canSeeFunctions">
         <div class="r-card">
@@ -145,11 +176,22 @@ function editFunction(
   display: grid;
   gap: 16px;
 
-  > h2 {
-    margin-bottom: 0;
+  > .heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
 
-    > span {
+    > h2 {
+      margin-bottom: 0;
+    }
+
+    > p:not(.icons) {
       opacity: 0.6;
+      font-size: var(--#{$prefix}font-size-sm);
+    }
+
+    > p.icons {
       font-size: var(--#{$prefix}font-size-sm);
     }
   }
@@ -171,7 +213,7 @@ function editFunction(
     grid-template-columns: repeat(2, 1fr);
     align-items: start;
 
-    > h2 {
+    > .heading {
       grid-column: span 2;
     }
   }
