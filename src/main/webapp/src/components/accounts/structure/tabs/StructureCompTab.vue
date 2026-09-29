@@ -95,12 +95,12 @@ function updateFilters(e: CustomEvent): void {
         <h2>
           {{ filiere.libelle }}
         </h2>
-        <span class="count">
+        <p class="count">
           {{
             filiere.disciplines.length
               + (filiere.personnesWithoutDiscipline.length > 0 ? 1 : 0)
           }}
-        </span>
+        </p>
       </template>
 
       <FiliereWithDisciplines
@@ -119,9 +119,9 @@ function updateFilters(e: CustomEvent): void {
         <h2>
           {{ t('page.structure.comp.withoutFunctions') }}
         </h2>
-        <span class="count">
+        <p class="count">
           {{ structure.withoutFunctions.length }}
-        </span>
+        </p>
       </template>
 
       <DisciplineCard

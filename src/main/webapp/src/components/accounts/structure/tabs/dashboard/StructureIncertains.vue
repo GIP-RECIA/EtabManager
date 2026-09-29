@@ -240,9 +240,9 @@ const table = useTable({
       <h2>
         {{ t('page.structure.dashboard.incertains') }}
       </h2>
-      <span class="count">
+      <p class="count">
         {{ table.getRowCount() }}
-      </span>
+      </p>
     </div>
 
     <div class="field">
@@ -354,7 +354,6 @@ const table = useTable({
 
     > .count {
       opacity: 0.6;
-      font-weight: bold;
     }
   }
 }
