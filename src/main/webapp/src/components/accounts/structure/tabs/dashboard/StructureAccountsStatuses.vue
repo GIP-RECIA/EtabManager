@@ -31,9 +31,9 @@ defineEmits<{
   selectedState: [Etat]
 }>()
 
-const isDev = import.meta.env.DEV
-
 const { t } = useI18n()
+
+const isDev = import.meta.env.DEV
 
 const accountStates = computed(() => (
   etatFilters.map(etat => ({

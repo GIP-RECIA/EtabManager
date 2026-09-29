@@ -72,6 +72,8 @@ const props = defineProps<{
 
 const { t } = useI18n()
 
+const isDev = import.meta.env.DEV
+
 const breakpoints = useBreakpoints({
   xs: 0,
   sm: 576,
@@ -340,22 +342,28 @@ function renderActions(row: Row<typeof features, AccountUser>) {
 const columnHelper = createColumnHelper<typeof features, AccountUser>()
 const globalFilter = ref<string>()
 const columns = computed(() => [
-  columnHelper.display({
-    id: 'select',
-    header: ({ table }) => h(IndeterminateCheckbox, {
-      checked: table.getIsAllPageRowsSelected(),
-      indeterminate: table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected(),
-      onChange: table.getToggleAllPageRowsSelectedHandler(),
-      ariaLabel: t('page.structure.accounts.table.selectAll'),
-    }),
-    cell: ({ row }) => h(IndeterminateCheckbox, {
-      checked: row.getIsSelected(),
-      disabled: !row.getCanSelect(),
-      onChange: row.getToggleSelectedHandler(),
-      ariaLabel: concatenate([row.original.nom, row.original.prenom], ' '),
-    }),
-    enableGlobalFilter: false,
-  }),
+  ...(
+    isDev
+      ? [
+          columnHelper.display({
+            id: 'select',
+            header: ({ table }) => h(IndeterminateCheckbox, {
+              checked: table.getIsAllPageRowsSelected(),
+              indeterminate: table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected(),
+              onChange: table.getToggleAllPageRowsSelectedHandler(),
+              ariaLabel: t('page.structure.accounts.table.selectAll'),
+            }),
+            cell: ({ row }) => h(IndeterminateCheckbox, {
+              checked: row.getIsSelected(),
+              disabled: !row.getCanSelect(),
+              onChange: row.getToggleSelectedHandler(),
+              ariaLabel: concatenate([row.original.nom, row.original.prenom], ' '),
+            }),
+            enableGlobalFilter: false,
+          }),
+        ]
+      : []
+  ),
   columnHelper.accessor('etat', {
     id: 'etat',
     header: t('page.structure.accounts.table.status'),
@@ -535,7 +543,7 @@ function onExport(): void {
             />
           </button>
         </li>
-        <li v-dev>
+        <li>
           <button
             type="button"
             :disabled="selected.length === 0"
