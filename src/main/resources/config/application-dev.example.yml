@@ -161,14 +161,14 @@ app:
       header:
         component-path: ''
         props:
-          template-api-path: ''
+          template-api-url: ''
           fname: ''
           dnma-url: ''
 
       footer:
         component-path: ''
         props:
-          template-api-path: ''
+          template-api-url: ''
 
   custom-config:
     partitionedSources:

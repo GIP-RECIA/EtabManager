@@ -63,16 +63,16 @@ watchOnce(isInit, (newValue) => {
     return
   const { header, footer } = configuration.value.front.extendedUportal
   if (header) {
-    const extendedUportalHeaderScript = document.createElement('script')
-    extendedUportalHeaderScript.setAttribute('src', header.componentPath)
-    extendedUportalHeaderScript.setAttribute('charset', 'utf-8')
-    document.head.appendChild(extendedUportalHeaderScript)
+    const rHeaderScript = document.createElement('script')
+    rHeaderScript.setAttribute('src', header.componentPath)
+    rHeaderScript.setAttribute('charset', 'utf-8')
+    document.head.appendChild(rHeaderScript)
   }
   if (footer) {
-    const extendedUportalFooterScript = document.createElement('script')
-    extendedUportalFooterScript.setAttribute('src', footer.componentPath)
-    extendedUportalFooterScript.setAttribute('charset', 'utf-8')
-    document.head.appendChild(extendedUportalFooterScript)
+    const rFooterScript = document.createElement('script')
+    rFooterScript.setAttribute('src', footer.componentPath)
+    rFooterScript.setAttribute('charset', 'utf-8')
+    document.head.appendChild(rFooterScript)
   }
 })
 
@@ -162,8 +162,19 @@ const {
 </script>
 
 <template>
+  <nav
+    role="navigation"
+    aria-label="Accès rapide"
+    class="skip-links"
+  >
+    <ul>
+      <li>
+        <a href="#main">Contenu</a>
+      </li>
+    </ul>
+  </nav>
   <header>
-    <extended-uportal-header
+    <r-header
       v-if="isInit"
       :service-name="appName"
       v-bind="configuration!.front.extendedUportal?.header?.props"
@@ -173,7 +184,10 @@ const {
     />
   </header>
   <div id="content">
-    <main>
+    <main
+      id="main"
+      tabindex="-1"
+    >
       <router-view
         v-if="sessionState"
       />
@@ -185,7 +199,7 @@ const {
       </p>
     </main>
     <footer>
-      <extended-uportal-footer
+      <r-footer
         v-if="isInit"
         v-bind="configuration!.front.extendedUportal?.footer?.props"
       />
@@ -196,7 +210,7 @@ const {
 </template>
 
 <style lang="scss">
-extended-uportal-header {
+r-header {
   display: block;
   height: var(--recia-header-height);
 }

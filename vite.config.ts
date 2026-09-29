@@ -47,9 +47,9 @@ export default ({ mode }: ConfigEnv) => {
         template: {
           compilerOptions: {
             isCustomElement: tag => [
+              'r-header',
+              'r-footer',
               'r-filters',
-              'extended-uportal-header',
-              'extended-uportal-footer',
             ].includes(tag),
           },
         },
