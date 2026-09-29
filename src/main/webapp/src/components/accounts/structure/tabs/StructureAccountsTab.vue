@@ -16,6 +16,7 @@
 
 <script setup lang="ts">
 import type {
+  ColumnVisibilityState,
   ExpandedState,
   Row,
   RowSelectionState,
@@ -62,7 +63,7 @@ import {
   etatFilters,
   etatMap,
 } from '@/types/enums/index.ts'
-import { concatenate, getIconDefinition, getStateLabel } from '@/utils/index.ts'
+import { concatenate, getIconDefinition, getStateLabel, normalize } from '@/utils/index.ts'
 import IndeterminateCheckbox from './accounts/IndeterminateCheckbox.vue'
 import '@gip-recia/ui-webcomponents/dist/r-filters.js'
 
@@ -342,6 +343,23 @@ function renderActions(row: Row<typeof features, AccountUser>) {
 const columnHelper = createColumnHelper<typeof features, AccountUser>()
 const globalFilter = ref<string>()
 const columns = computed(() => [
+  {
+    accessorFn: (row: AccountUser) => (
+      concatenate(
+        [
+          row.uid,
+          ...(
+            row.guichet
+              ? []
+              : [row.login]
+          ),
+          row.email,
+        ],
+        ' ',
+      )
+    ),
+    id: 'search',
+  },
   ...(
     isDev
       ? [
@@ -399,6 +417,9 @@ const columns = computed(() => [
 const rowSelection = ref<RowSelectionState>({})
 const sorting = ref<SortingState>([])
 const expanded = ref<ExpandedState>({})
+const columnVisibility = ref<ColumnVisibilityState>({
+  search: false,
+})
 
 const table = useTable({
   features,
@@ -417,6 +438,9 @@ const table = useTable({
     get expanded() {
       return expanded.value
     },
+    get columnVisibility() {
+      return columnVisibility.value
+    },
   },
   getRowCanExpand: () => true,
   initialState: {
@@ -430,6 +454,11 @@ const table = useTable({
     rowSelection.value = typeof updateOrValue === 'function'
       ? updateOrValue(rowSelection.value)
       : updateOrValue
+  },
+  globalFilterFn: (row, columnId, value) => {
+    const rowValue = row.getValue<string>(columnId)
+
+    return normalize(rowValue).includes(normalize(value))
   },
   onGlobalFilterChange: (val) => {
     globalFilter.value = val as string
@@ -637,7 +666,7 @@ function onExport(): void {
               role="none"
             >
               <td
-                :colspan="row.getAllCells().length"
+                :colspan="row.getVisibleCells().length"
                 role="none"
               >
                 <div>
