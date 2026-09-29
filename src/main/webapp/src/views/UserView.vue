@@ -380,8 +380,6 @@ function onAttach(): void {
 @use '@gip-recia/ui/mixins' as *;
 
 .container {
-  margin-top: 32px;
-  margin-bottom: 40px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -429,7 +427,6 @@ function onAttach(): void {
   }
 
   @media (width >= map.get($grid-breakpoints, md)) {
-    margin-bottom: 60px;
     gap: 32px;
 
     > [role='tabpanel'] {

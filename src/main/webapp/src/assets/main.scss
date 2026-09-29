@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@use 'sass:map';
+
 @use 'ress/dist/ress.min.css';
 
 @use '@gip-recia/ui/core' as *;
@@ -46,47 +48,76 @@
 }
 
 html,
-body {
-  height: 100vh;
-  overflow: hidden;
+body,
+#app {
+  height: 100%;
 }
 
-body {
-  background-color: var(--#{$prefix}body-bg);
-  font-family: 'DM Sans', 'sans-serif';
-  font-style: normal;
-  font-weight: normal;
-  font-size: var(--#{$prefix}body-font-size);
-  letter-spacing: 0;
-  color: var(--#{$prefix}body);
-
-  > #app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow: hidden;
-
-    > header {
+html {
+  > body {
+    > #app {
       background-color: var(--#{$prefix}body-bg);
-    }
+      font-family: $dm-sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: var(--#{$prefix}body-font-size);
+      letter-spacing: 0;
+      color: var(--#{$prefix}body);
 
-    > div {
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      grid-template-areas:
+        'header'
+        'alert'
+        'main'
+        'footer';
+
+      > header {
+        grid-area: header;
+        height: var(--#{$prefix}header-height, 68px);
+
+        &:has(> nav) {
+          height: calc(var(--#{$prefix}header-height, 68px) + 50px);
+        }
+      }
+
+      > .alert {
+        grid-area: alert;
+      }
 
       > main {
-        flex: 1 1 auto;
+        grid-area: main;
+        padding-top: 32px;
+        // padding-top: 40px;
+        padding-bottom: 40px;
+        display: grid;
+        grid-auto-rows: min-content;
+        row-gap: 40px;
+
+        > * {
+          min-width: 0;
+        }
+      }
+
+      > footer {
+        grid-area: footer;
+      }
+
+      @media (width >= map.get($grid-breakpoints, md)) {
+        > main {
+          // padding-top: 60px;
+          padding-bottom: 60px;
+          row-gap: 60px;
+        }
       }
     }
-  }
 
-  > .Toastify {
     > .Toastify {
-      &__toast-container {
-        &--top-right {
-          top: calc(var(--#{$prefix}header-height) + 1em);
+      > .Toastify {
+        &__toast-container {
+          &--top-right {
+            top: calc(var(--#{$prefix}header-height) + 1em);
+          }
         }
       }
     }

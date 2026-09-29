@@ -135,15 +135,6 @@ async function exportToEsidoc(): Promise<void> {
   justify-content: end;
 }
 
-.container {
-  margin-top: 32px;
-  margin-bottom: 40px;
-
-  @media (width >= map.get($grid-breakpoints, md)) {
-    margin-bottom: 60px;
-  }
-}
-
 .desc {
   white-space: pre-line;
   margin-bottom: 16px;

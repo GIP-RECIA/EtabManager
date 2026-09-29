@@ -137,15 +137,6 @@ async function save(
 @use '@gip-recia/ui/functions' as *;
 @use '@gip-recia/ui/mixins' as *;
 
-.container {
-  margin-top: 32px;
-  margin-bottom: 40px;
-
-  @media (width >= map.get($grid-breakpoints, md)) {
-    margin-bottom: 60px;
-  }
-}
-
 .services-grid {
   display: grid;
   gap: 32px;

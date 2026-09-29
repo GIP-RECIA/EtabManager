@@ -101,7 +101,20 @@ onUnmounted(() => {
 @use '@gip-recia/ui/functions' as *;
 @use '@gip-recia/ui/mixins' as *;
 
+@media (width >= map.get($grid-breakpoints, md)) {
+  body.navigation-drawer-visible {
+    nav {
+      margin-left: var(--recia-drawer-width);
+    }
+  }
+}
+
 nav {
+  position: fixed;
+  z-index: 1029;
+  right: 0;
+  left: 0;
+  background-color: var(--#{$prefix}body-bg);
   display: flex;
   align-items: center;
   padding: 8px;

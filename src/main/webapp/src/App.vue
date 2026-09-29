@@ -147,15 +147,6 @@ router.beforeEach(async (to, from) => {
   return true
 })
 
-router.afterEach(() => {
-  requestAnimationFrame(() => {
-    document.querySelector('#content')?.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    })
-  })
-})
-
 const {
   sessionState,
 } = useKeepSession()
@@ -183,28 +174,26 @@ const {
       v-if="sessionState && isAccountSection"
     />
   </header>
-  <div id="content">
-    <main
-      id="main"
-      tabindex="-1"
+  <main
+    id="main"
+    tabindex="-1"
+  >
+    <router-view
+      v-if="sessionState"
+    />
+    <p
+      v-else
+      class="no-session"
     >
-      <router-view
-        v-if="sessionState"
-      />
-      <p
-        v-else
-        class="no-session"
-      >
-        {{ t('noSession') }}
-      </p>
-    </main>
-    <footer>
-      <r-footer
-        v-if="isInit"
-        v-bind="configuration!.front.extendedUportal?.footer?.props"
-      />
-    </footer>
-  </div>
+      {{ t('noSession') }}
+    </p>
+  </main>
+  <footer>
+    <r-footer
+      v-if="isInit"
+      v-bind="configuration!.front.extendedUportal?.footer?.props"
+    />
+  </footer>
 
   <PiniaColadaDevtools />
 </template>

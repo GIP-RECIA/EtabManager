@@ -116,15 +116,6 @@ function setChildEditState(state: boolean): void {
 @use '@gip-recia/ui/functions' as *;
 @use '@gip-recia/ui/mixins' as *;
 
-.container {
-  margin-top: 32px;
-  margin-bottom: 40px;
-
-  @media (width >= map.get($grid-breakpoints, md)) {
-    margin-bottom: 60px;
-  }
-}
-
 .info-container {
   display: flex;
   flex-direction: column;

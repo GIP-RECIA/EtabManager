@@ -126,6 +126,20 @@ const router = createRouter({
         : prodRoutes
     ),
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    }
+    else if (to.fullPath === from.fullPath) {
+      return {}
+    }
+    else {
+      return {
+        top: 0,
+        // behavior: 'smooth',
+      }
+    }
+  },
 })
 
 export default router
