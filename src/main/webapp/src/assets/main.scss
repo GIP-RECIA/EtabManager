@@ -27,6 +27,8 @@
 @use '@gip-recia/ui/components/tags';
 @use '@gip-recia/ui/layouts';
 
+@use 'variables' as *;
+
 @use 'vuetify/settings' with (
   $reset: false,
   $color-pack: false,
@@ -77,7 +79,7 @@ html {
         height: var(--#{$prefix}header-height, 68px);
 
         &:has(> nav) {
-          height: calc(var(--#{$prefix}header-height, 68px) + 50px);
+          height: $account-header-height;
         }
       }
 

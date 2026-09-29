@@ -97,14 +97,12 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 @use 'sass:map';
-@use '@gip-recia/ui/core/variables' as *;
-@use '@gip-recia/ui/functions' as *;
-@use '@gip-recia/ui/mixins' as *;
+@use '@/assets/scoped' as *;
 
 @media (width >= map.get($grid-breakpoints, md)) {
   body.navigation-drawer-visible {
     nav {
-      margin-left: var(--recia-drawer-width);
+      margin-left: var(--#{$prefix}drawer-width);
     }
   }
 }
@@ -118,7 +116,7 @@ nav {
   display: flex;
   align-items: center;
   padding: 8px;
-  height: 50px;
+  height: $account-header-nav-height;
 
   > ul {
     @include unstyled-list;

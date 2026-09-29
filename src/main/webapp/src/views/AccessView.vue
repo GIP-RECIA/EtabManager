@@ -133,9 +133,7 @@ async function save(
 
 <style scoped lang="scss">
 @use 'sass:map';
-@use '@gip-recia/ui/core/variables' as *;
-@use '@gip-recia/ui/functions' as *;
-@use '@gip-recia/ui/mixins' as *;
+@use '@/assets/scoped' as *;
 
 .services-grid {
   display: grid;

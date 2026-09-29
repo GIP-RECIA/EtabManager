@@ -339,9 +339,7 @@ const table = useTable({
 
 <style scoped lang="scss">
 @use 'sass:map';
-@use '@gip-recia/ui/core/variables' as *;
-@use '@gip-recia/ui/functions' as *;
-@use '@gip-recia/ui/mixins' as *;
+@use '@/assets/scoped' as *;
 
 .incertains {
   .title {
@@ -380,7 +378,7 @@ const table = useTable({
 
     > thead {
       position: sticky;
-      top: 0;
+      top: $account-header-height;
       background-color: var(--#{$prefix}body-bg);
 
       > tr > th {
