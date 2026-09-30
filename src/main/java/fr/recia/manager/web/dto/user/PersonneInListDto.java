@@ -21,6 +21,7 @@ import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
 import fr.recia.manager.db.enums.CategoriePersonne;
 import fr.recia.manager.db.enums.Etat;
+import fr.recia.manager.services.utils.APersonneUtils;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -59,16 +60,7 @@ public class PersonneInListDto {
         this.dateModificationSource = databasePersonneDto.getDateModificationSource();
         this.dateSuppression = databasePersonneDto.getDateSuppression();
         this.local = databasePersonneDto.getSource().startsWith(Constants.SARAPISUI_);
-        this.guichet = null;
-        for(CustomConfigProperties.LoginOfficeProperties loginOfficeProperty : loginOfficeProperties){
-            if(loginOfficeProperty.getSource().equals(databasePersonneDto.getSource())){
-                for(CustomConfigProperties.LoginOfficeProperties.GuichetProperties guichetProperty : loginOfficeProperty.getGuichets()){
-                    if(guichetProperty.getCategoriesPersonne().contains(databasePersonneDto.getCategorie())){
-                        this.guichet = guichetProperty.getNom();
-                    }
-                }
-            }
-        }
+        this.guichet = APersonneUtils.getGuichet(databasePersonneDto, loginOfficeProperties);
     }
 
 }

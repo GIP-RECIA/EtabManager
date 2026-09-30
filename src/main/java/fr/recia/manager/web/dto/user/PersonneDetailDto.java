@@ -22,6 +22,7 @@ import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.enums.CategoriePersonne;
 import fr.recia.manager.db.enums.Civilite;
 import fr.recia.manager.db.enums.Etat;
+import fr.recia.manager.services.utils.APersonneUtils;
 import fr.recia.manager.web.dto.relation.RelationDto;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -116,16 +117,7 @@ public class PersonneDetailDto {
         this.relations = new ArrayList<>();
         this.dateModification = aPersonne.getDateModification();
         this.dateAcquittement = aPersonne.getDateAcquittement();
-        this.guichet = null;
-        for(CustomConfigProperties.LoginOfficeProperties loginOfficeProperty : loginOfficeProperties){
-            if(loginOfficeProperty.getSource().equals(aPersonne.getCleJointure().getSource())){
-                for(CustomConfigProperties.LoginOfficeProperties.GuichetProperties guichetProperty : loginOfficeProperty.getGuichets()){
-                    if(guichetProperty.getCategoriesPersonne().contains(aPersonne.getCategorie())){
-                        this.guichet = guichetProperty.getNom();
-                    }
-                }
-            }
-        }
+        this.guichet = APersonneUtils.getGuichet(aPersonne, loginOfficeProperties);
         this.local = aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_);
         this.groups = new ArrayList<>();
     }

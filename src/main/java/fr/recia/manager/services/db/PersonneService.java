@@ -18,6 +18,7 @@ package fr.recia.manager.services.db;
 
 import fr.recia.manager.configuration.AppProperties;
 import fr.recia.manager.configuration.Constants;
+import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.db.dto.fonction.FonctionDto;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
 import fr.recia.manager.db.entities.APersonneAStructure;
@@ -37,6 +38,7 @@ import fr.recia.manager.ldap.LdapUser;
 import fr.recia.manager.ldap.repository.LdapPeopleDao;
 import fr.recia.manager.services.cache.CacheInvalidationService;
 import fr.recia.manager.services.creation.PasswordGenerator;
+import fr.recia.manager.services.utils.APersonneUtils;
 import fr.recia.manager.web.dto.function.DisciplineDisplayDto;
 import fr.recia.manager.web.dto.function.DisciplinesInFilliereDisplayDto;
 import fr.recia.manager.web.dto.user.PersonneDetailDto;
@@ -145,8 +147,8 @@ public class PersonneService {
      */
     public boolean resetPersonne(APersonne aPersonne){
         log.trace("resetPersonne for {}", aPersonne.getId());
-        // TODO : de qui on peut réinitialiser les mot de passe ?
-        if(aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_) && aPersonne.getEtat().equals(Etat.Valide)){
+        final String guichet = APersonneUtils.getGuichet(aPersonne, appProperties.getCustomConfig().getLoginOffices());
+        if((guichet==null || aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_)) && aPersonne.getEtat().equals(Etat.Valide)){
             // Modifications en base
             aPersonne.setPassword(passwordGenerator.genPassword());
             aPersonne.setEtat(Etat.Invalide);
