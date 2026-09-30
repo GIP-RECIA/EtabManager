@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { enumValues } from '../enumValuesTypes'
+import type { enumValues } from '../enumValuesTypes.ts'
 import {
   faUserClock,
   faUserGear,

@@ -15,6 +15,7 @@
 -->
 
 <script setup lang="ts">
+import type { AppRole } from '@/types/enums/index.ts'
 import { faLink, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed, ref, useTemplateRef, watch, watchEffect } from 'vue'
@@ -31,7 +32,9 @@ const { t } = useI18n()
 
 const { data: structure } = useStructureQuery()
 
-const structureRights = computed(() => structure.value?.permissions)
+const structureRights = computed<AppRole[] | undefined>(
+  () => structure.value?.permissions,
+)
 
 const { canWriteGLC, canAttach } = useAppRights(structureRights)
 

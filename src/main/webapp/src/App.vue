@@ -80,7 +80,7 @@ onBeforeMount(() => {
   document.title = __APP_NAME__
 })
 
-const isAccountSection = computed(() => (
+const isAccountSection = computed<boolean>(() => (
   route.matched.some(r => r.name === 'accountRoot')
 ))
 

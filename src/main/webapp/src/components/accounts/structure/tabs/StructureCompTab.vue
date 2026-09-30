@@ -15,7 +15,7 @@
 -->
 
 <script setup lang="ts">
-import type { Structure } from '@/types/index.ts'
+import type { RfilterSection, Structure } from '@/types/index.ts'
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Disclosure from '@/components/Disclosure.vue'
@@ -39,7 +39,7 @@ enum Staff {
   Academic = 'academic',
 }
 
-const filters = computed(() => [
+const filters = computed<RfilterSection[]>(() => [
   {
     id: 'staff',
     name: 'Personnel',

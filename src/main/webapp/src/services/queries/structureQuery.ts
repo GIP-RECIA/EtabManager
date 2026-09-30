@@ -52,7 +52,7 @@ function useEtablissementQuery(id: Ref<number>) {
 
 function useStructureQuery() {
   const route = useRoute()
-  const structureId = computed(() => Number(route.params.structureId))
+  const structureId = computed<number>(() => Number(route.params.structureId))
 
   return useQuery(() => useStructureQueryOptions(structureId.value))
 }

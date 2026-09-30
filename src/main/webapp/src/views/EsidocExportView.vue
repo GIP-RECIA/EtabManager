@@ -57,7 +57,7 @@ function setChildEditState(state: boolean): void {
   isChildEdit.value = state
 }
 
-const etabsByUai = computed((): Map<string, string> => {
+const etabsByUai = computed<Map<string, string>>(() => {
   const map = new Map<string, string>()
 
   for (const etab of etabs.value ?? []) {

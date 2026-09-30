@@ -15,8 +15,9 @@
 -->
 
 <script setup lang="ts">
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import type { Etat } from '@/types/enums/index.ts'
-import type { Structure } from '@/types/index.ts'
+import type { enumValues, Structure } from '@/types/index.ts'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed } from 'vue'
@@ -35,7 +36,11 @@ const { t } = useI18n()
 
 const isDev = import.meta.env.DEV
 
-const accountStates = computed(() => (
+const accountStates = computed<({
+  etat: Etat
+  icon: IconDefinition
+  count: number
+} & enumValues)[]>(() => (
   etatFilters.map(etat => ({
     etat,
     icon: faUser,

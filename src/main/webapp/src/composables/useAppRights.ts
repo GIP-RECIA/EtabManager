@@ -21,11 +21,11 @@ import { AppRole } from '@/types/enums/index.ts'
 export function useAppRights(
   structureRights: Ref<AppRole[] | undefined>,
 ) {
-  const appRights = computed(() => new Set(structureRights.value ?? []))
+  const appRights = computed<Set<AppRole>>(() => new Set(structureRights.value ?? []))
 
-  const hasRole = (role: AppRole) => computed(() => appRights.value.has(role))
+  const hasRole = (role: AppRole) => computed<boolean>(() => appRights.value.has(role))
 
-  const hasAnyRole = (...roles: AppRole[]) => computed(() => (
+  const hasAnyRole = (...roles: AppRole[]) => computed<boolean>(() => (
     roles.some(role => appRights.value.has(role))
   ))
 

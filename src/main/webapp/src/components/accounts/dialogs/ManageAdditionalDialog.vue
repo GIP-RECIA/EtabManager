@@ -71,7 +71,10 @@ const userStuctures = computed<number[] | undefined>(() => (
   props.user?.listeStructures.map(({ id }) => id)
 ))
 
-const mandatory = computed(() => ({
+const mandatory = computed<{
+  userId: number | undefined
+  structureId: number | undefined
+}>(() => ({
   userId: selectedUser.value?.id ?? props.user?.id,
   structureId: selectedStructure.value?.id ?? props.structureId,
 }))

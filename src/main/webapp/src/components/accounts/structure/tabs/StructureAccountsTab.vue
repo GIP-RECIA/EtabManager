@@ -113,52 +113,56 @@ function isItemChecked(filterId: string, itemKey: string): boolean {
 
 const filters = computed(() => [
   ...(!sameSource.value
-    ? [{
-        id: 'source',
-        name: t('page.structure.accounts.filter.source.header'),
-        type: 'radio',
-        items: [
-          {
-            key: 'source-all',
-            value: t('page.structure.accounts.filter.source.all'),
-            checked: isItemChecked('source', 'source-all'),
-          },
-          {
-            key: 'external',
-            value: t('page.structure.accounts.filter.source.external'),
-            checked: isItemChecked('source', 'external'),
-          },
-          {
-            key: 'local',
-            value: t('page.structure.accounts.filter.source.local'),
-            checked: isItemChecked('source', 'local'),
-          },
-        ],
-      }]
+    ? [
+        {
+          id: 'source',
+          name: t('page.structure.accounts.filter.source.header'),
+          type: 'radio',
+          items: [
+            {
+              key: 'source-all',
+              value: t('page.structure.accounts.filter.source.all'),
+              checked: isItemChecked('source', 'source-all'),
+            },
+            {
+              key: 'external',
+              value: t('page.structure.accounts.filter.source.external'),
+              checked: isItemChecked('source', 'external'),
+            },
+            {
+              key: 'local',
+              value: t('page.structure.accounts.filter.source.local'),
+              checked: isItemChecked('source', 'local'),
+            },
+          ],
+        },
+      ]
     : []
   ),
   ...(categoriesPersonne.value.length > 1
-    ? [{
-        id: 'profil',
-        name: t('page.structure.accounts.filter.profil.header'),
-        type: 'checkbox',
-        items: [
-          {
-            key: 'profil-all',
-            value: t('page.structure.accounts.filter.profil.all'),
-            checked: isItemChecked('profil', 'profil-all'),
-          },
-          ...Object.values(CategoriePersonne)
-            .filter(cat => (
-              categoriesPersonne.value.includes(cat)
-            ))
-            .map(cat => ({
-              key: cat,
-              value: t(categoriePersonneMap[cat].i18n),
-              checked: isItemChecked('profil', cat),
-            })),
-        ],
-      }]
+    ? [
+        {
+          id: 'profil',
+          name: t('page.structure.accounts.filter.profil.header'),
+          type: 'checkbox',
+          items: [
+            {
+              key: 'profil-all',
+              value: t('page.structure.accounts.filter.profil.all'),
+              checked: isItemChecked('profil', 'profil-all'),
+            },
+            ...Object.values(CategoriePersonne)
+              .filter(cat => (
+                categoriesPersonne.value.includes(cat)
+              ))
+              .map(cat => ({
+                key: cat,
+                value: t(categoriePersonneMap[cat].i18n),
+                checked: isItemChecked('profil', cat),
+              })),
+          ],
+        },
+      ]
     : []
   ),
   {

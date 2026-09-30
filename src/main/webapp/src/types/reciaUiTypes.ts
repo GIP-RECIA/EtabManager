@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-export * from './alertTypes.ts'
-export * from './configurationTypes.ts'
-export * from './confirmationTypes.ts'
-export * from './endInfoTypes.ts'
-export * from './enumValuesTypes.ts'
-export * from './exportTypes.ts'
-export * from './functionTypes.ts'
-export * from './incertainTypes.ts'
-export * from './reciaUiTypes.ts'
-export * from './restrictionTypes.ts'
-export * from './rightTypes.ts'
-export * from './structureTypes.ts'
-export * from './userTypes.ts'
+export interface RfilterSection {
+  id: string
+  name: string
+  type: 'checkbox' | 'radio'
+  items: RfilterItem[]
+}
+
+export interface RfilterItem {
+  key: string
+  value: string
+  checked?: boolean
+}

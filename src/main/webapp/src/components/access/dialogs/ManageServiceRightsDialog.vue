@@ -51,7 +51,9 @@ const EMPTY_SERVICE_RIGHT: Pick<ServiceRights, 'service'> & ServiceRight = {
   allowPeople: false,
 }
 
-const serviceRight = computed(() => props.serviceRight ?? EMPTY_SERVICE_RIGHT)
+const serviceRight = computed<Pick<ServiceRights, 'service'> & ServiceRight>(
+  () => props.serviceRight ?? EMPTY_SERVICE_RIGHT,
+)
 
 const checkboxes = computed<RightMember[]>(() => [
   ...serviceRight.value.mandatoryGroups,

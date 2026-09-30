@@ -15,7 +15,8 @@
 -->
 
 <script setup lang="ts">
-import type { FunctionUser } from '@/types/index.ts'
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import type { enumValues, FunctionUser } from '@/types/index.ts'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { format } from 'date-fns'
 import { computed } from 'vue'
@@ -30,7 +31,9 @@ const props = defineProps<{
 
 const { t } = useI18n()
 
-const etat = computed(() => ({
+const etat = computed<{
+  icon: IconDefinition
+} & enumValues>(() => ({
   icon: getIconDefinition(props.user.local),
   ...etatMap[props.user.etat],
 }))

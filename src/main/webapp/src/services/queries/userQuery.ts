@@ -47,7 +47,7 @@ const { t } = i18n.global
 
 function useUserQuery() {
   const route = useRoute()
-  const userId = computed(() => Number(route.params.userId))
+  const userId = computed<number>(() => Number(route.params.userId))
 
   return useQuery(() => useUserQueryOptions(userId.value))
 }
