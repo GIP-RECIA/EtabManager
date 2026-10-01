@@ -1924,15 +1924,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pinia/colada@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "@pinia/colada@npm:1.4.2"
+"@pinia/colada@npm:^1.4.6":
+  version: 1.4.6
+  resolution: "@pinia/colada@npm:1.4.6"
   dependencies:
-    nostics: "npm:^1.1.4"
+    nostics: "npm:^1.2.0"
   peerDependencies:
     pinia: ^2.2.6 || ^3.0.0 || ^4.0.2
-    vue: ^3.5.17
-  checksum: 10/f0cc7213a514206e0ade8ecebd9a97bcdba32fc9fd58f6f99b65b475b277862240d81475dd86c89376373394719f8b38d5c6d9c9f1496ff2a951ab6ab242d6bc
+    vue: ^3.5.41
+  checksum: 10/6d697d9c19ae43c05b236ab07cb08723a6caa8200b4331d4992fc2db84d6bf16e063d801ef11b2b3ccc22452fe8097bec194cfafb39fe15ff262c60124e13bf6
   languageName: node
   linkType: hard
 
@@ -5029,7 +5029,7 @@ __metadata:
     "@gip-recia/ui-webcomponents": "npm:^1.18.1"
     "@intlify/unplugin-vue-i18n": "npm:^11.2.5"
     "@juggle/resize-observer": "npm:^3.4.0"
-    "@pinia/colada": "npm:^1.4.2"
+    "@pinia/colada": "npm:^1.4.6"
     "@pinia/colada-devtools": "npm:^1.1.2"
     "@pinia/testing": "npm:^2.0.1"
     "@playwright/test": "npm:^1.62.1"
@@ -7280,6 +7280,13 @@ __metadata:
   version: 1.2.0
   resolution: "nostics@npm:1.2.0"
   checksum: 10/eddb85764b5862ae30fc3f442e1b54df907bbc6ec0c8bfc8f7a4dd4892afe241eadd0e68888f846e1cf6ab96f3e0f7ccb435ef87654604c1b4cc297fefc00556
+  languageName: node
+  linkType: hard
+
+"nostics@npm:^1.2.0":
+  version: 1.3.0
+  resolution: "nostics@npm:1.3.0"
+  checksum: 10/3fb82dba13ccc6a5b4d72432b5b0fb2a7c941046cf83269c3db76bc25c7bbcf51a19c5fbde3ec1e47bf21bf9c034fff318dc5dd7e9668de9a87572fe4fecca14
   languageName: node
   linkType: hard
 
