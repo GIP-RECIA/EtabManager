@@ -3082,9 +3082,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/test-utils@npm:^2.5.0":
-  version: 2.5.0
-  resolution: "@vue/test-utils@npm:2.5.0"
+"@vue/test-utils@npm:^2.5.1":
+  version: 2.5.1
+  resolution: "@vue/test-utils@npm:2.5.1"
   dependencies:
     js-beautify: "npm:^2.0.0"
     vue-component-type-helpers: "npm:^3.0.0"
@@ -3095,7 +3095,7 @@ __metadata:
   peerDependenciesMeta:
     "@vue/server-renderer":
       optional: true
-  checksum: 10/7714f0af3d81778efb46919ca6363cb56f2e55311c8e452c6c4fc45d31f108c3f7b55d63f79283233ece020b92b9b70c9de4ab4c8825199d270c72d36f76012e
+  checksum: 10/342f623ba66a4807c09d5a5580f1971d94902e33c2b416f8fe99ee398db7d4c8b19cc694dac8bb84139a9ef63c8c6ed5f07f3103e166f31aba88e4581a60bbf1
   languageName: node
   linkType: hard
 
@@ -5043,7 +5043,7 @@ __metadata:
     "@vitejs/plugin-vue": "npm:^6.0.9"
     "@vue/compiler-dom": "npm:^3.5.40"
     "@vue/devtools-api": "npm:^8.2.1"
-    "@vue/test-utils": "npm:^2.5.0"
+    "@vue/test-utils": "npm:^2.5.1"
     "@vue/tsconfig": "npm:^0.9.1"
     "@vueuse/core": "npm:^14.4.0"
     axios: "npm:^1.20.0"
