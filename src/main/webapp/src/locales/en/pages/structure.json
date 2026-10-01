@@ -23,7 +23,22 @@
         "empty": "There are no alerts."
       },
       "accountsStatuses": "Account statuses",
-      "incertains": "Sarapis alerts"
+      "incertains": {
+        "header": "Sarapis alerts",
+        "filter": {
+          "mandatory": {
+            "header": "Type",
+            "all": "All types",
+            "yes": "Blocking",
+            "no": "Non-bloking"
+          }
+        },
+        "search": "Last name or first name",
+        "table": {
+          "texte": "Message",
+          "attribut": "Attribute"
+        }
+      }
     },
     "comp": {
       "filter": {

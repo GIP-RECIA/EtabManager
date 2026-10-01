@@ -23,7 +23,22 @@
         "empty": "Il n'y a aucune alerte."
       },
       "accountsStatuses": "États des comptes",
-      "incertains": "Alertes Sarapis"
+      "incertains": {
+        "header": "Alertes Sarapis",
+        "filter": {
+          "mandatory": {
+            "header": "Type",
+            "all": "Tous les types",
+            "yes": "Bloquante",
+            "no": "Non bloquante"
+          }
+        },
+        "search": "Nom ou prénom",
+        "table": {
+          "texte": "Message",
+          "attribut": "Attribut"
+        }
+      }
     },
     "comp": {
       "filter": {

@@ -21,7 +21,7 @@ import type {
   SortingState,
   VueTable,
 } from '@tanstack/vue-table'
-import type { Incertain, Structure } from '@/types/index.ts'
+import type { Incertain, RfilterSection, Structure } from '@/types/index.ts'
 import {
   faAngleDown,
   faAngleUp,
@@ -48,6 +48,7 @@ import { computed, Fragment, h, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
 import Pagination from '@/components/Pagination.vue'
+import SafeEmptyData from '@/components/SafeEmptyData.vue'
 import { etatMap } from '@/types/enums/index.ts'
 import { getIconDefinition, getStateLabel } from '@/utils/index.ts'
 
@@ -56,6 +57,47 @@ const props = defineProps<{
 }>()
 
 const { t } = useI18n()
+
+/* Filters */
+
+const activeFilters = ref<{ id: string, checked: string[] }[]>([])
+
+function isItemChecked(filterId: string, itemKey: string): boolean {
+  const filter = activeFilters.value.find(f => f.id === filterId)
+  if (!filter)
+    return itemKey === `${filterId}-all`
+
+  return filter.checked.includes(itemKey)
+}
+
+const filters = computed<RfilterSection[]>(() => [
+  {
+    id: 'mandatory',
+    name: t('page.structure.dashboard.incertains.filter.mandatory.header'),
+    type: 'radio',
+    items: [
+      {
+        key: 'mandatory-all',
+        value: t('page.structure.dashboard.incertains.filter.mandatory.all'),
+        checked: isItemChecked('mandatory', 'mandatory-all'),
+      },
+      {
+        key: 'yes',
+        value: t('page.structure.dashboard.incertains.filter.mandatory.yes'),
+        checked: isItemChecked('mandatory', 'yes'),
+      },
+      {
+        key: 'no',
+        value: t('page.structure.dashboard.incertains.filter.mandatory.no'),
+        checked: isItemChecked('mandatory', 'no'),
+      },
+    ],
+  },
+])
+
+function updateFilters(e: CustomEvent): void {
+  activeFilters.value = e.detail.activeFilters
+}
 
 /* Table */
 
@@ -67,6 +109,29 @@ watch(
     accounts.value = val ?? []
   },
   { immediate: true },
+)
+
+const filteredAccounts = computed<Incertain[]>(() => {
+  let result = accounts.value
+
+  for (const filter of activeFilters.value) {
+    const { id, checked } = filter
+
+    if (checked.length === 0 || checked.includes(`${id}-all`))
+      continue
+
+    switch (id) {
+      case 'mandatory':
+        result = result.filter(user => checked.includes(user.incertains.some(x => x.obligatoire) ? 'yes' : 'no'))
+        break
+    }
+  }
+
+  return result
+})
+
+const hasUid = computed<boolean>(() =>
+  accounts.value.some(row => row.personne.uid != null),
 )
 
 const features = tableFeatures({
@@ -197,7 +262,7 @@ const expanded = ref<ExpandedState>({})
 const table = useTable({
   features,
   columns,
-  data: accounts,
+  data: filteredAccounts,
   state: {
     get globalFilter() {
       return globalFilter.value
@@ -238,102 +303,137 @@ const table = useTable({
   <div class="incertains">
     <div class="title">
       <h2>
-        {{ t('page.structure.dashboard.incertains') }}
+        {{ t('page.structure.dashboard.incertains.header') }}
       </h2>
       <p class="count">
         {{ table.getRowCount() }}
       </p>
     </div>
 
-    <div class="field">
-      <div class="field-layout">
-        <div class="field-container">
-          <div class="middle">
-            <label for="structure-search">
-              {{ t('page.structure.accounts.search') }}
-            </label>
-            <input
-              id="structure-search"
-              v-model.trim="globalFilter"
-              type="text"
-              placeholder=""
-            >
+    <div class="">
+      <r-filters
+        :data="filters"
+        @update-filters="updateFilters"
+      />
+
+      <div class="field">
+        <div class="field-layout">
+          <div class="field-container">
+            <div class="middle">
+              <label for="structure-search">
+                {{ t('page.structure.dashboard.incertains.search') }}
+              </label>
+              <input
+                id="structure-search"
+                v-model.trim="globalFilter"
+                type="text"
+                placeholder=""
+              >
+            </div>
           </div>
+          <div class="active-indicator" />
         </div>
-        <div class="active-indicator" />
       </div>
-    </div>
 
-    <div class="accounts-data">
-      <table>
-        <thead>
-          <tr
-            v-for="headerGroup in table.getHeaderGroups()"
-            :key="headerGroup.id"
-          >
-            <th
-              v-for="header in headerGroup.headers"
-              :key="header.id"
-              :colSpan="header.colSpan"
-              :class="[
-                header.column.getCanSort()
-                  ? 'cursor-pointer select-none'
-                  : '',
-                header.column.columnDef.id,
-              ]"
-              @click="header.column.getToggleSortingHandler()?.($event)"
+      <div class="accounts-data">
+        <table>
+          <thead>
+            <tr
+              v-for="headerGroup in table.getHeaderGroups()"
+              :key="headerGroup.id"
             >
-              <FlexRender
-                v-if="!header.isPlaceholder"
-                :header="header"
-              />
-
-              <FontAwesomeIcon
-                v-if="header.column.getIsSorted()"
-                :icon="
-                  header.column.getIsSorted() === 'asc'
-                    ? faAngleUp
-                    : faAngleDown
-                "
-              />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <template
-            v-for="row in table.getRowModel().rows"
-            :key="row.id"
-          >
-            <tr class="contentLine">
-              <td
-                v-for="cell in row.getVisibleCells()"
-                :key="cell.id"
-                :class="cell.column.columnDef.id"
+              <th
+                v-for="header in headerGroup.headers"
+                :key="header.id"
+                :colSpan="header.colSpan"
+                :class="[
+                  header.column.getCanSort()
+                    ? 'cursor-pointer select-none'
+                    : '',
+                  header.column.columnDef.id,
+                ]"
+                @click="header.column.getToggleSortingHandler()?.($event)"
               >
                 <FlexRender
-                  :cell="cell"
+                  v-if="!header.isPlaceholder"
+                  :header="header"
                 />
-              </td>
-            </tr>
-            <tr
-              v-show="row.getIsExpanded()"
-              :id="`user-menu-${row.original.personne.id}`"
-              class="expandedLine"
-            >
-              <td :colspan="row.getAllCells().length">
-                <div>
-                  {{ row.original.incertains }}
-                </div>
-              </td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
-    </div>
 
-    <Pagination
-      :table="table as VueTable<any, any>"
-    />
+                <FontAwesomeIcon
+                  v-if="header.column.getIsSorted()"
+                  :icon="
+                    header.column.getIsSorted() === 'asc'
+                      ? faAngleUp
+                      : faAngleDown
+                  "
+                />
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template
+              v-for="row in table.getRowModel().rows"
+              :key="row.id"
+            >
+              <tr class="contentLine">
+                <td
+                  v-for="cell in row.getVisibleCells()"
+                  :key="cell.id"
+                  :class="cell.column.columnDef.id"
+                >
+                  <FlexRender
+                    :cell="cell"
+                  />
+                </td>
+              </tr>
+              <tr
+                v-show="row.getIsExpanded()"
+                :id="`user-menu-${row.original.personne.id}`"
+                class="expandedLine"
+              >
+                <td :colspan="row.getVisibleCells().length">
+                  <ul>
+                    <li
+                      v-for="(incertain, index) in row.original.incertains"
+                      :key="`${row.original.personne.id}-${index}`"
+                    >
+                      <p v-if="hasUid">
+                        <span class="label">
+                          {{ t('page.structure.dashboard.incertains.table.uid') }}
+                        </span>
+                        <SafeEmptyData
+                          :value="row.original.personne.uid"
+                        />
+                      </p>
+                      <p>
+                        <span class="label">
+                          {{ t('page.structure.dashboard.incertains.table.texte') }}
+                        </span>
+                        <SafeEmptyData
+                          :value="incertain.texte"
+                        />
+                      </p>
+                      <p>
+                        <span class="label">
+                          {{ t('page.structure.dashboard.incertains.table.attribut') }}
+                        </span>
+                        <SafeEmptyData
+                          :value="incertain.value ? `${incertain.attribut} : ${incertain.value}` : incertain.attribut"
+                        />
+                      </p>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+
+      <Pagination
+        :table="table as VueTable<any, any>"
+      />
+    </div>
   </div>
 </template>
 
@@ -356,6 +456,11 @@ const table = useTable({
       opacity: 0.6;
     }
   }
+
+  > div {
+    display: grid;
+    gap: 16px;
+  }
 }
 
 .accounts-data {
@@ -367,27 +472,33 @@ const table = useTable({
 
     > thead > tr > th,
     > tbody > tr > td {
-      &.select,
       &.etat {
         padding: 12px;
-        width: 40px;
         text-align: center;
+        width: 70px;
+      }
+    }
+
+    > tbody > tr > td {
+      &.etat {
+        width: 40px;
       }
     }
 
     > thead {
       position: sticky;
       top: $account-header-height;
+      z-index: 1;
       background-color: var(--#{$prefix}body-bg);
 
       > tr > th {
         padding: 12px;
+        text-align: start;
       }
     }
 
     > tbody {
       > tr {
-        border-radius: 10px;
         transition: background-color 0.15s ease;
 
         &.contentLine {
@@ -401,13 +512,8 @@ const table = useTable({
           border-top: 1px solid var(--#{$prefix}stroke);
 
           > td {
-            &:not(.select, .etat, .actions) {
+            &:not(.etat, .actions) {
               padding: 12px 16px;
-            }
-
-            &.select {
-              grid-area: select;
-              padding-bottom: 0;
             }
 
             &.etat {
@@ -442,13 +548,24 @@ const table = useTable({
         }
 
         &.expandedLine {
-          > td > div {
-            display: grid;
-            grid-auto-flow: column;
-            grid-auto-columns: 1fr;
+          display: grid;
 
-            > div {
-              padding: 12px 16px;
+          > td > ul {
+            @include unstyled-list;
+
+            > li {
+              display: grid;
+              grid-auto-rows: 1fr;
+
+              > p {
+                display: flex;
+                flex-direction: column;
+                padding: 12px 16px;
+
+                > .label {
+                  opacity: 0.6;
+                }
+              }
             }
           }
         }
@@ -458,7 +575,10 @@ const table = useTable({
         }
 
         &:hover,
-        &:has(:focus-visible) {
+        &:has(:focus-visible),
+        &:hover + tr.expandedLine,
+        &:has(:focus-visible) + tr.expandedLine,
+        &:has(+ tr.expandedLine:hover) {
           background-color: HEXToRGBA(var(--#{$prefix}btn-secondary-hover), 0.4);
         }
       }
@@ -480,31 +600,45 @@ const table = useTable({
         padding: 12px 16px;
       }
 
-      > tbody > tr.contentLine {
-        display: table-row;
+      > tbody > tr {
+        &.contentLine {
+          display: table-row;
 
-        > td {
-          &.select {
-            padding-bottom: 12px;
+          > td {
+            &.etat {
+              padding-top: 12px;
+              width: 70px;
+            }
+
+            &.nom {
+              padding-bottom: 12px;
+            }
+
+            &.prenom {
+              padding-top: 12px;
+            }
+
+            &.actions {
+              flex-direction: row;
+            }
           }
+        }
 
-          &.etat {
-            padding-top: 12px;
-          }
+        &.expandedLine {
+          display: table-row;
 
-          &.nom {
-            padding-bottom: 12px;
-          }
-
-          &.prenom {
-            padding-top: 12px;
-          }
-
-          &.actions {
-            flex-direction: row;
+          > td > ul > li {
+            grid-template-columns: repeat(2, 1fr);
           }
         }
       }
+    }
+  }
+
+  @media (width >= map.get($grid-breakpoints, md)) {
+    > table > tbody > tr.expandedLine > td > div {
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
     }
   }
 }

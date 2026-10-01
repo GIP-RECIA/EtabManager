@@ -773,9 +773,16 @@ function onExport(): void {
       }
     }
 
+    > tbody > tr > td {
+      &.etat {
+        width: 40px;
+      }
+    }
+
     > thead {
       position: sticky;
       top: $account-header-height;
+      z-index: 1;
       background-color: var(--#{$prefix}body-bg);
 
       > tr > th {
@@ -844,7 +851,6 @@ function onExport(): void {
 
           > td > div {
             display: grid;
-            align-items: center;
             grid-auto-rows: 1fr;
 
             > p {
@@ -900,6 +906,7 @@ function onExport(): void {
 
             &.etat {
               padding-top: 12px;
+              width: 70px;
             }
 
             &.nom {
