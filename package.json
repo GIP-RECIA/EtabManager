@@ -16,7 +16,7 @@
     "changelog:generate": "commit-and-tag-version --packageFiles pom.xml --skip.bump --skip.tag --skip.commit -t ''"
   },
   "dependencies": {
-    "@pinia/colada": "^1.4.2",
+    "@pinia/colada": "^1.4.6",
     "@tanstack/vue-table": "^9.2.4",
     "@vueuse/core": "^14.4.0",
     "axios": "^1.19.0",
