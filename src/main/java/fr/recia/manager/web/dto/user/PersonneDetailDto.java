@@ -88,10 +88,10 @@ public class PersonneDetailDto {
         this.givenName = aPersonne.getGivenName();
         this.patronyme = aPersonne.getPatronyme();
         this.sn = aPersonne.getSn();
+        this.guichet = APersonneUtils.getGuichet(aPersonne, loginOfficeProperties);
         if (showUid) {
             this.uid = aPersonne.getUid();
-            // TODO : dans quel cas on affiche le mot de passe ?
-            if(aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_) && aPersonne.getEtat().equals(Etat.Invalide)){
+            if((guichet==null || aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_)) && aPersonne.getEtat().equals(Etat.Invalide)){
                 this.password = aPersonne.getPassword();
             }
         }
@@ -117,7 +117,6 @@ public class PersonneDetailDto {
         this.relations = new ArrayList<>();
         this.dateModification = aPersonne.getDateModification();
         this.dateAcquittement = aPersonne.getDateAcquittement();
-        this.guichet = APersonneUtils.getGuichet(aPersonne, loginOfficeProperties);
         this.local = aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_);
         this.groups = new ArrayList<>();
     }
