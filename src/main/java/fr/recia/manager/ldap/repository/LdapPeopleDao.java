@@ -143,8 +143,8 @@ public class LdapPeopleDao {
         }
     }
 
-    @Cacheable(value = "personneLDAPByUid", key = "#id")
-    public LdapUser getLdapUser(String uid, Long id){
+    @Cacheable(value = "personneLDAPByUid", key = "#uid")
+    public LdapUser getLdapUser(String uid){
         List<LdapUser> result = ldapTemplate.search(
             query()
                 .base(ldapProperties.getUserBranch().getBaseDN())

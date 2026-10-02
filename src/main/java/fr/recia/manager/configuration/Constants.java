@@ -28,6 +28,10 @@ public class Constants {
     public static final String JSON_ARRAY_PREFIX = "[ \"";
     public static final String JSON_ARRAY_SUFFIX = "\" ]";
 
+    public static final String GROUP_NAME_DELIMITER = ":";
+    public static final String GROUP_INTERETAB = "Inter_etablissements";
+    public static final String GROUP_INTERACAD = "Inter_Services_Academique";
+
     public static final String SPRING_PROFILE_DEVELOPMENT = "dev";
     public static final String SPRING_PROFILE_PRODUCTION = "prod";
     public static final String SPRING_PROFILE_TEST = "test";

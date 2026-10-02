@@ -18,26 +18,26 @@ package fr.recia.manager.services.db;
 
 import fr.recia.manager.configuration.AppProperties;
 import fr.recia.manager.configuration.Constants;
-import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.db.dto.fonction.FonctionDto;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
 import fr.recia.manager.db.entities.APersonneAStructure;
 import fr.recia.manager.db.entities.common.ExternalId;
 import fr.recia.manager.db.entities.education.Discipline;
-import fr.recia.manager.db.entities.education.Enseignement;
 import fr.recia.manager.db.entities.fonction.TypeFonctionFiliere;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.structure.AStructure;
+import fr.recia.manager.db.entities.structure.Etablissement;
+import fr.recia.manager.db.entities.structure.ServiceAcademique;
 import fr.recia.manager.db.enums.Etat;
 import fr.recia.manager.db.enums.ExternalIdSource;
 import fr.recia.manager.db.enums.ForceEtat;
 import fr.recia.manager.db.repositories.APersonneAStructureRepository;
-import fr.recia.manager.db.repositories.education.EnseignementRepository;
 import fr.recia.manager.db.repositories.personne.APersonneRepository;
 import fr.recia.manager.ldap.LdapUser;
 import fr.recia.manager.ldap.repository.LdapPeopleDao;
 import fr.recia.manager.services.cache.CacheInvalidationService;
 import fr.recia.manager.services.creation.PasswordGenerator;
+import fr.recia.manager.services.structure.StructureLoader;
 import fr.recia.manager.services.utils.APersonneUtils;
 import fr.recia.manager.web.dto.function.DisciplineDisplayDto;
 import fr.recia.manager.web.dto.function.DisciplinesInFilliereDisplayDto;
@@ -82,7 +82,8 @@ public class PersonneService {
     private AppProperties appProperties;
     @Autowired
     private PasswordGenerator passwordGenerator;
-
+    @Autowired
+    private StructureLoader structureLoader;
 
     public List<DatabasePersonneDto> searchPersonne(String name, boolean admin, Set<String> sources) {
         return admin ? aPersonneRepository.findByNameLikeAdmin(name, sources) : aPersonneRepository.findByNameLike(name, sources);
@@ -274,7 +275,7 @@ public class PersonneService {
 
     public PersonneDetailDto getFullPersonne(Long id, APersonne personne, boolean showUid, Set<String> allowedSirens){
         PersonneDetailDto personneDetailDto = new PersonneDetailDto(personne, showUid, appProperties.getCustomConfig().getLoginOffices());
-        LdapUser ldapUser = ldapPeopleDao.getLdapUser(personne.getUid(), id);
+        LdapUser ldapUser = ldapPeopleDao.getLdapUser(personne.getUid());
         // Dans le cas ou la personne n'est pas dans le LDAP
         String sirenCourant = "";
         if(ldapUser != null){
@@ -299,6 +300,45 @@ public class PersonneService {
             structureForUserDto.setClasses(groupeService.getClassesOfPersonne(personne.getId(), personne.getCategorie(), aStructure.getId()));
             structureForUserDto.setGroupesPedagogiques(groupeService.getGroupesOfPersonne(personne.getId(), personne.getCategorie(), aStructure.getId()));
             structureForUserDto.setEnseignements(enseignementService.getEnseignementsByEtabAndPersonne(aStructure.getId(), personne.getId()));
+            // Groupes des utilisateurs par structures
+            // TODO : manière plus efficace que de reparcourir tous les groupes pour chaque structure
+            if(ldapUser != null) {
+                List<String> groups = ldapUser.getGroups();
+                for(String group : groups){
+                    // Groupes pour les collectivités (siren dans le nom du groupe)
+                    if(group.contains(aStructure.getSiren())){
+                        structureForUserDto.addGroup(group);
+                    }
+                    // Groupes pour les établissements et services académiques (UAI dans le nom du groupe)
+                    final String branch = group.split(Constants.GROUP_NAME_DELIMITER)[0];
+                    if(aStructure instanceof Etablissement){
+                        Etablissement etablissement = (Etablissement) aStructure;
+                        final String uai = etablissement.getUai();
+                        if(group.contains(uai)){
+                            structureForUserDto.addGroup(group);
+                        }
+                        // Groupes inter-établissements
+                        if(group.contains(Constants.GROUP_INTERETAB)){
+                            if(structureLoader.getBranchOfStructure(uai).equals(branch)){
+                                structureForUserDto.addGroup(group);
+                            }
+                        }
+                    }
+                    if(aStructure instanceof ServiceAcademique){
+                        ServiceAcademique serviceAcademique = (ServiceAcademique) aStructure;
+                        final String uai = serviceAcademique.getUai();
+                        if(group.contains(uai)){
+                            structureForUserDto.addGroup(group);
+                        }
+                        // Groupes inter-établissements
+                        if(group.contains(Constants.GROUP_INTERACAD)){
+                            if(structureLoader.getBranchOfStructure(uai).equals(branch)){
+                                structureForUserDto.addGroup(group);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         // Complétion de l'utilisateur avec les autres informations dans le LDAP
@@ -317,8 +357,6 @@ public class PersonneService {
                         }
                     }
                 }
-            // isMemberOf
-            personneDetailDto.setGroups(groups);
             } else {
                 log.warn("groupes null pour la personne {} !", personne.getUid());
             }

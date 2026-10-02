@@ -158,6 +158,7 @@ public class AddPersonneService {
         if(userCreation.getCategoriePersonne().equals(CategoriePersonne.Enseignant)
             || userCreation.getCategoriePersonne().equals(CategoriePersonne.Non_enseignant_etablissement)
             || userCreation.getCategoriePersonne().equals(CategoriePersonne.Non_enseignant_service_academique)){
+            // TODO : source en dur
             if(source.equals("SarapisUi_AC-ORLEANS-TOURS") || source.equals("SarapisUi_LA-CENTRE")){
                 if(aPersonneRepository.doesEmailExists(userCreation.getCourriel()) > 0){
                     log.error("Email {} already exists ! Can't create local user", userCreation.getCourriel());
