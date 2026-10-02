@@ -42,6 +42,7 @@ public class StructureForUserDto {
     private List<String> classes;
     private List<String> groupesPedagogiques;
     private List<String> enseignements;
+    private List<String> groupes;
     private boolean authorizedForPrincipal;
 
     public StructureForUserDto(AStructure aStructure) {
@@ -67,7 +68,12 @@ public class StructureForUserDto {
         this.structureRattachement = false;
         this.classes = new ArrayList<>();
         this.groupesPedagogiques = new ArrayList<>();
+        this.groupes = new ArrayList<>();
         this.authorizedForPrincipal = false;
+    }
+
+    public void addGroup(String group){
+        this.groupes.add(group);
     }
 
 }
