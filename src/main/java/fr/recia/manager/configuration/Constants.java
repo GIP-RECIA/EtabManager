@@ -27,6 +27,8 @@ public class Constants {
     public static final String JSON_ARRAY_DELIMITER = "\", \"";
     public static final String JSON_ARRAY_PREFIX = "[ \"";
     public static final String JSON_ARRAY_SUFFIX = "\" ]";
+    public static final String INCERTAIN_DELIMITER = "->";
+    public static final String INCERTAIN_PREFIX = "Cas géré : ";
 
     public static final String GROUP_NAME_DELIMITER = ":";
     public static final String GROUP_INTERETAB = "Inter_etablissements";

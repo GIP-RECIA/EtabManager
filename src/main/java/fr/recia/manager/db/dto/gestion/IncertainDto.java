@@ -16,6 +16,7 @@
 
 package fr.recia.manager.db.dto.gestion;
 
+import fr.recia.manager.configuration.Constants;
 import lombok.Data;
 
 
@@ -30,7 +31,19 @@ public class IncertainDto {
     public IncertainDto(DatabaseIncertainDto databaseIncertainDto){
         this.attribut = databaseIncertainDto.getAttribut();
         this.value = databaseIncertainDto.getValue();
-        this.texte = databaseIncertainDto.getTexte();
+        this.texte = sanitizeText(databaseIncertainDto.getTexte());
         this.obligatoire = databaseIncertainDto.isObligatoire();
+    }
+
+    private String sanitizeText(String texte) {
+        final int separatorIndex = texte.indexOf(Constants.INCERTAIN_DELIMITER);
+        if (separatorIndex >= 0) {
+            texte = texte.substring(0, separatorIndex);
+        }
+        final int prefixIndex = texte.indexOf(Constants.INCERTAIN_PREFIX);
+        if (prefixIndex >= 0) {
+            texte = texte.substring(prefixIndex + Constants.INCERTAIN_PREFIX.length());
+        }
+        return texte;
     }
 }
