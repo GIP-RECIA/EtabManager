@@ -304,36 +304,38 @@ public class PersonneService {
             // TODO : manière plus efficace que de reparcourir tous les groupes pour chaque structure
             if(ldapUser != null) {
                 List<String> groups = ldapUser.getGroups();
-                for(String group : groups){
-                    // Groupes pour les collectivités (siren dans le nom du groupe)
-                    if(group.contains(aStructure.getSiren())){
-                        structureForUserDto.addGroup(group);
-                    }
-                    // Groupes pour les établissements et services académiques (UAI dans le nom du groupe)
-                    final String branch = group.split(Constants.GROUP_NAME_DELIMITER)[0];
-                    if(aStructure instanceof Etablissement){
-                        Etablissement etablissement = (Etablissement) aStructure;
-                        final String uai = etablissement.getUai();
-                        if(group.contains(uai)){
+                if(groups != null){
+                    for(String group : groups){
+                        // Groupes pour les collectivités (siren dans le nom du groupe)
+                        if(group.contains(aStructure.getSiren())){
                             structureForUserDto.addGroup(group);
                         }
-                        // Groupes inter-établissements
-                        if(group.contains(Constants.GROUP_INTERETAB)){
-                            if(structureLoader.getBranchOfStructure(uai).equals(branch)){
+                        // Groupes pour les établissements et services académiques (UAI dans le nom du groupe)
+                        final String branch = group.split(Constants.GROUP_NAME_DELIMITER)[0];
+                        if(aStructure instanceof Etablissement){
+                            Etablissement etablissement = (Etablissement) aStructure;
+                            final String uai = etablissement.getUai();
+                            if(group.contains(uai)){
                                 structureForUserDto.addGroup(group);
                             }
+                            // Groupes inter-établissements
+                            if(group.contains(Constants.GROUP_INTERETAB)){
+                                if(structureLoader.getBranchOfStructure(uai).equals(branch)){
+                                    structureForUserDto.addGroup(group);
+                                }
+                            }
                         }
-                    }
-                    if(aStructure instanceof ServiceAcademique){
-                        ServiceAcademique serviceAcademique = (ServiceAcademique) aStructure;
-                        final String uai = serviceAcademique.getUai();
-                        if(group.contains(uai)){
-                            structureForUserDto.addGroup(group);
-                        }
-                        // Groupes inter-établissements
-                        if(group.contains(Constants.GROUP_INTERACAD)){
-                            if(structureLoader.getBranchOfStructure(uai).equals(branch)){
+                        if(aStructure instanceof ServiceAcademique){
+                            ServiceAcademique serviceAcademique = (ServiceAcademique) aStructure;
+                            final String uai = serviceAcademique.getUai();
+                            if(group.contains(uai)){
                                 structureForUserDto.addGroup(group);
+                            }
+                            // Groupes inter-établissements
+                            if(group.contains(Constants.GROUP_INTERACAD)){
+                                if(structureLoader.getBranchOfStructure(uai).equals(branch)){
+                                    structureForUserDto.addGroup(group);
+                                }
                             }
                         }
                     }
