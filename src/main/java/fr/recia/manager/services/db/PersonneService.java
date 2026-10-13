@@ -31,7 +31,7 @@ import fr.recia.manager.db.entities.structure.ServiceAcademique;
 import fr.recia.manager.db.enums.Etat;
 import fr.recia.manager.db.enums.ExternalIdSource;
 import fr.recia.manager.db.enums.ForceEtat;
-import fr.recia.manager.db.repositories.APersonneAStructureRepository;
+import fr.recia.manager.db.repositories.personne.APersonneAStructureRepository;
 import fr.recia.manager.db.repositories.personne.APersonneRepository;
 import fr.recia.manager.ldap.LdapUser;
 import fr.recia.manager.ldap.repository.LdapPeopleDao;
