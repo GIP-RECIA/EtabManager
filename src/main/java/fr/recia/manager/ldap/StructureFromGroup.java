@@ -29,6 +29,7 @@ public class StructureFromGroup {
 
     private StructureKey structureKey;
     private String UAI;
+    private String siren;
     private String displayName;
     private String groupBranch;
 

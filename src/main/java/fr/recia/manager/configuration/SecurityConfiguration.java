@@ -186,8 +186,7 @@ public class SecurityConfiguration {
                                         break;
                                     // Seul droit un peu fait à la main, si on est admin de branch coll alors on a les droits sur toutes les collectivités
                                     case COLLECTIVITY:
-                                        for (StructureSirenDomain collectivite : structureLoader.getAllCollectivites()) {
-                                            final String collectiviteSiren = collectivite.getSiren();
+                                        for (String collectiviteSiren : structureLoader.getAllCollectivites()) {
                                             for (AppRole role : rule.getRoles()) {
                                                 rightsForEtabs.get(role).add(collectiviteSiren);
                                             }

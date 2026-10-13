@@ -52,17 +52,25 @@ public class LdapGroupStructureContextMapper implements ContextMapper<StructureF
         final String groupId = context.getStringAttribute(externalGroupHelper.getGroupIdAttribute());
         StructureFromGroup structure = new StructureFromGroup();
         structure.setStructureKey(new StructureKey(groupId, getCategorieStructure(groupId)));
-        // extract infos from pattern : récupération du groupe 1 pour la branche, le groupe 3 à split pour le displayName et l'UAI, le groupe 3 pour avoir le nom du groupe de l'établissement
-        Matcher matcher = ldapProperties.getGroupBranch().getStructureProperties().getStructureFromGroupPattern().matcher(groupId);
-        if (matcher.find() && matcher.groupCount() >= 4) {
-            structure.setGroupBranch(matcher.group(1));
-            structure.setDisplayName(matcher.group(4));
+        // extract infos from pattern n°1: récupération du groupe 1 pour la branche, le groupe 3 à split pour le displayName et l'UAI, le groupe 3 pour avoir le nom du groupe de l'établissement
+        Matcher matcherUai = ldapProperties.getGroupBranch().getStructureProperties().getStructureFromUaiGroupPattern().matcher(groupId);
+        if (matcherUai.find() && matcherUai.groupCount() >= 4) {
+            structure.setGroupBranch(matcherUai.group(1));
+            structure.setDisplayName(matcherUai.group(4));
             // test Branche == coll car groupe 6 vide dans ce cas, et renseigné obligatoirement sinon
-            if (matcher.groupCount() == 6) {
-                structure.setUAI(matcher.group(6));
+            if (matcherUai.groupCount() == 6) {
+                structure.setUAI(matcherUai.group(6));
             }
         }
-
+        // Si collectivité, extract infos from pattern n°2: pareil mais avec le siren à la place de l'UAI
+        Matcher matcherSiren = ldapProperties.getGroupBranch().getStructureProperties().getStructureFromSirenGroupPattern().matcher(groupId);
+        if (matcherSiren.find() && matcherSiren.groupCount() >= 4) {
+            structure.setGroupBranch(matcherSiren.group(1));
+            structure.setDisplayName(matcherSiren.group(4));
+            if (matcherSiren.groupCount() == 6) {
+                structure.setSiren(matcherSiren.group(6));
+            }
+        }
         return structure;
     }
 

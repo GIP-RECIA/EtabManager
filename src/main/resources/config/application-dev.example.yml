@@ -114,7 +114,6 @@ app:
     structure-branch:
       base:
       all-structures-by-siren-filter:
-      structures-coll-filter:
 
     group-branch:
       dn-contains-display-name:
@@ -128,7 +127,8 @@ app:
       resolve-user-members-by-user-attributes:
       dont-resolve-members-with-group-pattern: ''
       structure-properties:
-        structure-from-group-pattern: ''
+        structure-from-uai-group-pattern: ''
+        structure-from-siren-group-pattern: ''
         filter-groups-of-structure: ''
         structure-categories-patterns:
           Etablissement: ''
