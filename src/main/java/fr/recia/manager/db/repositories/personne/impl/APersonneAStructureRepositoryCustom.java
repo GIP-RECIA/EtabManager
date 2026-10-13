@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package fr.recia.manager.db.repositories;
+package fr.recia.manager.db.repositories.personne.impl;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
-public class APersonneAStructureRepository2 {
+public class APersonneAStructureRepositoryCustom {
 
     @PersistenceContext
     private EntityManager entityManager;

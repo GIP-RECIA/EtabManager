@@ -22,8 +22,8 @@ import fr.recia.manager.db.entities.fonction.Fonction;
 import fr.recia.manager.db.entities.fonction.TypeFonctionFiliere;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.structure.AStructure;
-import fr.recia.manager.db.repositories.APersonneAStructureRepository;
-import fr.recia.manager.db.repositories.APersonneAStructureRepository2;
+import fr.recia.manager.db.repositories.personne.APersonneAStructureRepository;
+import fr.recia.manager.db.repositories.personne.impl.APersonneAStructureRepositoryCustom;
 import fr.recia.manager.db.repositories.education.DisciplineRepository;
 import fr.recia.manager.db.repositories.fonction.FonctionRepository;
 import fr.recia.manager.db.repositories.fonction.TypeFonctionFiliereRepository;
@@ -61,7 +61,7 @@ class PersonneControllerTest {
     @Autowired
     private AStructureRepository<AStructure> aStructureRepository;
     @Autowired
-    private APersonneAStructureRepository2 aPersonneAStructureRepository2;
+    private APersonneAStructureRepositoryCustom aPersonneAStructureRepositoryCustom;
 
     private MockMvc mockPersonneControllerMvc;
 
@@ -74,7 +74,7 @@ class PersonneControllerTest {
         setField(personneController, "disciplineRepository", disciplineRepository);
         setField(personneController, "typeFonctionFiliereRepository", typeFonctionFiliereRepository);
         setField(personneController, "aStructureRepository", aStructureRepository);
-        setField(personneController, "aPersonneAStructureRepository2", aPersonneAStructureRepository2);
+        setField(personneController, "aPersonneAStructureRepositoryCustom", aPersonneAStructureRepositoryCustom);
 
         mockPersonneControllerMvc = standaloneSetup(personneController).build();
     }

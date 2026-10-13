@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package fr.recia.manager.db.repositories;
+package fr.recia.manager.db.repositories.personne;
 
 import fr.recia.manager.db.entities.APersonneAStructure;
+import fr.recia.manager.db.repositories.AbstractRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

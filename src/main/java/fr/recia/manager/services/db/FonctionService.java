@@ -31,8 +31,8 @@ import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.structure.AStructure;
 import fr.recia.manager.db.enums.CategoriePersonne;
 import fr.recia.manager.db.enums.Etat;
-import fr.recia.manager.db.repositories.APersonneAStructureRepository;
-import fr.recia.manager.db.repositories.APersonneAStructureRepository2;
+import fr.recia.manager.db.repositories.personne.APersonneAStructureRepository;
+import fr.recia.manager.db.repositories.personne.impl.APersonneAStructureRepositoryCustom;
 import fr.recia.manager.db.repositories.education.DisciplineRepository;
 import fr.recia.manager.db.repositories.fonction.FonctionRepository;
 import fr.recia.manager.db.repositories.fonction.TypeFonctionFiliereRepository;
@@ -64,7 +64,7 @@ public class FonctionService {
     @Autowired
     private APersonneAStructureRepository<APersonneAStructure> aPersonneAStructureRepository;
     @Autowired
-    private APersonneAStructureRepository2 aPersonneAStructureRepository2;
+    private APersonneAStructureRepositoryCustom aPersonneAStructureRepositoryCustom;
     @Autowired
     private APersonneRepository<APersonne> aPersonneRepository;
     @Autowired
@@ -277,14 +277,14 @@ public class FonctionService {
                         log.error("Unable to attach user {} to structure {}", aPersonne.getId(), aStructure.getId());
                         break;
                     }
-                    aPersonneAStructureRepository2.insertInStructure(personneId, structureId);
+                    aPersonneAStructureRepositoryCustom.insertInStructure(personneId, structureId);
                     break;
                 case detach:
                     if (!isInStructure || toDeleteAdditional.isEmpty() || officialFonctionsInStructure > 0 || aPersonne.getListeStructures().size()==1) {
                         log.error("Unable to detach user {} of structure {}", aPersonne.getId(), aStructure.getId());
                         break;
                     }
-                    aPersonneAStructureRepository2.deleteFromStructure(personneId, structureId);
+                    aPersonneAStructureRepositoryCustom.deleteFromStructure(personneId, structureId);
                     break;
                 default:
                     break;

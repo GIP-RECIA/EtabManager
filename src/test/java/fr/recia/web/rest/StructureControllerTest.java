@@ -23,7 +23,7 @@ import fr.recia.manager.db.entities.fonction.Fonction;
 import fr.recia.manager.db.entities.fonction.TypeFonctionFiliere;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.structure.Etablissement;
-import fr.recia.manager.db.repositories.APersonneAStructureRepository;
+import fr.recia.manager.db.repositories.personne.APersonneAStructureRepository;
 import fr.recia.manager.db.repositories.education.DisciplineRepository;
 import fr.recia.manager.db.repositories.fonction.FonctionRepository;
 import fr.recia.manager.db.repositories.fonction.TypeFonctionFiliereRepository;
