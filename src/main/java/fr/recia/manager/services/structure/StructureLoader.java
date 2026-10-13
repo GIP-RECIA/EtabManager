@@ -49,7 +49,7 @@ public class StructureLoader implements InitializingBean {
     private Map<String, String> branchForLoadedStructures;
     private Map<String, String> groupNameForLoadedStructures;
     private Map<String, String> uaiToSirenForStructures;
-    private List<StructureSirenDomain> loadedCollectivites;
+    private List<String> loadedCollectivites;
     private Map<String, List<String>> domainsBySirenForStructures;
     private LdapGroupDao groupDao;
     private LdapStructureDao ldapStructureDao;
@@ -71,15 +71,20 @@ public class StructureLoader implements InitializingBean {
     }
 
     private void init() {
-        loadedCollectivites = ldapStructureDao.structuresCollectivites();
         Set<StructureFromGroup> loadedStructures = groupDao.getStructuresFromGroups();
         loadedStructures.forEach(structure -> {
-            branchForLoadedStructures.put(structure.getUAI(), structure.getGroupBranch());
-            groupNameForLoadedStructures.put(structure.getUAI(), structure.getDisplayName());
-            if (loadedStructuresByBranch.containsKey(structure.getGroupBranch())) {
-                loadedStructuresByBranch.get(structure.getGroupBranch()).add(structure);
+            if(structure.getUAI() != null){
+                branchForLoadedStructures.put(structure.getUAI(), structure.getGroupBranch());
+                groupNameForLoadedStructures.put(structure.getUAI(), structure.getDisplayName());
+                if (loadedStructuresByBranch.containsKey(structure.getGroupBranch())) {
+                    loadedStructuresByBranch.get(structure.getGroupBranch()).add(structure);
+                } else {
+                    loadedStructuresByBranch.put(structure.getGroupBranch(), Sets.newHashSet(structure));
+                }
             } else {
-                loadedStructuresByBranch.put(structure.getGroupBranch(), Sets.newHashSet(structure));
+                if(structure.getSiren() != null){
+                    loadedCollectivites.add(structure.getSiren());
+                }
             }
         });
         List<StructureSirenDomain> structureSirenDomains = ldapStructureDao.structuresFromSiren();
@@ -141,7 +146,7 @@ public class StructureLoader implements InitializingBean {
         return uaiToSirenForStructures.get(uai);
     }
 
-    public List<StructureSirenDomain> getAllCollectivites(){
+    public List<String> getAllCollectivites(){
         return this.loadedCollectivites;
     }
 

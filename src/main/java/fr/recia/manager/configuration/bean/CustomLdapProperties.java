@@ -81,7 +81,6 @@ public class CustomLdapProperties {
 
     @Data
     public static class StructureBranchProperties {
-        private String structuresCollFilter;
         private String allStructuresBySirenFilter;
         private String base;
     }
@@ -137,7 +136,8 @@ public class CustomLdapProperties {
         @Validated
         public static class StructureProperties {
 
-            private Pattern structureFromGroupPattern;
+            private Pattern structureFromUaiGroupPattern;
+            private Pattern structureFromSirenGroupPattern;
             private String filterGroupsOfStructure;
             private Map<CategorieStructure, Pattern> structureCategoriesPatterns;
             private Pattern uaiPattern;

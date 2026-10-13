@@ -43,12 +43,4 @@ public class LdapStructureDao {
         );
     }
 
-    public List<StructureSirenDomain> structuresCollectivites() {
-        return ldapTemplate.search(
-            ldapProperties.getStructureBranch().getBase(),
-            ldapProperties.getStructureBranch().getStructuresCollFilter(),
-            structureSirenDomainAttributesMapper
-        );
-    }
-
 }

@@ -32,6 +32,7 @@ public class StructureSirenDomainAttributesMapper implements AttributesMapper<St
 
     @Override
     public StructureSirenDomain mapFromAttributes(Attributes attrs) throws NamingException {
+        // TODO : attributs en dur
         StructureSirenDomain entry = new StructureSirenDomain();
         Attribute sirenAttr = attrs.get("ENTStructureSIREN");
         if (sirenAttr != null) {
