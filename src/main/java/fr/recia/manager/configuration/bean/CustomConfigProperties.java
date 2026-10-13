@@ -18,7 +18,6 @@ package fr.recia.manager.configuration.bean;
 
 import fr.recia.manager.db.dto.AlertType;
 import fr.recia.manager.db.enums.CategoriePersonne;
-import fr.recia.manager.utils.ListUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,10 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static fr.recia.manager.configuration.Constants.JSON_ARRAY_DELIMITER;
-import static fr.recia.manager.configuration.Constants.JSON_ARRAY_PREFIX;
-import static fr.recia.manager.configuration.Constants.JSON_ARRAY_SUFFIX;
 
 @Data
 @Slf4j
@@ -46,6 +41,23 @@ public class CustomConfigProperties {
     private Map<String, Set<String>> adminFonctionsBySource;
     private List<LoginOfficeProperties> loginOffices;
     private List<PartitionedSourcesProperties> partitionedSources;
+    private List<ProfilsByCategoryProperties> profilsByCategory;
+    private List<FonctionsByProfilProperties> fonctionsByProfil;
+    private Map<String, Set<String>> profilsByCategoryMap;
+    private Map<String, String> profilByFonctionMap;
+    private Map<String, List<String>> categoryByProfilMap;
+
+    @Data
+    public static class ProfilsByCategoryProperties {
+        private String category;
+        private Set<String> profils;
+    }
+
+    @Data
+    public static class FonctionsByProfilProperties {
+        private String profil;
+        private Set<String> codesFiliere;
+    }
 
     @Data
     public static class PartitionedSourcesProperties {
@@ -69,11 +81,9 @@ public class CustomConfigProperties {
 
             @Data
             public static class ValueProperties {
-
                 private int value;
                 private AlertType type;
                 private boolean action;
-
             }
 
         }
@@ -103,26 +113,55 @@ public class CustomConfigProperties {
 
         @Data
         public static class FiliereProperties {
-
             private String code;
             private List<String> disciplines;
             private boolean admin;
-
         }
 
     }
 
+    /**
+     * Charge les properties des fonctions admin dans une Map pratique à interroger
+     */
     public void loadAdminFonctions(){
-        adminFonctionsBySource = new HashMap<>();
-        for(FonctionsProperties fonctionsProperties : fonctions){
+        this.adminFonctionsBySource = new HashMap<>();
+        for(FonctionsProperties fonctionsProperties : this.fonctions){
             final String source = fonctionsProperties.source;
-            if(!adminFonctionsBySource.containsKey(source)){
-                adminFonctionsBySource.put(source, new HashSet<>());
+            if(!this.adminFonctionsBySource.containsKey(source)){
+                this.adminFonctionsBySource.put(source, new HashSet<>());
             }
             for(FonctionsProperties.FiliereProperties filiereProperties : fonctionsProperties.filieres){
                 if(filiereProperties.admin){
-                    adminFonctionsBySource.get(source).add(filiereProperties.code);
+                    this.adminFonctionsBySource.get(source).add(filiereProperties.code);
                 }
+            }
+        }
+    }
+
+    /**
+     * Charge les properties au sujet des liens profils->catégories<->fonctions dans des Map pratiques à interroger
+     */
+    public void loadProfileMapper(){
+        this.profilsByCategoryMap = new HashMap<>();
+        this.categoryByProfilMap = new HashMap<>();
+        for(ProfilsByCategoryProperties profilsByCategoryProperties : this.profilsByCategory){
+            this.profilsByCategoryMap.put(profilsByCategoryProperties.getCategory(), profilsByCategoryProperties.getProfils());
+            for(String profil : profilsByCategoryProperties.getProfils()){
+                if(this.categoryByProfilMap.containsKey(profil)){
+                    log.debug("Multiple categories for profil {} in configuration. Resolution for these conflicts will be handed by hand when adding functions", profil);
+                } else {
+                    this.categoryByProfilMap.put(profil, new ArrayList<>());
+                }
+                this.categoryByProfilMap.get(profil).add(profilsByCategoryProperties.getCategory());
+            }
+        }
+        this.profilByFonctionMap = new HashMap<>();
+        for(FonctionsByProfilProperties fonctionsByProfilProperties : this.fonctionsByProfil){
+            for(String codeFiliere : fonctionsByProfilProperties.getCodesFiliere()){
+                if(this.profilByFonctionMap.containsKey(codeFiliere)){
+                    log.warn("Duplicate profil for filiere {} in configuration !", codeFiliere);
+                }
+                this.profilByFonctionMap.put(codeFiliere, fonctionsByProfilProperties.getProfil());
             }
         }
     }

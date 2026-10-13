@@ -36,6 +36,7 @@ import fr.recia.manager.db.repositories.APersonneAStructureRepository2;
 import fr.recia.manager.db.repositories.education.DisciplineRepository;
 import fr.recia.manager.db.repositories.fonction.FonctionRepository;
 import fr.recia.manager.db.repositories.fonction.TypeFonctionFiliereRepository;
+import fr.recia.manager.db.repositories.personne.impl.APersonneCategoryRepository;
 import fr.recia.manager.db.repositories.personne.APersonneRepository;
 import fr.recia.manager.db.repositories.structure.AStructureRepository;
 import fr.recia.manager.services.cache.CacheInvalidationService;
@@ -51,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -73,6 +75,8 @@ public class FonctionService {
     private DisciplineRepository<Discipline> disciplineRepository;
     @Autowired
     private TypeFonctionFiliereRepository<TypeFonctionFiliere> typeFonctionFiliereRepository;
+    @Autowired
+    private APersonneCategoryRepository aPersonneCategoryRepository;
     @Autowired
     private AppProperties appProperties;
     @Autowired
@@ -141,7 +145,7 @@ public class FonctionService {
     public boolean saveAdditionalFonctions(Long personneId, Long structureId, List<FonctionToModify> toAddFunctions, List<FonctionToModify> toDeleteFunctions, FonctionAction requiredAction, boolean isAdmin) {
         // Permet de savoir si tous les ajouts ont échoué ou si il y a au moins 1 ajout qui a réussi
         boolean ok = false;
-        final APersonne aPersonne = aPersonneRepository.findById(personneId).orElse(null);
+        APersonne aPersonne = aPersonneRepository.findById(personneId).orElse(null);
         final AStructure aStructure = aStructureRepository.findById(structureId).orElse(null);
         if (aPersonne == null || aStructure == null || !List.of(Etat.Invalide, Etat.Valide, Etat.Bloque).contains(aPersonne.getEtat())
             || List.of(CategoriePersonne.Eleve, CategoriePersonne.Personne_relation_eleve, CategoriePersonne.Tuteur_stage, CategoriePersonne.Responsable_Entreprise).contains(aPersonne.getCategorie())) {
@@ -194,17 +198,48 @@ public class FonctionService {
         }
 
         if (!toAddAdditional.isEmpty()) {
+            final Map<String, Set<String>> profilsByCategory = appProperties.getCustomConfig().getProfilsByCategoryMap();
+            final Map<String, String> profilByFonction = appProperties.getCustomConfig().getProfilByFonctionMap();
+            final Map<String, List<String>> categoryByProfil = appProperties.getCustomConfig().getCategoryByProfilMap();
             List<Fonction> fonctions = new ArrayList<>();
             for(FonctionDto fonctionDto : toAddAdditional){
                 // Si on a déjà la fonction qu'on veut ajouter alors il ne faut pas la remettre ça va poser des problèmes de contraintes
                 Long nbExistingFonctions = fonctionRepository.nbSameFonctionsInStructure(fonctionDto.getPersonne(), fonctionDto.getStructure(), fonctionDto.getDiscipline(), fonctionDto.getFiliere());
+                // Si on a pas du tout la fonction, on l'ajoute
                 if(nbExistingFonctions == 0){
                     TypeFonctionFiliere filiere = typeFonctionFiliereRepository.findById(fonctionDto.getFiliere()).orElse(null);
                     Discipline discipline = disciplineRepository.findById(fonctionDto.getDiscipline()).orElse(null);
-                    fonctions.add(new Fonction(discipline, filiere, aStructure, aPersonne, source, fonctionDto.getDateFin(), fonctionDto.getDateDebut()));
-                    ok = true;
+                    // Avant de l'ajouter, on vérifie qu'il ne faut pas changer la catégorie de la personne en fonction des profils associés au codeFillière de la fonction
+                    final String codeFiliere = filiere.getCodeFiliere();
+                    final String categoriePersonne = aPersonne.getCategorie().toString();
+                    final Set<String> profilsAutorisesPersonne = profilsByCategory.get(categoriePersonne);
+                    final String profilFonction = profilByFonction.get(codeFiliere);
+                    final List<String> categoryNeeded = categoryByProfil.get(profilFonction);
+                    boolean validCategory = true;
+                    if(!profilsAutorisesPersonne.contains(profilFonction)){
+                        log.info("Profil {} is needed for filiere {} but not authorized for category {}. List of profiles authorized for personne is : {}", profilFonction, codeFiliere, categoriePersonne, profilsAutorisesPersonne);
+                        // On vérifie qu'on peut donner une nouvelle catégorie qui correspond à la fonction : si on ne sait pas choisir, il faudra résoudre le problème à la main
+                        if(categoryNeeded.size() == 1){
+                            final CategoriePersonne newCategory = CategoriePersonne.valueOf(categoryNeeded.get(0));
+                            log.info("Changing personne category from {} to {}", aPersonne.getCategorie(), newCategory);
+                            try {
+                                aPersonne = aPersonneCategoryRepository.changeCategory(aPersonne, newCategory);
+                            } catch (Exception e) {
+                                log.warn("Can't change category of personne {} to {}", aPersonne.getUid(), newCategory, e);
+                                validCategory = false;
+                            }
+                        } else {
+                            log.warn("Can't add fonction {} to user {} because of authorized profils. Resolution need to be done by hand.", fonctionDto, aPersonne.getUid());
+                            validCategory = false;
+                        }
+                    }
+                    // On ajoute la nouvelle fonction
+                    if(validCategory){
+                        fonctions.add(new Fonction(discipline, filiere, aStructure, aPersonne, source, fonctionDto.getDateFin(), fonctionDto.getDateDebut()));
+                        ok = true;
+                    }
                 } else if (nbExistingFonctions == 1){
-                    // Par contre si on a une date de début/fin il faut mettre à jour la fonction avec les nouvelles dates
+                    // Sinon si on a déjà la fonction, si on a une date de début/fin il faut la mettre à jour
                     Fonction fonction = fonctionRepository.findSameFonctionsInStructure(fonctionDto.getPersonne(), fonctionDto.getStructure(), fonctionDto.getDiscipline(), fonctionDto.getFiliere()).get(0);
                     if((fonctionDto.getDateFin() != null && !fonctionDto.getDateFin().equals(fonction.getDateFin())) || (fonctionDto.getDateDebut() != null && !fonctionDto.getDateDebut().equals(fonction.getDateDebut()))){
                         log.debug("Function {}-{} already added for user {} in etab {}, updating dates...", fonctionDto.getFiliere(), fonctionDto.getDiscipline(), fonctionDto.getPersonne(), fonctionDto.getStructure());

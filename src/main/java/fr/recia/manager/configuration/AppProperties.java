@@ -104,6 +104,7 @@ public class AppProperties {
             log.error("Couldn't load service rights properties !", e);
         }
         customConfig.loadAdminFonctions();
+        customConfig.loadProfileMapper();
         log.info("Loaded properties: {}", this);
     }
 
