@@ -210,3 +210,13 @@ app:
             admin: true
         disciplines:
           - ''
+
+    profilsByCategory:
+      - category: ''
+        profils :
+          - ""
+
+    fonctionsByProfil:
+      - profil: ""
+        codesFiliere:
+          - ""
