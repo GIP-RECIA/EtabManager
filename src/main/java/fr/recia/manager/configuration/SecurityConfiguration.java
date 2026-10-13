@@ -180,7 +180,11 @@ public class SecurityConfiguration {
                                         for (StructureFromGroup structure : structureLoader.getStructuresOfBranch(matcher.group(1))) {
                                             final String sirenFromUai = structureLoader.getSirenByUai(structure.getUAI());
                                             for (AppRole role : rule.getRoles()) {
-                                                rightsForEtabs.get(role).add(sirenFromUai);
+                                                if(sirenFromUai != null){
+                                                    rightsForEtabs.get(role).add(sirenFromUai);
+                                                } else {
+                                                    log.warn("SIREN null for UAI : {}", structure.getUAI());
+                                                }
                                             }
                                         }
                                         break;
