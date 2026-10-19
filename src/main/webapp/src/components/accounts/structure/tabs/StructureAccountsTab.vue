@@ -226,7 +226,7 @@ const filteredAccounts = computed<AccountUser[]>(() => {
 })
 
 const hasUid = computed<boolean>(() =>
-  accounts.value.some(row => row.uid != null),
+  accounts.value.some(row => row.uid),
 )
 
 const features = tableFeatures({
