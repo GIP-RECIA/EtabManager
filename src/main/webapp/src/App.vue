@@ -84,8 +84,6 @@ const isAccountSection = computed<boolean>(() => (
   route.matched.some(r => r.name === 'accountRoot')
 ))
 
-const appName = __APP_NAME__
-
 const router = useRouter()
 
 const {
@@ -167,7 +165,6 @@ const {
   <header>
     <r-header
       v-if="isInit"
-      :service-name="appName"
       v-bind="configuration!.front.extendedUportal?.header?.props"
     />
     <AccountToolbar
@@ -198,7 +195,7 @@ const {
   <PiniaColadaDevtools />
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 r-header {
   display: block;
   height: var(--recia-header-height);
