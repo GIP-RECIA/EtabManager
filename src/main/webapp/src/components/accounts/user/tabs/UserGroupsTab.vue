@@ -62,14 +62,5 @@ defineProps<{
       gap: 7px 8px;
     }
   }
-
-  @media (width >= map.get($grid-breakpoints, lg)) {
-    grid-template-columns: repeat(2, 1fr);
-    align-items: start;
-
-    > .heading {
-      grid-column: span 2;
-    }
-  }
 }
 </style>
