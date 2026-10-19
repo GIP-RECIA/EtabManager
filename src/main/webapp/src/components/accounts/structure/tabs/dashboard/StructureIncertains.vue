@@ -21,7 +21,8 @@ import type {
   SortingState,
   VueTable,
 } from '@tanstack/vue-table'
-import type { Incertain, RfilterSection, Structure } from '@/types/index.ts'
+import type { Etat } from '@/types/enums/index.ts'
+import type { Incertain, Structure } from '@/types/index.ts'
 import {
   faAngleDown,
   faAngleUp,
@@ -60,6 +61,10 @@ const { t } = useI18n()
 
 /* Filters */
 
+const states = computed<Etat[]>(() => (
+  [...new Set(props.structure?.incertains.map(account => account.personne.etat))]
+))
+
 const activeFilters = ref<{ id: string, checked: string[] }[]>([])
 
 function isItemChecked(filterId: string, itemKey: string): boolean {
@@ -70,7 +75,7 @@ function isItemChecked(filterId: string, itemKey: string): boolean {
   return filter.checked.includes(itemKey)
 }
 
-const filters = computed<RfilterSection[]>(() => [
+const filters = computed(() => [
   {
     id: 'mandatory',
     name: t('page.structure.dashboard.incertains.filter.mandatory.header'),
@@ -93,6 +98,28 @@ const filters = computed<RfilterSection[]>(() => [
       },
     ],
   },
+  ...(states.value.length > 1
+    ? [
+        {
+          id: 'state',
+          name: t('page.structure.accounts.filter.state.header'),
+          type: 'checkbox',
+          items: [
+            {
+              key: 'state-all',
+              value: t('page.structure.accounts.filter.state.all'),
+              checked: isItemChecked('state', 'state-all'),
+            },
+            ...states.value.map(etat => ({
+              key: etat,
+              value: t(etatMap[etat].i18n),
+              checked: isItemChecked('state', etat),
+            })),
+          ],
+        },
+      ]
+    : []
+  ),
 ])
 
 function updateFilters(e: CustomEvent): void {
@@ -123,6 +150,9 @@ const filteredAccounts = computed<Incertain[]>(() => {
     switch (id) {
       case 'mandatory':
         result = result.filter(user => checked.includes(user.incertains.some(x => x.obligatoire) ? 'yes' : 'no'))
+        break
+      case 'state':
+        result = result.filter(user => checked.includes(user.personne.etat))
         break
     }
   }

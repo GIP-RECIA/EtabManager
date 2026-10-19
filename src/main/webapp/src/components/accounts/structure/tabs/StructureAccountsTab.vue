@@ -60,7 +60,6 @@ import {
   CategoriePersonne,
   categoriePersonneMap,
   Etat,
-  etatFilters,
   etatMap,
 } from '@/types/enums/index.ts'
 import { concatenate, getIconDefinition, getStateLabel, normalize } from '@/utils/index.ts'
@@ -87,10 +86,7 @@ const breakpoints = useBreakpoints({
 /* Filters */
 
 const categoriesPersonne = computed<CategoriePersonne[]>(() => (
-  [...new Set(
-    props.structure?.personnes
-      .map(user => user.categoriePersonne),
-  )]
+  [...new Set(props.structure?.personnes.map(user => user.categoriePersonne))]
 ))
 
 const sameSource = computed<boolean>(() => {
@@ -100,6 +96,10 @@ const sameSource = computed<boolean>(() => {
     && personnes.length > 0
     && personnes.every(user => user.local === personnes[0].local)
 })
+
+const states = computed<Etat[]>(() => (
+  [...new Set(props.structure?.personnes.map(account => account.etat))]
+))
 
 const activeFilters = ref<{ id: string, checked: string[] }[]>([])
 
@@ -165,23 +165,28 @@ const filters = computed(() => [
       ]
     : []
   ),
-  {
-    id: 'state',
-    name: t('page.structure.accounts.filter.state.header'),
-    type: 'checkbox',
-    items: [
-      {
-        key: 'state-all',
-        value: t('page.structure.accounts.filter.state.all'),
-        checked: isItemChecked('state', 'state-all'),
-      },
-      ...etatFilters.map(etat => ({
-        key: etat,
-        value: t(etatMap[etat].i18n),
-        checked: isItemChecked('state', etat),
-      })),
-    ],
-  },
+  ...(states.value.length > 1
+    ? [
+        {
+          id: 'state',
+          name: t('page.structure.accounts.filter.state.header'),
+          type: 'checkbox',
+          items: [
+            {
+              key: 'state-all',
+              value: t('page.structure.accounts.filter.state.all'),
+              checked: isItemChecked('state', 'state-all'),
+            },
+            ...states.value.map(etat => ({
+              key: etat,
+              value: t(etatMap[etat].i18n),
+              checked: isItemChecked('state', etat),
+            })),
+          ],
+        },
+      ]
+    : []
+  ),
 ])
 
 function updateFilters(e: CustomEvent): void {
