@@ -78,6 +78,7 @@
     "actions": "Actions",
     "tab": {
       "info": "Informations",
+      "groups": "Groupes",
       "administrative": "Affectations"
     },
     "info": {

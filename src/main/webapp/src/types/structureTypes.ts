@@ -40,6 +40,7 @@ export type UserStructure = CommonStructure & {
   classes: string[]
   groupesPedagogiques: string[]
   authorizedForPrincipal: boolean
+  groupes: string[]
 }
 
 export type Structure = CommonStructure & {

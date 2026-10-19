@@ -33,6 +33,7 @@ import { computed, ref, useTemplateRef, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ManageAdditionalDialog from '@/components/accounts/dialogs/ManageAdditionalDialog.vue'
 import UserAdministrativeTab from '@/components/accounts/user/tabs/UserAdministrativeTab.vue'
+import UserGroupsTab from '@/components/accounts/user/tabs/UserGroupsTab.vue'
 import UserInformationTab from '@/components/accounts/user/tabs/UserInformationTab.vue'
 import UserInfo from '@/components/accounts/user/UserInfo.vue'
 import {
@@ -70,6 +71,7 @@ const {
 
 const tabs = computed<string[]>(() => [
   'info',
+  'groups',
   ...(canSeeClassesAndGroups.value || canSeeFunctions.value
     ? ['administrative']
     : []
@@ -352,11 +354,20 @@ function onAttach(): void {
       :user="user"
     />
 
-    <UserAdministrativeTab
+    <UserGroupsTab
       v-show="activeTab === 1"
       id="user-tabpanel-1"
       role="tabpanel"
       aria-labelledby="user-tab-1"
+      tabindex="0"
+      :user="user"
+    />
+
+    <UserAdministrativeTab
+      v-show="activeTab === 2"
+      id="user-tabpanel-2"
+      role="tabpanel"
+      aria-labelledby="user-tab-2"
       tabindex="0"
       :user="user"
       @edit-function="editFunction"
