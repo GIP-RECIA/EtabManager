@@ -335,7 +335,14 @@ const table = useTable({
         </div>
       </div>
 
-      <div class="accounts-data">
+      <span class="result">
+        {{ t('result', table.getRowCount()) }}
+      </span>
+
+      <div
+        v-show="table.getRowCount() > 0"
+        class="accounts-data"
+      >
         <table>
           <thead>
             <tr
@@ -457,9 +464,14 @@ const table = useTable({
     }
   }
 
-  > div {
-    display: grid;
+  > div:not(.title) {
+    display: flex;
+    flex-direction: column;
     gap: 16px;
+
+    > .result {
+      align-self: flex-end;
+    }
   }
 }
 

@@ -592,26 +592,35 @@ function onExport(): void {
       </ul>
     </div>
 
-    <div class="field">
-      <div class="field-layout">
-        <div class="field-container">
-          <div class="middle">
-            <label for="structure-search">
-              {{ t('page.structure.accounts.search') }}
-            </label>
-            <input
-              id="structure-search"
-              v-model.trim="globalFilter"
-              type="text"
-              placeholder=""
-            >
+    <div class="search">
+      <div class="field">
+        <div class="field-layout">
+          <div class="field-container">
+            <div class="middle">
+              <label for="structure-search">
+                {{ t('page.structure.accounts.search') }}
+              </label>
+              <input
+                id="structure-search"
+                v-model.trim="globalFilter"
+                type="text"
+                placeholder=""
+              >
+            </div>
           </div>
+          <div class="active-indicator" />
         </div>
-        <div class="active-indicator" />
       </div>
+
+      <span class="result">
+        {{ t('result', table.getRowCount()) }}
+      </span>
     </div>
 
-    <div class="accounts-data">
+    <div
+      v-show="table.getRowCount() > 0"
+      class="accounts-data"
+    >
       <table :aria-label="t('page.structure.accounts.table.label')">
         <thead>
           <tr
@@ -746,6 +755,16 @@ function onExport(): void {
     flex-wrap: wrap;
     justify-content: end;
     gap: 8px;
+  }
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  > .result {
+    align-self: flex-end;
   }
 }
 

@@ -4,7 +4,7 @@
   "all": "Tous",
   "used": "Utilisés",
   "searchOutOfStructure": "Rechercher hors de la structure",
-  "result": "Résultat | Résultats",
+  "result": "Aucun résultats | {n} résultat | {n} résultats",
   "enabled": "Activé",
   "disabled": "Désactivé",
   "noSession": "Vous n'avez plus de session\nVeuillez rafraichir la page"

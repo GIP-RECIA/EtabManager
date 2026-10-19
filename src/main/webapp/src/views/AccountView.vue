@@ -159,7 +159,14 @@ const table = useTable({
           </div>
         </div>
 
-        <ul class="info-container">
+        <span class="result">
+          {{ t('result', table.getRowCount()) }}
+        </span>
+
+        <ul
+          v-show="table.getRowCount() > 0"
+          class="info-container"
+        >
           <li
             v-for="row in table.getRowModel().rows"
             :key="row.id"
@@ -215,6 +222,10 @@ const table = useTable({
 }
 
 .structures {
+  > .result {
+    align-self: flex-end;
+  }
+
   > ul {
     @include unstyled-list;
     align-items: unset;

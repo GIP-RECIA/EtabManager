@@ -4,7 +4,7 @@
   "all": "All",
   "used": "Used",
   "searchOutOfStructure": "Search outside the structure",
-  "result": "Result | Results",
+  "result": "No results | {n} result | {n} results",
   "enabled": "Enabled",
   "disabled": "Disabled",
   "noSession": "You are no longer logged in\nPlease refresh the page"
