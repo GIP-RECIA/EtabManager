@@ -306,7 +306,7 @@ const table = useTable({
         {{ t('page.structure.dashboard.incertains.header') }}
       </h2>
       <p class="count">
-        {{ table.getRowCount() }}
+        {{ accounts.length }}
       </p>
     </div>
 
