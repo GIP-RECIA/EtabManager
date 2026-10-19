@@ -36,7 +36,6 @@ defineProps<{
     />
 
     <StructureIncertains
-      v-dev
       :structure="structure"
     />
   </div>
