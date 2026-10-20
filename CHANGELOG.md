@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.4](https://github.com/GIP-RECIA/EtabManager/compare/0.2.3...0.2.4) (2026-10-20)
+
+### Features
+
+* affichage du mot de passe pour les personnes qui ne sont pas sur un guichet externe ([e53b99a](https://github.com/GIP-RECIA/EtabManager/commit/e53b99a2ef061b33eb139ccd93bb1c48c37cacdb))
+* groupes dans les détails d'une personne ([3736079](https://github.com/GIP-RECIA/EtabManager/commit/3736079f100314f3f0db747548b097d31e47ddf0))
+* groupes des personnes par structures ([9e52412](https://github.com/GIP-RECIA/EtabManager/commit/9e524124360a3e17f0de4ca061a4410c497b3b2d))
+* réinitialisation de mot de passe pour les personnes qui ne sont pas sur un guichet externe ([9cb46d1](https://github.com/GIP-RECIA/EtabManager/commit/9cb46d15fe8d6791a517936e51c883bf4003a4ff))
+* temps de réactivation temporaire paramétrable ([ca8e978](https://github.com/GIP-RECIA/EtabManager/commit/ca8e978cadc942d52543a36e187374b9568e2d68))
+* texte incertains améliorés ([ced1918](https://github.com/GIP-RECIA/EtabManager/commit/ced1918a45caad5d262ab49662b2fcfa6b776f3e))
+* **ui:** add account search in structure by uid, login and email ([dcc6660](https://github.com/GIP-RECIA/EtabManager/commit/dcc6660bce72d028efd03630557f47cea0cf8197))
+* **ui:** add sarapis mandatory information in row ([bb1e937](https://github.com/GIP-RECIA/EtabManager/commit/bb1e937acb1292356acbbba4e22ecba44c228996))
+* **ui:** add skip links and cleanup ([3f97de9](https://github.com/GIP-RECIA/EtabManager/commit/3f97de9fb921954935c63a6ae6f16e365d324aed))
+* **ui:** display user groups ([e25a28e](https://github.com/GIP-RECIA/EtabManager/commit/e25a28ed1e6409327fcdda13deb19825c7d51023))
+* **ui:** dynamic state filters ([a95a255](https://github.com/GIP-RECIA/EtabManager/commit/a95a255b895b6e5ae3ec90842e1b7d3146e19478))
+* **ui:** improve accounts list ([b222427](https://github.com/GIP-RECIA/EtabManager/commit/b2224278a2ed8885255b2e2f51e1be7818e48439))
+* **ui:** improve no session page ([5272411](https://github.com/GIP-RECIA/EtabManager/commit/52724110403ff9b577bbf1e1627491b8351308f5))
+* **ui:** show result count ([341e137](https://github.com/GIP-RECIA/EtabManager/commit/341e13703bd5052de87f2a6738d2b1b68f29eca4))
+* **ui:** show sarapis alerts ([4f8b7fa](https://github.com/GIP-RECIA/EtabManager/commit/4f8b7fa2ebc7a81c39e4debfe38f6e91f9b0d068))
+* **ui:** show user structure in affectation tab ([0c79e03](https://github.com/GIP-RECIA/EtabManager/commit/0c79e0306250b8dcbe3bfa8a2c062264eb1821bf))
+* vérification de la catégorie d'une personne avant ajout d'une fonction complémentaire ([2cda2da](https://github.com/GIP-RECIA/EtabManager/commit/2cda2dab1996e26ee23056555926eabda2fbac93))
+
+### Bug Fixes
+
+* affichage de la DRAAF ([755462c](https://github.com/GIP-RECIA/EtabManager/commit/755462c32871b706c82d5b560da117a6b3cde1c0))
+* NPE si une personne n'a pas de groupes ([1303dfd](https://github.com/GIP-RECIA/EtabManager/commit/1303dfdcc465aac3a1b6f53a09d8711c60a6b7d2))
+* SIREN null dans les authorizedSiren ([16ebe30](https://github.com/GIP-RECIA/EtabManager/commit/16ebe304137bd356ad37641ca1c228229aeee766))
+* **ui:** don't show end date if end greater than 24 months ([6fc749a](https://github.com/GIP-RECIA/EtabManager/commit/6fc749ad99b5f0eba4ce136279dfa8546c490360))
+* **ui:** groups view ([e02e19b](https://github.com/GIP-RECIA/EtabManager/commit/e02e19b6e0449a3b46729d6065058a1d39f3e774))
+* **ui:** hide uid field if empty ([731dbfe](https://github.com/GIP-RECIA/EtabManager/commit/731dbfef97e717d8e000911a4be07b3bd401e9ff))
+* **ui:** hide unused accounts list checkbox ([cc7b8ec](https://github.com/GIP-RECIA/EtabManager/commit/cc7b8ec0d5177d3a203afe67d4be68465eb50aff))
+* **ui:** incertains count ([da11f42](https://github.com/GIP-RECIA/EtabManager/commit/da11f42d4d78a554130a642ac4df3fe2b9336ef9))
+* **ui:** sarapis mandatory information in row ([6e61352](https://github.com/GIP-RECIA/EtabManager/commit/6e61352960e71fd7e63dd28f819a09863a17aee6))
+* **ui:** shown siren if structure hasn't uai ([a35f7e9](https://github.com/GIP-RECIA/EtabManager/commit/a35f7e9bc9797e9805724f2c137815d37eb58613))
+
 ## [0.2.3](https://github.com/GIP-RECIA/EtabManager/compare/0.2.2...0.2.3) (2026-09-09)
 
 ### Bug Fixes
