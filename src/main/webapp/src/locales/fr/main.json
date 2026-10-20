@@ -7,5 +7,6 @@
   "result": "Aucun résultats | {n} résultat | {n} résultats",
   "enabled": "Activé",
   "disabled": "Désactivé",
-  "noSession": "Vous n'avez plus de session\nVeuillez rafraichir la page"
+  "noSession": "Vous n'avez plus de session",
+  "error": "Erreur"
 }

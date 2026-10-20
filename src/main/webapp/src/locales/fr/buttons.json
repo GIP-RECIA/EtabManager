@@ -18,6 +18,7 @@
     "manage": "Gérer",
     "restore": "Rétablir",
     "create": "Créer",
-    "export": "Exporter"
+    "export": "Exporter",
+    "reload": "Recharger"
   }
 }

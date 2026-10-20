@@ -31,6 +31,7 @@ import {
 import { usePrincipalRightsQueryOptions } from '@/services/queries/index.ts'
 import { useConfigurationStore } from '@/stores/index.ts'
 import { errorHandler } from '@/utils/index.ts'
+import NoSessionView from '@/views/NoSessionView.vue'
 
 const { t } = useI18n()
 
@@ -178,12 +179,9 @@ const {
     <router-view
       v-if="sessionState"
     />
-    <p
+    <NoSessionView
       v-else
-      class="no-session"
-    >
-      {{ t('noSession') }}
-    </p>
+    />
   </main>
   <footer>
     <r-footer
@@ -199,9 +197,5 @@ const {
 r-header {
   display: block;
   height: var(--recia-header-height);
-}
-
-.no-session {
-  white-space: pre;
 }
 </style>
