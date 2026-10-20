@@ -38,7 +38,7 @@
           "texte": "Message",
           "mandatory": {
             "yes": "@:page.structure.dashboard.incertains.filter.mandatory.yes",
-            "no": "@:page.structure.dashboard.incertains.filter.mandatory.yes"
+            "no": "@:page.structure.dashboard.incertains.filter.mandatory.no"
           },
           "attribut": "Attribut"
         }
