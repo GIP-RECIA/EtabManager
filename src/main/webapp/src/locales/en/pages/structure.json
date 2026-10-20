@@ -36,6 +36,10 @@
         "search": "Last name or first name",
         "table": {
           "texte": "Message",
+          "mandatory": {
+            "yes": "@:page.structure.dashboard.incertains.filter.mandatory.yes",
+            "no": "@:page.structure.dashboard.incertains.filter.mandatory.yes"
+          },
           "attribut": "Attribute"
         }
       }

@@ -29,13 +29,17 @@
           "mandatory": {
             "header": "Type",
             "all": "Tous les types",
-            "yes": "Bloquante",
-            "no": "Non bloquante"
+            "yes": "Bloquant",
+            "no": "Non bloquant"
           }
         },
         "search": "Nom ou prénom",
         "table": {
           "texte": "Message",
+          "mandatory": {
+            "yes": "@:page.structure.dashboard.incertains.filter.mandatory.yes",
+            "no": "@:page.structure.dashboard.incertains.filter.mandatory.yes"
+          },
           "attribut": "Attribut"
         }
       }

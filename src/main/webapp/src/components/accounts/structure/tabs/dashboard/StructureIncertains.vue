@@ -26,6 +26,8 @@ import type { Incertain, Structure } from '@/types/index.ts'
 import {
   faAngleDown,
   faAngleUp,
+  faCircleInfo,
+  faExclamationTriangle,
   faEye,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -159,10 +161,6 @@ const filteredAccounts = computed<Incertain[]>(() => {
 
   return result
 })
-
-const hasUid = computed<boolean>(() =>
-  accounts.value.some(row => row.personne.uid != null),
-)
 
 const features = tableFeatures({
   columnFilteringFeature,
@@ -434,21 +432,21 @@ const table = useTable({
                       v-for="(incertain, index) in row.original.incertains"
                       :key="`${row.original.personne.id}-${index}`"
                     >
-                      <p v-if="hasUid">
-                        <span class="label">
-                          {{ t('page.structure.dashboard.incertains.table.uid') }}
-                        </span>
-                        <SafeEmptyData
-                          :value="row.original.personne.uid"
-                        />
-                      </p>
                       <p>
                         <span class="label">
                           {{ t('page.structure.dashboard.incertains.table.texte') }}
                         </span>
-                        <SafeEmptyData
-                          :value="incertain.texte"
-                        />
+                        <span class="message">
+                          <span :title="t(`page.structure.dashboard.incertains.table.mandatory.${incertain.obligatoire ? 'yes' : 'no'}`)">
+                            <FontAwesomeIcon
+                              :icon="incertain.obligatoire ? faExclamationTriangle : faCircleInfo"
+                              :class="[incertain.obligatoire ? 'error' : 'info']"
+                            />
+                          </span>
+                          <SafeEmptyData
+                            :value="incertain.texte"
+                          />
+                        </span>
                       </p>
                       <p>
                         <span class="label">
@@ -606,6 +604,23 @@ const table = useTable({
 
                 > .label {
                   opacity: 0.6;
+                }
+
+                > .message {
+                  display: inline-flex;
+                  gap: 8px;
+
+                  > span > svg {
+                    margin-top: 3px;
+
+                    &.info {
+                      color: var(--#{$prefix}system-blue);
+                    }
+
+                    &.error {
+                      color: var(--#{$prefix}system-red);
+                    }
+                  }
                 }
               }
             }
