@@ -602,11 +602,11 @@ function onExport(): void {
         <div class="field-layout">
           <div class="field-container">
             <div class="middle">
-              <label for="structure-search">
+              <label for="structure-account-search">
                 {{ t('page.structure.accounts.search') }}
               </label>
               <input
-                id="structure-search"
+                id="structure-account-search"
                 v-model.trim="globalFilter"
                 type="text"
                 placeholder=""

@@ -348,11 +348,11 @@ const table = useTable({
         <div class="field-layout">
           <div class="field-container">
             <div class="middle">
-              <label for="structure-search">
+              <label for="structure-incertain-search">
                 {{ t('page.structure.dashboard.incertains.search') }}
               </label>
               <input
-                id="structure-search"
+                id="structure-incertain-search"
                 v-model.trim="globalFilter"
                 type="text"
                 placeholder=""
