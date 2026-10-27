@@ -51,6 +51,8 @@ import java.io.Serializable;
 @ToString
 public abstract class AMappingRelation implements Serializable {
 
+    private static final long serialVersionUID = 3524489935869116631L;
+
     /**
      * The Source which insert the entry.
      */

@@ -25,7 +25,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class APersonneAStructureId implements Serializable {
+public class APersonneAStructureId {
 
     private Long aPersonneId;
     private Long aStructureId;

@@ -71,12 +71,11 @@ public class StringOperation {
      * @return <code>String</code>Le CN formaté.
      */
     public String cleanForCN(final String sn, final String givenName) {
-        String sb = sansAccent(sn.replaceAll(REGEX_CN, STRING_SPACE)
+        return sansAccent(sn.replaceAll(REGEX_CN, STRING_SPACE)
             .replaceAll(REGEX_SPACES, STRING_SPACE)) +
             STRING_SPACE +
             sansAccent(givenName.replaceAll(REGEX_CN, STRING_SPACE)
                 .replaceAll(REGEX_SPACES, STRING_SPACE).toUpperCase());
-        return sb;
     }
 
 }

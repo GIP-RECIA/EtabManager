@@ -31,7 +31,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public abstract class AbstractTimedEntity extends AbstractEntity implements Serializable {
+public abstract class AbstractTimedEntity extends AbstractEntity {
 
 	/** Donne l'information de la date de fin de l'objet lors de l'export. */
     protected LocalDateTime dateFin;

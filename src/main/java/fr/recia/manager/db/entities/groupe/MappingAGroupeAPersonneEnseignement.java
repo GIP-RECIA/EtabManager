@@ -33,11 +33,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "apersonnes_agroupes_enseignements")
@@ -51,7 +47,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class MappingAGroupeAPersonneEnseignement implements Serializable {
+public class MappingAGroupeAPersonneEnseignement {
 
     /**
      * The Source which insert the entry.
@@ -64,8 +60,7 @@ public class MappingAGroupeAPersonneEnseignement implements Serializable {
     private LocalDateTime dateFin;
 
     /** Donne l'information de la date de début de l'objet. */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateDebut;
+    private LocalDateTime dateDebut;
 
     /**
      * The pk

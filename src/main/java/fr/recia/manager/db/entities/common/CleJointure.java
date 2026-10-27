@@ -35,7 +35,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class CleJointure implements Serializable {
+public class CleJointure {
 
     /**
      * Source de l'alimentation.

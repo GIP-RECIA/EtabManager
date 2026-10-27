@@ -35,7 +35,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Adresse implements Serializable {
+public class Adresse {
 
     /**
      * Champ libre d'une adresse.

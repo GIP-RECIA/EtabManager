@@ -39,6 +39,8 @@ import java.io.Serializable;
 @ToString
 public class MappingAGroupeAPersonneEnseignementId implements Serializable {
 
+    private static final long serialVersionUID = 2006806122083265965L;
+
     /**
      * The personne to associate to the groupe and enseignement.
      */

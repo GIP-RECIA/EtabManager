@@ -221,7 +221,7 @@ public class FonctionService {
                         log.info("Profil {} is needed for filiere {} but not authorized for category {}. List of profiles authorized for personne is : {}", profilFonction, codeFiliere, categoriePersonne, profilsAutorisesPersonne);
                         // On vérifie qu'on peut donner une nouvelle catégorie qui correspond à la fonction : si on ne sait pas choisir, il faudra résoudre le problème à la main
                         if(categoryNeeded.size() == 1){
-                            final CategoriePersonne newCategory = CategoriePersonne.valueOf(categoryNeeded.get(0));
+                            final CategoriePersonne newCategory = CategoriePersonne.valueOf(categoryNeeded.getFirst());
                             log.info("Changing personne category from {} to {}", aPersonne.getCategorie(), newCategory);
                             try {
                                 aPersonne = aPersonneCategoryRepository.changeCategory(aPersonne, newCategory);
@@ -241,7 +241,7 @@ public class FonctionService {
                     }
                 } else if (nbExistingFonctions == 1){
                     // Sinon si on a déjà la fonction, si on a une date de début/fin il faut la mettre à jour
-                    Fonction fonction = fonctionRepository.findSameFonctionsInStructure(fonctionDto.getPersonne(), fonctionDto.getStructure(), fonctionDto.getDiscipline(), fonctionDto.getFiliere()).get(0);
+                    Fonction fonction = fonctionRepository.findSameFonctionsInStructure(fonctionDto.getPersonne(), fonctionDto.getStructure(), fonctionDto.getDiscipline(), fonctionDto.getFiliere()).getFirst();
                     if((fonctionDto.getDateFin() != null && !fonctionDto.getDateFin().equals(fonction.getDateFin())) || (fonctionDto.getDateDebut() != null && !fonctionDto.getDateDebut().equals(fonction.getDateDebut()))){
                         log.debug("Function {}-{} already added for user {} in etab {}, updating dates...", fonctionDto.getFiliere(), fonctionDto.getDiscipline(), fonctionDto.getPersonne(), fonctionDto.getStructure());
                         fonction.setDateFin(fonctionDto.getDateFin());

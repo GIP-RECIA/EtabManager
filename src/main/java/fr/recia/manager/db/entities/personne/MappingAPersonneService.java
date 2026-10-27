@@ -60,7 +60,7 @@ import java.util.Date;
                 joinColumns = @JoinColumn(name = "APERSONNE_ID")),
         @AssociationOverride(name = "pk.service",
                 joinColumns = @JoinColumn(name = "SERVICE_ID")) })
-public class MappingAPersonneService implements Serializable {
+public class MappingAPersonneService {
 
     @EmbeddedId
     private MappingAPersonneServiceId pk = new MappingAPersonneServiceId();

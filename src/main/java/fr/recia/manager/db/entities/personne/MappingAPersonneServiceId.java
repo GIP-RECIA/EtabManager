@@ -33,7 +33,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MappingAPersonneServiceId implements Serializable {
+public class MappingAPersonneServiceId {
 
     /** La personne qui possède le service */
     @ManyToOne(cascade = CascadeType.REFRESH)

@@ -63,27 +63,17 @@ public class APersonneCategoryRepository {
      */
     private String getTableForCategory(CategoriePersonne categorie) {
         // TODO : possible de faire autrement qu'avec un switch case - comment récupérer le nom des tables ?
-        switch (categorie) {
-            case Eleve:
-                return "eleve";
-            case Enseignant:
-                return "enseignant";
-            case Non_enseignant_collectivite_locale:
-                return "nonenseignantcollectivitelocale";
-            case Non_enseignant_service_academique:
-                return "nonenseignantserviceacademique";
-            case Non_enseignant_etablissement:
-                return "nonenseignantetablissement";
-            case Personne_relation_eleve:
-                return "personnerelationeleve";
-            case Personnel_exterieur:
-                return "personnelexterieur";
-            case Responsable_Entreprise:
-                return "responsableentreprise";
-            case Tuteur_stage:
-                return "tuteurstage";
-        }
-        return null;
+        return switch (categorie) {
+            case Eleve -> "eleve";
+            case Enseignant -> "enseignant";
+            case Non_enseignant_collectivite_locale -> "nonenseignantcollectivitelocale";
+            case Non_enseignant_service_academique -> "nonenseignantserviceacademique";
+            case Non_enseignant_etablissement -> "nonenseignantetablissement";
+            case Personne_relation_eleve -> "personnerelationeleve";
+            case Personnel_exterieur -> "personnelexterieur";
+            case Responsable_Entreprise -> "responsableentreprise";
+            case Tuteur_stage -> "tuteurstage";
+        };
     }
 
 }

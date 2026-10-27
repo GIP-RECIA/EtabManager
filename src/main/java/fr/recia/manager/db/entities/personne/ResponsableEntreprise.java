@@ -34,7 +34,7 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
-public class ResponsableEntreprise extends APersonne implements Serializable {
+public class ResponsableEntreprise extends APersonne {
 
     /**
      * Constructeur de l'objet ResponsableEntreprise.java.

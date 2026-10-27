@@ -35,7 +35,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public abstract class AbstractEntity extends AbstractSimpleEntity implements Serializable {
+public abstract class AbstractEntity extends AbstractSimpleEntity {
 
     /** Gestion des versions de l'objet, incrémentation de +1 à chaque modification de update ou merge. */
     @Version

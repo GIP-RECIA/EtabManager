@@ -16,9 +16,6 @@
 
 package fr.recia.manager.web.rest;
 
-import com.fasterxml.jackson.databind.ser.FilterProvider;
-import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
-import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import fr.recia.manager.audit.AuditEvent;
 import fr.recia.manager.audit.AuditService;
 import fr.recia.manager.audit.EventType;
@@ -46,7 +43,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +53,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.node.ObjectNode;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -72,6 +70,8 @@ import java.util.Set;
 @RequestMapping(value = "/api/personne")
 public class PersonneController {
 
+    @Autowired
+    private ObjectMapper objectMapper;
     @Autowired
     private FonctionService fonctionService;
     @Autowired
@@ -163,25 +163,24 @@ public class PersonneController {
         return new ResponseEntity<>(searchedPersonnes, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/export")
-    public ResponseEntity<MappingJacksonValue> exportPersonnes(@AuthenticationPrincipal AppUser principal,
-                                                             @RequestParam List<Long> ids,
-                                                             @RequestParam Long etab,
-                                                             @RequestParam List<String> columns){
+    @GetMapping("/export")
+    public ResponseEntity<List<ObjectNode>> exportPersonnes(@AuthenticationPrincipal AppUser principal, @RequestParam List<Long> ids, @RequestParam Long etab, @RequestParam List<String> columns) {
         Set<String> allowedSiren = principal.getRightsForEtabs().get(AppRole.READ_GLC);
-        List<PersonneExportDto> personnesExport = new ArrayList<>();
-        for(Long id : ids){
+        List<ObjectNode> export = new ArrayList<>();
+        for (Long id : ids) {
             APersonne personne = personneService.getPersonne(id);
-            PersonneDetailDto personneDetailDto = personneService.getFullPersonne(id, personne, true, allowedSiren);
-            PersonneExportDto personneExportDto = new PersonneExportDto(personneDetailDto, etab);
-            personnesExport.add(personneExportDto);
+            PersonneDetailDto detail = personneService.getFullPersonne(id, personne, true, allowedSiren);
+            PersonneExportDto dto = new PersonneExportDto(detail, etab);
+            ObjectNode json = objectMapper.valueToTree(dto);
+            ObjectNode filtered = objectMapper.createObjectNode();
+            for (String column : columns) {
+                if (json.has(column)) {
+                    filtered.set(column, json.get(column));
+                }
+            }
+            export.add(filtered);
         }
-        // Projection pour garder seulement certaines colonnes
-        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept(new HashSet<>(columns));
-        FilterProvider filters = new SimpleFilterProvider().addFilter("personneExportFilter", filter);
-        MappingJacksonValue mapping = new MappingJacksonValue(personnesExport);
-        mapping.setFilters(filters);
-        return new ResponseEntity<>(mapping, HttpStatus.OK);
+        return ResponseEntity.ok(export);
     }
 
     @GetMapping(value = "/{id}")

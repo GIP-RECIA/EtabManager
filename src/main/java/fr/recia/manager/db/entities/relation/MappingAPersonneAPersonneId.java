@@ -44,6 +44,8 @@ import java.io.Serializable;
 @ToString
 public class MappingAPersonneAPersonneId implements Serializable {
 
+    private static final long serialVersionUID = 3586332807462018577L;
+
     /**
      * The personne to associate to the personne2.
      */

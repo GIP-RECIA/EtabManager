@@ -26,7 +26,7 @@ import java.io.Serializable;
 
 @MappedSuperclass
 @Data
-public abstract class AbstractSimpleEntity implements Serializable {
+public abstract class AbstractSimpleEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

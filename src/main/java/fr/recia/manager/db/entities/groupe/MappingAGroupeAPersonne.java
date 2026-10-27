@@ -53,7 +53,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class MappingAGroupeAPersonne implements Serializable {
+public class MappingAGroupeAPersonne {
 
     /**
      * The Source which insert the entry.

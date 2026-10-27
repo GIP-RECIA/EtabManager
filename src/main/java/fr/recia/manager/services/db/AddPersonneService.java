@@ -173,8 +173,8 @@ public class AddPersonneService {
         String codeGenerateur;
         String codeRegion;
         if (domainsOfStructure.size() == 1) {
-            codeGenerateur = appProperties.getUidFactory().getDomainToCodeGenerateur().get(domainsOfStructure.get(0));
-            codeRegion = appProperties.getUidFactory().getDomainToCodeRegion().get(domainsOfStructure.get(0));
+            codeGenerateur = appProperties.getUidFactory().getDomainToCodeGenerateur().get(domainsOfStructure.getFirst());
+            codeRegion = appProperties.getUidFactory().getDomainToCodeRegion().get(domainsOfStructure.getFirst());
         } else {
             codeGenerateur = appProperties.getUidFactory().getDefaultCodeGenerateur();
             codeRegion = appProperties.getUidFactory().getDefaultCodeRegion();

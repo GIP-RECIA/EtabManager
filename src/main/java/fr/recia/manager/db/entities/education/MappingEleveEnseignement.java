@@ -35,7 +35,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class MappingEleveEnseignement implements Serializable {
+public class MappingEleveEnseignement {
 
     /**
      * Relation avec l'objet parent.

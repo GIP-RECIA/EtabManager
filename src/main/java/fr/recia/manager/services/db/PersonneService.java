@@ -313,8 +313,7 @@ public class PersonneService {
                         }
                         // Groupes pour les établissements et services académiques (UAI dans le nom du groupe)
                         final String branch = group.split(Constants.GROUP_NAME_DELIMITER)[0];
-                        if(aStructure instanceof Etablissement){
-                            Etablissement etablissement = (Etablissement) aStructure;
+                        if(aStructure instanceof Etablissement etablissement){
                             final String uai = etablissement.getUai();
                             if(group.contains(uai)){
                                 structureForUserDto.addGroup(group);
@@ -326,8 +325,7 @@ public class PersonneService {
                                 }
                             }
                         }
-                        if(aStructure instanceof ServiceAcademique){
-                            ServiceAcademique serviceAcademique = (ServiceAcademique) aStructure;
+                        if(aStructure instanceof ServiceAcademique serviceAcademique){
                             final String uai = serviceAcademique.getUai();
                             if(group.contains(uai)){
                                 structureForUserDto.addGroup(group);
