@@ -11,7 +11,7 @@
 
   <groupId>fr.recia.manager</groupId>
   <artifactId>etab-manager</artifactId>
-  <version>0.2.5</version>
+  <version>0.2.6-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>etab-manager</name>
   <description>API de gestion des établissements</description>
