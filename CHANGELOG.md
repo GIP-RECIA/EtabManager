@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.5](https://github.com/GIP-RECIA/EtabManager/compare/0.2.4...0.2.5) (2026-10-27)
+
+### Features
+
+* suite migration java25 ([a2a2470](https://github.com/GIP-RECIA/EtabManager/commit/a2a2470fbb22ec0e6fd99c7bd723669a23660826))
+* **WIP:** migration vers spring boot 3 et java 17 ([fdf72c7](https://github.com/GIP-RECIA/EtabManager/commit/fdf72c7ec2964f0c3fe20a98bcb96c33791db42f))
+* **WIP:** migration vers spring boot 4 et java 21 ([b5c096f](https://github.com/GIP-RECIA/EtabManager/commit/b5c096f8baa48bc28d69703f2a5fdfbe3de85d81))
+
+### Bug Fixes
+
+* gestion des dates de fonctions ([2dcd386](https://github.com/GIP-RECIA/EtabManager/commit/2dcd386024e8b992d68bdbaa66e1c5f446c44cef))
+* invalid csrf token ([40b26e1](https://github.com/GIP-RECIA/EtabManager/commit/40b26e14338b8062852637cc75ed4df55193457e))
+* join too many tables sur apersonne ([201a08a](https://github.com/GIP-RECIA/EtabManager/commit/201a08a7bec5024261648b6dcb2c24a50b5d9c43))
+* join too many tables sur astructure ([676f71b](https://github.com/GIP-RECIA/EtabManager/commit/676f71bbafdc9086a120cb37e5e60148e1ae544d))
+* **ui:** use unique search id ([b048273](https://github.com/GIP-RECIA/EtabManager/commit/b048273ad980807e549c536d9ecb4d739242f9de))
+* warnings serialization ([10d26d1](https://github.com/GIP-RECIA/EtabManager/commit/10d26d1c1a4c4a8058358c3f864fb4198ff1fb4b))
+
 ## [0.2.4](https://github.com/GIP-RECIA/EtabManager/compare/0.2.3...0.2.4) (2026-10-20)
 
 ### Features
