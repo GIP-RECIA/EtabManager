@@ -31,6 +31,8 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
+import java.time.LocalDateTime;
+
 @Embeddable
 @Getter
 @Setter
@@ -65,12 +67,10 @@ public class MappingFonctionMEFMEF {
     private MEF mef;
 
     /** Donne l'information de la date de debut de la fonction lors de l'export. */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateDebut;
+    private LocalDateTime dateDebut;
 
     /** Donne l'information de la date de debut de la fonction lors de l'export. */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateFin;
+    private LocalDateTime dateFin;
 
     /**
      * Contructor of the object MappingFonctionMEFMEF.java.

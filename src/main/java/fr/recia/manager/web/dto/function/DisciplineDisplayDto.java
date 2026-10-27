@@ -28,6 +28,6 @@ import java.util.Date;
 public class DisciplineDisplayDto {
     private Long id;
     private String libelle;
-    private LocalDate dateDebut;
+    private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
 }

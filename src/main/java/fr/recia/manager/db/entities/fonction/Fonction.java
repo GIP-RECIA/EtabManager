@@ -99,7 +99,7 @@ public class Fonction extends AFonction {
      * @param dateFin   Date de fin de la fonction.
      */
     public Fonction(final TypeFonctionFiliere filiere, final AStructure structure,
-                    final APersonne personne, final String source, final Date dateFin, final Date dateDebut) {
+                    final APersonne personne, final String source, final LocalDateTime dateFin, final LocalDateTime dateDebut) {
         super(CategorieFonction.Fonction, personne, source, dateFin, dateDebut);
         this.filiere = filiere;
         this.structure = structure;
@@ -133,7 +133,7 @@ public class Fonction extends AFonction {
      * @param dateFin         Date de fin de la fonction.
      */
     public Fonction(final Discipline disciplinePoste, final TypeFonctionFiliere filiere,
-                    final AStructure structure, final APersonne personne, final String source, final Date dateFin, final Date dateDebut) {
+                    final AStructure structure, final APersonne personne, final String source, final LocalDateTime dateFin, final LocalDateTime dateDebut) {
         super(CategorieFonction.Fonction, personne, source, dateFin, dateDebut);
         this.disciplinePoste = disciplinePoste;
         this.filiere = filiere;

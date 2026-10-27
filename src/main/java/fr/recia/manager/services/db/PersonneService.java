@@ -255,10 +255,10 @@ public class PersonneService {
             aPersonne.setForceEtat(ForceEtat.NONE);
             // On met une date de fin si la personne est censée arriver depuis les sources officielles
             if(!aPersonne.getCleJointure().getSource().startsWith(Constants.SARAPISUI_)){
-                LocalDate localDate = LocalDate.now().plusDays(appProperties.getCustomConfig().getUndoSuppressDays());
-                aPersonne.setDateFin(Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                LocalDateTime localDate = LocalDate.now().plusDays(appProperties.getCustomConfig().getUndoSuppressDays()).atStartOfDay();
+                aPersonne.setDateFin(localDate);
             }
-            Date date = new Date();
+            LocalDateTime date = LocalDateTime.now();
             if(aPersonne.getDateAcquittement().equals(aPersonne.getDateModification())){
                 aPersonne.setDateAcquittement(date);
             } else {

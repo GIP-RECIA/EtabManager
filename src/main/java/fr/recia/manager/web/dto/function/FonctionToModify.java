@@ -26,6 +26,6 @@ import java.util.Date;
 public class FonctionToModify {
     private Long filiere;
     private Long discipline;
-    private LocalDate dateDebut;
+    private LocalDateTime dateDebut;
     private LocalDateTime dateFin;
 }
