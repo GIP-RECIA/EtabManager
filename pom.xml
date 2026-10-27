@@ -11,7 +11,7 @@
 
   <groupId>fr.recia.manager</groupId>
   <artifactId>etab-manager</artifactId>
-  <version>0.2.5-SNAPSHOT</version>
+  <version>0.2.5</version>
   <packaging>war</packaging>
   <name>etab-manager</name>
   <description>API de gestion des établissements</description>
@@ -85,8 +85,8 @@
       <groupId>com.querydsl</groupId>
       <artifactId>querydsl-apt</artifactId>
       <version>5.1.0</version>
-      <scope>provided</scope>
       <classifier>jakarta</classifier>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.querydsl</groupId>
