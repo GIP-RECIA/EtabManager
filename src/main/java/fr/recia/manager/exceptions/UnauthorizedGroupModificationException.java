@@ -16,7 +16,13 @@
 
 package fr.recia.manager.exceptions;
 
+import java.io.Serial;
+
 public class UnauthorizedGroupModificationException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 4091551121975604540L;
+
     public UnauthorizedGroupModificationException(String message) {
         super(message);
     }

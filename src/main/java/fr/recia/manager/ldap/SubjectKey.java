@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -38,6 +39,7 @@ public class SubjectKey implements ICompositeKey<String, SubjectType>, Serializa
     /**
      * Serial Version id.
      */
+    @Serial
     private static final long serialVersionUID = 687644117634464074L;
 
     /**

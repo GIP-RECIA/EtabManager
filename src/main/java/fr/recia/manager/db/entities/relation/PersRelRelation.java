@@ -33,6 +33,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
+
 @Entity
 @DiscriminatorValue(value = "PERSREL")
 @Getter
@@ -41,6 +43,9 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public class PersRelRelation extends AMappingRelation {
+
+    @Serial
+    private static final long serialVersionUID = 7604380165208818534L;
 
     /**
      * Type énuméré du type de lien de parenté.

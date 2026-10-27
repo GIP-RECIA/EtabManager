@@ -16,7 +16,13 @@
 
 package fr.recia.manager.exceptions;
 
+import java.io.Serial;
+
 public class UnauthorizedPeopleModificationException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = -2918213816943099796L;
+
     public UnauthorizedPeopleModificationException(String message) {
         super(message);
     }

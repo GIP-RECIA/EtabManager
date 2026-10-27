@@ -21,6 +21,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +29,9 @@ import java.util.Set;
 @Getter
 @Setter
 public class AppUser extends User {
+
+    @Serial
+    private static final long serialVersionUID = 1838774062592563162L;
 
     private Map<AppRole, Set<String>> rightsForEtabs;
     private Set<AppRole> globalRights;

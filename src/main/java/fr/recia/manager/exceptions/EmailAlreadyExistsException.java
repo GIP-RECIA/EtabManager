@@ -16,7 +16,13 @@
 
 package fr.recia.manager.exceptions;
 
+import java.io.Serial;
+
 public class EmailAlreadyExistsException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = -4491748002920921063L;
+
     public EmailAlreadyExistsException(String message) {
         super(message);
     }

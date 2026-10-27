@@ -28,6 +28,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
+
 @Entity
 @DiscriminatorValue(value = "ENSTUTSTAGE")
 @Getter
@@ -36,6 +38,9 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public class EnsTutStageRelation extends AStageRelation {
+
+    @Serial
+    private static final long serialVersionUID = -6498178629352970883L;
 
     /**
      * @param source

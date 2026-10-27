@@ -25,6 +25,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -38,6 +39,7 @@ public class StructureKey implements ICompositeKey<String, CategorieStructure>, 
     /**
      * Serial Id.
      */
+    @Serial
     private static final long serialVersionUID = -210670392798727508L;
     /**
      * The identifier of the context.

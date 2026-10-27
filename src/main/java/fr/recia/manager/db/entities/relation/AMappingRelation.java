@@ -35,6 +35,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Entity
@@ -51,6 +52,7 @@ import java.io.Serializable;
 @ToString
 public abstract class AMappingRelation implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 3524489935869116631L;
 
     /**

@@ -16,7 +16,13 @@
 
 package fr.recia.manager.exceptions;
 
+import java.io.Serial;
+
 public class LoginTooHighException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = -8880127567506861331L;
+
     public LoginTooHighException(String message) {
         super(message);
     }

@@ -16,7 +16,13 @@
 
 package fr.recia.manager.exceptions;
 
+import java.io.Serial;
+
 public class InvalidDomainException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = -5709704378837365828L;
+
     public InvalidDomainException(String message) {
         super(message);
     }

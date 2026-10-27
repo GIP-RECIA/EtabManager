@@ -22,6 +22,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -32,6 +33,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class SubjectKeyDTO implements ICompositeKey<String, SubjectType>, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -3212536832220424331L;
 
     @NonNull
     private String keyId;

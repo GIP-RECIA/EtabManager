@@ -31,6 +31,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
+
 @Entity
 @Getter
 @Setter
@@ -38,6 +40,9 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public abstract class AStageRelation extends AMappingRelation {
+
+    @Serial
+    private static final long serialVersionUID = -7020734487189208451L;
 
     /**
      * Type énuméré du type de la relation de stage.

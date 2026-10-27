@@ -28,6 +28,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
+
 @Entity
 @DiscriminatorValue(value = "MASTAGE")
 @Getter
@@ -36,6 +38,9 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true, onlyExplicitlyIncluded = true)
 @ToString(callSuper = true)
 public class MAStageRelation extends AStageRelation {
+
+    @Serial
+    private static final long serialVersionUID = 6872013322322863592L;
 
     /**
      * @param source

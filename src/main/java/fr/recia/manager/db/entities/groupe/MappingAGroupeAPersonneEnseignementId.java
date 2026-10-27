@@ -28,6 +28,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Embeddable
@@ -39,6 +40,7 @@ import java.io.Serializable;
 @ToString
 public class MappingAGroupeAPersonneEnseignementId implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 2006806122083265965L;
 
     /**
