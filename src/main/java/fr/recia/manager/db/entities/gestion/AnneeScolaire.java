@@ -17,17 +17,15 @@
 package fr.recia.manager.db.entities.gestion;
 
 import fr.recia.manager.db.entities.common.AbstractEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Getter

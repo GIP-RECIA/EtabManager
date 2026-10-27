@@ -20,20 +20,17 @@ import fr.recia.manager.db.entities.education.Discipline;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.entities.structure.AStructure;
 import fr.recia.manager.db.enums.CategorieFonction;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter

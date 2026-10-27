@@ -16,14 +16,9 @@
 
 package fr.recia.manager.configuration.bean;
 
-import fr.recia.manager.utils.ListUtil;
 import lombok.Data;
 
 import java.util.List;
-
-import static fr.recia.manager.configuration.Constants.JSON_ARRAY_DELIMITER;
-import static fr.recia.manager.configuration.Constants.JSON_ARRAY_PREFIX;
-import static fr.recia.manager.configuration.Constants.JSON_ARRAY_SUFFIX;
 
 @Data
 public class CorsProperties {

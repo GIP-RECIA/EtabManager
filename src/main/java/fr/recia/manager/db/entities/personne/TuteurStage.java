@@ -19,15 +19,13 @@ package fr.recia.manager.db.entities.personne;
 import fr.recia.manager.db.entities.common.CleJointure;
 import fr.recia.manager.db.entities.structure.AStructure;
 import fr.recia.manager.db.enums.CategoriePersonne;
+import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import jakarta.persistence.Entity;
-
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Getter

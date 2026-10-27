@@ -21,11 +21,15 @@ import fr.recia.manager.configuration.cas.CustomCasAuthenticationEntryPoint;
 import fr.recia.manager.configuration.cas.CustomCasSuccessHandler;
 import fr.recia.manager.configuration.cas.CustomSessionMappingStorage;
 import fr.recia.manager.ldap.StructureFromGroup;
-import fr.recia.manager.ldap.StructureSirenDomain;
 import fr.recia.manager.security.AdminRule;
-import fr.recia.manager.security.AppUser;
 import fr.recia.manager.security.AppRole;
+import fr.recia.manager.security.AppUser;
 import fr.recia.manager.services.structure.StructureLoader;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apereo.cas.client.session.SingleSignOutFilter;
 import org.apereo.cas.client.validation.Assertion;
@@ -51,11 +55,6 @@ import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +63,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Slf4j
 @Configuration

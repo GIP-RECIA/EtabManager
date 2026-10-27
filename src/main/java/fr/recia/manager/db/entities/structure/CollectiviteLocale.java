@@ -18,13 +18,12 @@ package fr.recia.manager.db.entities.structure;
 
 import fr.recia.manager.db.entities.common.CleJointure;
 import fr.recia.manager.db.enums.CategorieStructure;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 
 @Entity
 @Getter

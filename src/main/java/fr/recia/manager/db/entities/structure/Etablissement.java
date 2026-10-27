@@ -21,10 +21,6 @@ import fr.recia.manager.db.entities.groupe.GroupementEtablissements;
 import fr.recia.manager.db.enums.CategorieStructure;
 import fr.recia.manager.db.enums.Contrat;
 import fr.recia.manager.db.utils.IntConst;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +31,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.HashSet;
 import java.util.Set;
 

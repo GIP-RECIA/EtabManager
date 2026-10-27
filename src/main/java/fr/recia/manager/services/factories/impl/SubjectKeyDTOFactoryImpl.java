@@ -22,9 +22,9 @@ import fr.recia.manager.ldap.SubjectKey;
 import fr.recia.manager.ldap.enums.SubjectType;
 import fr.recia.manager.services.factories.CompositeKeyDTOFactory;
 import fr.recia.manager.web.dto.SubjectKeyDTO;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
-import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 

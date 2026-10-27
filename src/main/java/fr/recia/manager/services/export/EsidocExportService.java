@@ -16,7 +16,6 @@
 
 package fr.recia.manager.services.export;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import fr.recia.manager.configuration.AppProperties;
 import fr.recia.manager.web.dto.export.EsidocWSResponse;
 import fr.recia.manager.web.dto.export.EsidocWSResponseInfo;
@@ -24,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

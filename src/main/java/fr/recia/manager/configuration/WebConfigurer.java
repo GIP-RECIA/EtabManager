@@ -16,6 +16,7 @@
 
 package fr.recia.manager.configuration;
 
+import jakarta.servlet.ServletContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.server.MimeMappings;
@@ -27,8 +28,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.ServletException;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 

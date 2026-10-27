@@ -17,14 +17,13 @@
 package fr.recia.manager.db.entities.fonction;
 
 import fr.recia.manager.db.entities.common.AbstractSimpleEntity;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import jakarta.persistence.Entity;
 
 @Entity
 @Getter

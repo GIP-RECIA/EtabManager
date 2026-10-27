@@ -17,11 +17,8 @@
 package fr.recia.manager.db.repositories.groupe;
 
 import fr.recia.manager.db.entities.groupe.AGroupeOfFoncClasseGroupe;
-import fr.recia.manager.db.entities.structure.Etablissement;
 import fr.recia.manager.db.repositories.AbstractRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface AGroupeOfFoncClasseGroupeRepository<T extends AGroupeOfFoncClasseGroupe> extends AbstractRepository<T, Long> {}

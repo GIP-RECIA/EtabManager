@@ -18,18 +18,17 @@ package fr.recia.manager.db.entities.fonction;
 
 import fr.recia.manager.db.entities.education.MEF;
 import fr.recia.manager.db.utils.IntConst;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Parent;
-
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 
 import java.time.LocalDateTime;
 

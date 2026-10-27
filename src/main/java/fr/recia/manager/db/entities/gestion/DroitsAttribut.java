@@ -19,15 +19,14 @@ package fr.recia.manager.db.entities.gestion;
 import fr.recia.manager.db.entities.common.AbstractSimpleEntity;
 import fr.recia.manager.db.entities.groupe.RoleApplicatif;
 import fr.recia.manager.db.entities.structure.AStructure;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter

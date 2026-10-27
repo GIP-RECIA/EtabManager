@@ -19,18 +19,17 @@ package fr.recia.manager.db.entities.groupe;
 import fr.recia.manager.db.entities.common.AbstractTimedEntity;
 import fr.recia.manager.db.enums.CategorieGroupe;
 import fr.recia.manager.db.utils.IntConst;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 

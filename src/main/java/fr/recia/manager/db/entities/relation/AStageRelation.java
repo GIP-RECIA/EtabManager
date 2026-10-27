@@ -21,16 +21,15 @@ import fr.recia.manager.db.entities.personne.Eleve;
 import fr.recia.manager.db.enums.CategorieRelation;
 import fr.recia.manager.db.enums.TypeStage;
 import fr.recia.manager.db.utils.IntConst;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 @Entity
 @Getter

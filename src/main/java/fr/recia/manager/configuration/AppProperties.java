@@ -36,6 +36,7 @@ import fr.recia.manager.configuration.bean.RightsProperties;
 import fr.recia.manager.configuration.bean.ServiceConfigProperties;
 import fr.recia.manager.configuration.bean.UIDFactoryProperties;
 import fr.recia.manager.security.AdminRule;
+import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -44,7 +45,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.validation.annotation.Validated;
 
-import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

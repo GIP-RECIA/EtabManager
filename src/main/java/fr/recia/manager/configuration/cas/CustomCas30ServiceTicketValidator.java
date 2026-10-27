@@ -17,6 +17,7 @@
 package fr.recia.manager.configuration.cas;
 
 import fr.recia.manager.configuration.AppProperties;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apereo.cas.client.authentication.AttributePrincipalImpl;
@@ -33,7 +34,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
-import jakarta.servlet.http.HttpServletRequest;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.StringReader;

@@ -17,27 +17,20 @@
 package fr.recia.manager.configuration.bean;
 
 import fr.recia.manager.db.enums.CategorieStructure;
-import fr.recia.manager.utils.ListUtil;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-import jakarta.annotation.Nullable;
 import javax.naming.directory.SearchControls;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import static fr.recia.manager.configuration.Constants.JSON_ARRAY_DELIMITER;
-import static fr.recia.manager.configuration.Constants.JSON_ARRAY_PREFIX;
-import static fr.recia.manager.configuration.Constants.JSON_ARRAY_SUFFIX;
 
 @Data
 @Validated

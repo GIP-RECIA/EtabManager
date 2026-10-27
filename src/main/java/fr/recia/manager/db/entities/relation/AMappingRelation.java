@@ -19,12 +19,6 @@ package fr.recia.manager.db.entities.relation;
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.enums.CategorieRelation;
 import fr.recia.manager.db.utils.IntConst;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import jakarta.persistence.AssociationOverride;
 import jakarta.persistence.AssociationOverrides;
 import jakarta.persistence.Basic;
@@ -35,6 +29,12 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 
 @Entity

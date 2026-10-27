@@ -17,13 +17,12 @@
 package fr.recia.manager.db.entities.common;
 
 import fr.recia.manager.db.utils.IntConst;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 
 @Embeddable
 @NoArgsConstructor

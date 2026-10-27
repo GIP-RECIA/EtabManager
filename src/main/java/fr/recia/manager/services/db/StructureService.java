@@ -31,8 +31,6 @@ import fr.recia.manager.db.entities.structure.AStructure;
 import fr.recia.manager.db.entities.structure.Etablissement;
 import fr.recia.manager.db.entities.structure.QAStructure;
 import fr.recia.manager.db.entities.structure.QEtablissement;
-import fr.recia.manager.db.entities.structure.TypeStructure;
-import fr.recia.manager.db.enums.CategoriePersonne;
 import fr.recia.manager.db.repositories.education.DisciplineRepository;
 import fr.recia.manager.db.repositories.fonction.FonctionRepository;
 import fr.recia.manager.db.repositories.fonction.TypeFonctionFiliereRepository;

@@ -19,11 +19,10 @@ package fr.recia.manager.db.repositories.personne.impl;
 
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.enums.CategoriePersonne;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 // Implémentation spécifique pour gérer correctement le changement de catégorie d'une personne, car hibernate ne le gère pas nativement

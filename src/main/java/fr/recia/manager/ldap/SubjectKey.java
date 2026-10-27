@@ -18,13 +18,13 @@ package fr.recia.manager.ldap;
 
 import fr.recia.manager.ldap.enums.SubjectType;
 import fr.recia.manager.web.dto.ICompositeKey;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import java.io.Serializable;
 
 /**

@@ -27,10 +27,6 @@ import fr.recia.manager.db.enums.CategorieStructure;
 import fr.recia.manager.db.enums.Etat;
 import fr.recia.manager.db.enums.EtatAlim;
 import fr.recia.manager.db.utils.IntConst;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -47,6 +43,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.HashSet;

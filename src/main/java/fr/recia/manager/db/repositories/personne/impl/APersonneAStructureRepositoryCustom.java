@@ -16,11 +16,10 @@
 
 package fr.recia.manager.db.repositories.personne.impl;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class APersonneAStructureRepositoryCustom {

@@ -17,15 +17,15 @@
 package fr.recia.manager.db.entities.groupe;
 
 import fr.recia.manager.db.enums.CategorieGroupe;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 

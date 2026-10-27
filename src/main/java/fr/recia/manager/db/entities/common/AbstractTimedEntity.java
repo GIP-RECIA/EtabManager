@@ -16,16 +16,12 @@
 
 package fr.recia.manager.db.entities.common;
 
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @MappedSuperclass
 @NoArgsConstructor

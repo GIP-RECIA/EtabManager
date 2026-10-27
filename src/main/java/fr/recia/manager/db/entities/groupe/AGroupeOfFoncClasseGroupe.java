@@ -19,18 +19,18 @@ package fr.recia.manager.db.entities.groupe;
 import fr.recia.manager.db.entities.fonction.FonctionClasseGroupe;
 import fr.recia.manager.db.entities.structure.Etablissement;
 import fr.recia.manager.db.enums.CategorieGroupe;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.HashSet;
 import java.util.Set;
 

@@ -18,12 +18,6 @@ package fr.recia.manager.db.entities.groupe;
 
 import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.utils.IntConst;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import jakarta.persistence.AssociationOverride;
 import jakarta.persistence.AssociationOverrides;
 import jakarta.persistence.Basic;
@@ -32,11 +26,13 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import java.io.Serializable;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "apersonnes_agroupes")

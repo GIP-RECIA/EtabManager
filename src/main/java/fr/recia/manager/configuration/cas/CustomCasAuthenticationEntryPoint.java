@@ -18,12 +18,11 @@ package fr.recia.manager.configuration.cas;
 
 import fr.recia.manager.configuration.AppProperties;
 import fr.recia.manager.exceptions.InvalidDomainException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Classe custom qui permet de gérer le multidomaine lors de la demande d'émission d'un ST

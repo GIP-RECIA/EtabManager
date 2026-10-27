@@ -19,10 +19,6 @@ package fr.recia.manager.db.entities.education;
 import fr.recia.manager.db.entities.common.AbstractSimpleEntity;
 import fr.recia.manager.db.enums.MEFType;
 import fr.recia.manager.db.utils.IntConst;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,6 +28,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.HashSet;

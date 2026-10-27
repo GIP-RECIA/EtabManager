@@ -16,13 +16,11 @@
 
 package fr.recia.manager.db.entities.common;
 
-import lombok.Data;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import java.io.Serializable;
+import lombok.Data;
 
 @MappedSuperclass
 @Data

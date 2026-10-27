@@ -18,13 +18,10 @@ package fr.recia.manager.web.dto.user;
 
 import fr.recia.manager.db.enums.CategoriePersonne;
 import fr.recia.manager.db.enums.Civilite;
-import fr.recia.manager.web.dto.function.FonctionToModify;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @Data
 public class UserCreation {

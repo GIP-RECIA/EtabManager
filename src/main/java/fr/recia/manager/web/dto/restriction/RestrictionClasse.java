@@ -19,7 +19,6 @@ package fr.recia.manager.web.dto.restriction;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @Data
 public class RestrictionClasse {

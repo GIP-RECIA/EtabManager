@@ -21,11 +21,11 @@ import fr.recia.manager.ldap.StructureFromGroup;
 import fr.recia.manager.ldap.StructureSirenDomain;
 import fr.recia.manager.ldap.repository.LdapGroupDao;
 import fr.recia.manager.ldap.repository.LdapStructureDao;
+import jakarta.annotation.PostConstruct;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 
-import jakarta.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

@@ -21,11 +21,6 @@ import fr.recia.manager.db.entities.personne.APersonne;
 import fr.recia.manager.db.enums.CategorieFonction;
 import fr.recia.manager.db.enums.TypeClasse;
 import fr.recia.manager.db.utils.IntConst;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,6 +29,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter

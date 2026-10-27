@@ -20,14 +20,13 @@ import fr.recia.manager.db.entities.personne.Eleve;
 import fr.recia.manager.db.entities.personne.Enseignant;
 import fr.recia.manager.db.enums.CategorieRelation;
 import fr.recia.manager.db.enums.TypeStage;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
 
 @Entity
 @DiscriminatorValue(value = "ENSRESPSTAGE")

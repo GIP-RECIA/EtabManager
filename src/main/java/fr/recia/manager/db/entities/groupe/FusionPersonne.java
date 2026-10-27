@@ -17,12 +17,12 @@
 package fr.recia.manager.db.entities.groupe;
 
 import fr.recia.manager.db.enums.CategorieGroupe;
+import jakarta.persistence.Entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import jakarta.persistence.Entity;
 import java.util.Set;
 
 @Entity

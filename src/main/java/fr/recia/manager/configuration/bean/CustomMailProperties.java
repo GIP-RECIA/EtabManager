@@ -16,10 +16,9 @@
 
 package fr.recia.manager.configuration.bean;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
-
-import jakarta.validation.constraints.NotBlank;
 
 @Data
 @Validated

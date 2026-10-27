@@ -19,16 +19,16 @@ package fr.recia.manager.db.entities.groupe;
 import fr.recia.manager.db.entities.education.MEF;
 import fr.recia.manager.db.entities.structure.Etablissement;
 import fr.recia.manager.db.enums.CategorieGroupe;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.HashSet;
 import java.util.Set;
 

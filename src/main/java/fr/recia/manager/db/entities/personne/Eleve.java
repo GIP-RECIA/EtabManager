@@ -21,9 +21,6 @@ import fr.recia.manager.db.entities.education.MEF;
 import fr.recia.manager.db.entities.education.MappingEleveEnseignement;
 import fr.recia.manager.db.enums.CategoriePersonne;
 import fr.recia.manager.db.utils.IntConst;
-import lombok.Getter;
-import lombok.Setter;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -34,9 +31,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 

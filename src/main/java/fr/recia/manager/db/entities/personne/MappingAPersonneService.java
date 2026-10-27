@@ -17,13 +17,6 @@
 package fr.recia.manager.db.entities.personne;
 
 import fr.recia.manager.db.utils.IntConst;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import jakarta.persistence.AssociationOverride;
 import jakarta.persistence.AssociationOverrides;
 import jakarta.persistence.Basic;
@@ -32,11 +25,14 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Table de jointure entre personne et service avec la source et une date de fin.

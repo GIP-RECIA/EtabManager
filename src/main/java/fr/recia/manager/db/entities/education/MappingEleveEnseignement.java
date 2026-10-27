@@ -19,17 +19,15 @@ package fr.recia.manager.db.entities.education;
 import fr.recia.manager.db.entities.personne.Eleve;
 import fr.recia.manager.db.entities.structure.Etablissement;
 import fr.recia.manager.db.utils.IntConst;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.Parent;
-
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import java.io.Serializable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Parent;
 
 @Embeddable
 @Getter

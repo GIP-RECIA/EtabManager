@@ -17,12 +17,12 @@
 package fr.recia.manager.configuration;
 
 import fr.recia.manager.utils.CustomLocalDateTimeDeserializer;
-import tools.jackson.databind.JacksonModule;
-import tools.jackson.databind.json.JsonMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
+import tools.jackson.databind.JacksonModule;
+import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.module.SimpleModule;
 
 import java.time.LocalDateTime;

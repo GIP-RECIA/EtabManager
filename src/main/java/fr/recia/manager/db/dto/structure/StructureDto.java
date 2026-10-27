@@ -18,8 +18,6 @@ package fr.recia.manager.db.dto.structure;
 
 import fr.recia.manager.configuration.bean.CustomConfigProperties;
 import fr.recia.manager.db.dto.AlertDto;
-import fr.recia.manager.db.dto.education.DisciplineDto;
-import fr.recia.manager.db.dto.fonction.FonctionDto;
 import fr.recia.manager.db.dto.fonction.TypeFonctionFiliereDto;
 import fr.recia.manager.db.dto.gestion.IncertainPersonneDto;
 import fr.recia.manager.db.dto.personne.DatabasePersonneDto;
@@ -39,10 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @Slf4j
