@@ -54,7 +54,7 @@ import { RouterLink } from 'vue-router'
 import Pagination from '@/components/Pagination.vue'
 import SafeEmptyData from '@/components/SafeEmptyData.vue'
 import { etatMap } from '@/types/enums/index.ts'
-import { getIconDefinition, getStateLabel } from '@/utils/index.ts'
+import { getIconDefinition, getStateLabel, normalize } from '@/utils/index.ts'
 
 const props = defineProps<{
   structure?: Structure
@@ -314,6 +314,17 @@ const table = useTable({
       pageIndex: 0,
       pageSize: 20,
     },
+  },
+  globalFilterFn: (row, columnId, value) => {
+    const terms = normalize(value).trim().split(/\s+/).filter(Boolean)
+
+    const values = row.getAllCells().map(cell =>
+      normalize(String(cell.getValue() ?? '')),
+    )
+
+    return terms.every(term =>
+      values.some(cellValue => cellValue.includes(term)),
+    )
   },
   onGlobalFilterChange: (val) => {
     globalFilter.value = val as string

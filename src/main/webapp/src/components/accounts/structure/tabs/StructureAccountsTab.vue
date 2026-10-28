@@ -471,9 +471,15 @@ const table = useTable({
       : updateOrValue
   },
   globalFilterFn: (row, columnId, value) => {
-    const rowValue = row.getValue<string>(columnId)
+    const terms = normalize(value).trim().split(/\s+/).filter(Boolean)
 
-    return normalize(rowValue).includes(normalize(value))
+    const values = row.getAllCells().map(cell =>
+      normalize(String(cell.getValue() ?? '')),
+    )
+
+    return terms.every(term =>
+      values.some(cellValue => cellValue.includes(term)),
+    )
   },
   onGlobalFilterChange: (val) => {
     globalFilter.value = val as string
