@@ -19,6 +19,7 @@
     "restore": "Restore",
     "create": "Create",
     "export": "Export",
-    "reload": "Reload"
+    "reload": "Reload",
+    "erase": "Erase"
   }
 }

@@ -29,6 +29,7 @@ import {
   faCircleInfo,
   faExclamationTriangle,
   faEye,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
@@ -264,8 +265,13 @@ function renderActions(row: Row<typeof features, Incertain>) {
   )
 }
 
-const columnHelper = createColumnHelper<typeof features, Incertain>()
 const globalFilter = ref<string>()
+
+function eraseGlobalFilter() {
+  globalFilter.value = ''
+}
+
+const columnHelper = createColumnHelper<typeof features, Incertain>()
 const columns = computed(() => [
   columnHelper.accessor('personne.etat', {
     id: 'etat',
@@ -357,6 +363,16 @@ const table = useTable({
                 type="text"
                 placeholder=""
               >
+            </div>
+            <div class="end">
+              <button
+                type="button"
+                :title="t('button.erase')"
+                class="btn-tertiary circle"
+                @click="eraseGlobalFilter"
+              >
+                <FontAwesomeIcon :icon="faTimes" />
+              </button>
             </div>
           </div>
           <div class="active-indicator" />

@@ -17,6 +17,8 @@
 <script setup lang="ts">
 import type { VueTable } from '@tanstack/vue-table'
 import type { SearchStructure } from '@/types/index.ts'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   columnFilteringFeature,
   createFilteredRowModel,
@@ -38,6 +40,10 @@ const { t } = useI18n()
 
 const userSearch = ref<string>()
 
+function eraseUserSearch() {
+  userSearch.value = ''
+}
+
 /* Table */
 
 const { data: structures } = useStructuresQuery()
@@ -51,6 +57,11 @@ const features = tableFeatures({
 })
 
 const globalFilter = ref<string>()
+
+function eraseGlobalFilter() {
+  globalFilter.value = ''
+}
+
 const columns = [
   {
     accessorFn: (row: SearchStructure) => (
@@ -129,6 +140,16 @@ const table = useTable({
                   placeholder=""
                 >
               </div>
+              <div class="end">
+                <button
+                  type="button"
+                  :title="t('button.erase')"
+                  class="btn-tertiary circle"
+                  @click="eraseUserSearch"
+                >
+                  <FontAwesomeIcon :icon="faTimes" />
+                </button>
+              </div>
             </div>
             <div class="active-indicator" />
           </div>
@@ -153,6 +174,16 @@ const table = useTable({
                   type="text"
                   placeholder=""
                 >
+              </div>
+              <div class="end">
+                <button
+                  type="button"
+                  :title="t('button.erase')"
+                  class="btn-tertiary circle"
+                  @click="eraseGlobalFilter"
+                >
+                  <FontAwesomeIcon :icon="faTimes" />
+                </button>
               </div>
             </div>
             <div class="active-indicator" />

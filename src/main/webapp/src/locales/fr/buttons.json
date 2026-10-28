@@ -19,6 +19,7 @@
     "restore": "Rétablir",
     "create": "Créer",
     "export": "Exporter",
-    "reload": "Recharger"
+    "reload": "Recharger",
+    "erase": "Effacer"
   }
 }
