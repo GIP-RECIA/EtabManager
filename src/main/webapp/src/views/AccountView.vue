@@ -38,12 +38,6 @@ import { concatenate, normalize } from '@/utils/index.ts'
 
 const { t } = useI18n()
 
-const userSearch = ref<string>()
-
-function eraseUserSearch() {
-  userSearch.value = ''
-}
-
 /* Table */
 
 const { data: structures } = useStructuresQuery()
@@ -124,44 +118,6 @@ const table = useTable({
     <PageLayout
       :title="t('page.account.h1')"
     >
-      <div
-        v-dev
-        class="users"
-      >
-        <h2>
-          {{ t('page.account.user.header') }}
-        </h2>
-
-        <div class="field">
-          <div class="field-layout">
-            <div class="field-container">
-              <div class="middle">
-                <label for="user-search">
-                  {{ t('page.account.user.search') }}
-                </label>
-                <input
-                  id="user-search"
-                  v-model.trim="userSearch"
-                  type="text"
-                  placeholder=""
-                >
-              </div>
-              <div class="end">
-                <button
-                  type="button"
-                  :title="t('button.erase')"
-                  class="btn-tertiary circle"
-                  @click="eraseUserSearch"
-                >
-                  <FontAwesomeIcon :icon="faTimes" />
-                </button>
-              </div>
-            </div>
-            <div class="active-indicator" />
-          </div>
-        </div>
-      </div>
-
       <div class="structures">
         <h2>
           {{ t('page.account.structure.header') }}
@@ -247,7 +203,6 @@ const table = useTable({
 @use 'sass:map';
 @use '@/assets/scoped' as *;
 
-.users,
 .structures {
   display: flex;
   flex-direction: column;
@@ -256,9 +211,7 @@ const table = useTable({
   > h2 {
     margin-bottom: 0;
   }
-}
 
-.structures {
   > .result {
     align-self: flex-end;
   }
