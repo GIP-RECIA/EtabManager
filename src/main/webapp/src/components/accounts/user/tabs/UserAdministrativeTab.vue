@@ -138,6 +138,11 @@ function editFunction(
   display: grid;
   gap: 16px;
 
+  > .r-card > .body {
+    display: grid;
+    gap: 16px;
+  }
+
   @media (width >= map.get($grid-breakpoints, lg)) {
     grid-template-columns: repeat(2, 1fr);
     align-items: start;

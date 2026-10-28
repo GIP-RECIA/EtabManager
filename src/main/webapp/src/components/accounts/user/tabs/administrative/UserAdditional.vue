@@ -149,4 +149,9 @@ const filteredFilieres = computed<PossibleFunction[] | undefined>(() => {
 <style scoped lang="scss">
 @use 'sass:map';
 @use '@/assets/scoped' as *;
+
+.r-card > .body {
+  display: grid;
+  gap: 16px;
+}
 </style>
