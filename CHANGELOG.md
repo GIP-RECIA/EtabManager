@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.6](https://github.com/GIP-RECIA/EtabManager/compare/0.2.5...0.2.6) (2026-10-27)
+
+### Bug Fixes
+
+* NoClassDefFoundError querydsl ([a32f30a](https://github.com/GIP-RECIA/EtabManager/commit/a32f30a481374e943af59fab463c21cb4e9db0b7))
+
 ## [0.2.5](https://github.com/GIP-RECIA/EtabManager/compare/0.2.4...0.2.5) (2026-10-27)
 
 ### Features
