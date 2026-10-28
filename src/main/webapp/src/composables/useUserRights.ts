@@ -88,6 +88,15 @@ export function useUserRights(
       || etat === Etat.Bloque
   })
 
+  const canDoAction = computed<boolean>(() => (
+    canReset.value
+    || canToggleLock.value
+    || canDelete.value
+    || canForceDelete.value
+    || canUndoDelete.value
+    || canAttach.value
+  ))
+
   const isLocked = computed<boolean>(() => {
     if (!user.value)
       return false
@@ -139,5 +148,6 @@ export function useUserRights(
     isDeleting,
     canSeeClassesAndGroups,
     canSeeFunctions,
+    canDoAction,
   }
 }

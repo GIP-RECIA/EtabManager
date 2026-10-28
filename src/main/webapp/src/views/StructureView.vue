@@ -15,8 +15,9 @@
 -->
 
 <script setup lang="ts">
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import type { AppRole } from '@/types/enums/index.ts'
-import { faLink, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisVertical, faLink, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed, ref, useTemplateRef, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -25,6 +26,7 @@ import StructureInfo from '@/components/accounts/structure/StructureInfo.vue'
 import StructureAccountsTab from '@/components/accounts/structure/tabs/StructureAccountsTab.vue'
 import StructureCompTab from '@/components/accounts/structure/tabs/StructureCompTab.vue'
 import StructureDashboardTab from '@/components/accounts/structure/tabs/StructureDashboardTab.vue'
+import MenuButton from '@/components/MenuButton.vue'
 import { useAppRights, useNavigationTabs, useTabs } from '@/composables/index.ts'
 import { useStructureQuery } from '@/services/queries/index.ts'
 
@@ -86,12 +88,55 @@ const dialogState = ref<boolean>(false)
 
 /* Actions */
 
-function onAttach(): void {
-  dialogState.value = true
+enum Actions {
+  ATTACH,
+  CREATE,
 }
 
-function onCreate(): void {
+const availableActions = computed<{
+  uid: string | number
+  name: string
+  icon?: IconDefinition
+  disabled?: boolean
+}[]>(() => {
+  const actions: {
+    uid: string | number
+    name: string
+    icon?: IconDefinition
+    disabled?: boolean
+  }[] = []
 
+  if (canAttach.value) {
+    actions.push({
+      uid: Actions.ATTACH,
+      name: t('button.attach'),
+      icon: faLink,
+    })
+  }
+
+  if (canWriteGLC.value) {
+    actions.push({
+      uid: Actions.CREATE,
+      name: t('button.create'),
+      icon: faPlus,
+    })
+  }
+
+  return actions
+})
+
+function onAction(uid: string | number): void {
+  switch (uid) {
+    case Actions.ATTACH:
+      dialogState.value = true
+      break
+
+    case Actions.CREATE:
+      break
+
+    default:
+      break
+  }
 }
 </script>
 
@@ -103,39 +148,17 @@ function onCreate(): void {
       />
 
       <div
-        v-if="canWriteGLC"
+        v-if="canWriteGLC && availableActions.length > 0"
         class="structure-actions"
       >
-        <h2 class="sr-only">
-          {{ t('page.structure.actions') }}
-        </h2>
-
-        <ul>
-          <li v-if="canAttach">
-            <button
-              type="button"
-              class="btn-primary small"
-              @click="onAttach"
-            >
-              {{ t('button.attach') }}
-              <FontAwesomeIcon
-                :icon="faLink"
-              />
-            </button>
-          </li>
-          <li v-dev>
-            <button
-              type="button"
-              class="btn-primary small"
-              @click="onCreate"
-            >
-              {{ t('button.create') }}
-              <FontAwesomeIcon
-                :icon="faPlus"
-              />
-            </button>
-          </li>
-        </ul>
+        <MenuButton
+          :items="availableActions"
+          :btn-title="t('button.action', 2)"
+          btn-class="btn-secondary circle small"
+          @update:model-value="onAction"
+        >
+          <FontAwesomeIcon :icon="faEllipsisVertical" />
+        </MenuButton>
       </div>
     </header>
 
@@ -221,16 +244,9 @@ function onCreate(): void {
     }
 
     > .structure-actions {
-      flex: 0 1 auto;
-      min-width: 320 - 2 * 16px;
-
-      > ul {
-        @include unstyled-list;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: end;
-        gap: 8px;
-      }
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: end;
     }
   }
 
@@ -253,17 +269,21 @@ function onCreate(): void {
     }
   }
 
+  @media (width >= map.get($grid-breakpoints, sm)) {
+    > header {
+      flex-direction: row;
+
+      > .structure-actions {
+        display: unset;
+      }
+    }
+  }
+
   @media (width >= map.get($grid-breakpoints, md)) {
     gap: 32px;
 
     > [role='tabpanel'] {
       gap: 48px;
-    }
-  }
-
-  @media (width >= map.get($grid-breakpoints, lg)) {
-    > header {
-      flex-direction: row;
     }
   }
 }

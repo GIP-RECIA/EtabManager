@@ -20,6 +20,7 @@
     "create": "Créer",
     "export": "Exporter",
     "reload": "Recharger",
-    "erase": "Effacer"
+    "erase": "Effacer",
+    "action": "Action | Actions"
   }
 }

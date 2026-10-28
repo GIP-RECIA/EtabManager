@@ -15,18 +15,21 @@
 -->
 
 <script setup lang="ts">
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import type {
   FunctionForm,
   UserFunction,
   UserStructure,
 } from '@/types/index.ts'
 import {
+  faEllipsisVertical,
   faKey,
   faLink,
   faLock,
   faLockOpen,
   faRotateLeft,
   faTrashCan,
+
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { computed, ref, useTemplateRef, watch, watchEffect } from 'vue'
@@ -36,6 +39,7 @@ import UserAdministrativeTab from '@/components/accounts/user/tabs/UserAdministr
 import UserGroupsTab from '@/components/accounts/user/tabs/UserGroupsTab.vue'
 import UserInformationTab from '@/components/accounts/user/tabs/UserInformationTab.vue'
 import UserInfo from '@/components/accounts/user/UserInfo.vue'
+import MenuButton from '@/components/MenuButton.vue'
 import {
   useNavigationTabs,
   useTabs,
@@ -65,6 +69,7 @@ const {
   isLocked,
   canSeeClassesAndGroups,
   canSeeFunctions,
+  canDoAction,
 } = useUserRights(user)
 
 /* Tabs */
@@ -151,17 +156,83 @@ function editFunction(
 
 /* Actions */
 
+enum Actions {
+  RESET,
+  TOGGLE_LOCK,
+  DELETE,
+  FORCE_DELETE,
+  UNDO_DELETE,
+  ATTACH,
+}
+
+const availableActions = computed<{
+  uid: string | number
+  name: string
+  icon?: IconDefinition
+  disabled?: boolean
+}[]>(() => {
+  const actions: {
+    uid: string | number
+    name: string
+    icon?: IconDefinition
+    disabled?: boolean
+  }[] = []
+
+  if (canReset.value) {
+    actions.push({
+      uid: Actions.RESET,
+      name: t('button.reset'),
+      icon: faKey,
+    })
+  }
+
+  if (canToggleLock.value) {
+    actions.push({
+      uid: Actions.TOGGLE_LOCK,
+      name: t(`button.${isLocked.value ? 'unlock' : 'lock'}`),
+      icon: isLocked.value ? faLockOpen : faLock,
+    })
+  }
+
+  if (canDelete.value) {
+    actions.push({
+      uid: Actions.DELETE,
+      name: t('button.delete'),
+      icon: faTrashCan,
+    })
+  }
+
+  if (canForceDelete.value) {
+    actions.push({
+      uid: Actions.FORCE_DELETE,
+      name: t('button.forceDelete'),
+      icon: faTrashCan,
+    })
+  }
+
+  if (canUndoDelete.value) {
+    actions.push({
+      uid: Actions.UNDO_DELETE,
+      name: t('button.undoDelete'),
+      icon: faRotateLeft,
+      disabled: !user.value?.etat,
+    })
+  }
+
+  if (canAttach.value) {
+    actions.push({
+      uid: Actions.ATTACH,
+      name: t('button.attach'),
+      icon: faLink,
+    })
+  }
+
+  return actions
+})
+
 const {
   mutate: reset,
 } = useResetUserMutation()
-
-function onReset(): void {
-  if (!user.value)
-    return
-
-  const { id } = user.value
-  reset(id)
-}
 
 const {
   mutate: lock,
@@ -170,50 +241,53 @@ const {
   mutate: unlock,
 } = useUnlockUserMutation()
 
-function onToggleLock(): void {
-  if (!user.value)
-    return
-
-  const { id } = user.value
-  isLocked.value
-    ? unlock(id)
-    : lock(id)
-}
-
 const {
   mutate: undoDelete,
 } = useUndoDeleteUserMutation()
-
-function onUndoDelete(): void {
-  if (!user.value)
-    return
-
-  const { id } = user.value
-  undoDelete(id)
-}
 
 const {
   mutate: deleteU,
 } = useDeleteUserMutation()
 
-function onDelete(): void {
-  if (!user.value)
-    return
-
-  const { id } = user.value
-  deleteU(id)
-}
-
 const {
   mutate: forceDelete,
 } = useForceDeleteUserMutation()
 
-function onForceDelete(): void {
+function onAction(uid: string | number): void {
   if (!user.value)
     return
 
   const { id } = user.value
-  forceDelete(id)
+  switch (uid) {
+    case Actions.RESET:
+      reset(id)
+      break
+
+    case Actions.TOGGLE_LOCK:
+      isLocked.value
+        ? unlock(id)
+        : lock(id)
+      break
+
+    case Actions.DELETE:
+      deleteU(id)
+      break
+
+    case Actions.FORCE_DELETE:
+      forceDelete(id)
+      break
+
+    case Actions.UNDO_DELETE:
+      undoDelete(id)
+      break
+
+    case Actions.ATTACH:
+      onAttach()
+      break
+
+    default:
+      break
+  }
 }
 
 function onAttach(): void {
@@ -234,86 +308,18 @@ function onAttach(): void {
         :user="user"
       />
 
-      <div class="user-actions">
-        <h2 class="sr-only">
-          {{ t('page.user.actions') }}
-        </h2>
-
-        <ul>
-          <li v-if="canReset">
-            <button
-              type="button"
-              class="btn-primary small"
-              @click="onReset"
-            >
-              {{ t('button.reset') }}
-              <FontAwesomeIcon
-                :icon="faKey"
-              />
-            </button>
-          </li>
-          <li v-if="canToggleLock">
-            <button
-              type="button"
-              class="btn-primary small"
-              @click="onToggleLock"
-            >
-              {{ t(`button.${isLocked ? 'unlock' : 'lock'}`) }}
-              <FontAwesomeIcon
-                :icon="isLocked ? faLockOpen : faLock"
-              />
-            </button>
-          </li>
-          <li v-if="canDelete">
-            <button
-              type="button"
-              class="btn-primary small"
-              @click="onDelete"
-            >
-              {{ t('button.delete') }}
-              <FontAwesomeIcon
-                :icon="faTrashCan"
-              />
-            </button>
-          </li>
-          <li v-if="canForceDelete">
-            <button
-              type="button"
-              class="btn-primary small"
-              @click="onForceDelete"
-            >
-              {{ t('button.forceDelete') }}
-              <FontAwesomeIcon
-                :icon="faTrashCan"
-              />
-            </button>
-          </li>
-          <li v-if="canUndoDelete">
-            <button
-              type="button"
-              class="btn-primary small"
-              @click="onUndoDelete"
-            >
-              {{ t('button.undoDelete') }}
-              <FontAwesomeIcon
-                :icon="faRotateLeft"
-              />
-            </button>
-          </li>
-          <li v-if="canAttach">
-            <button
-              type="button"
-              class="btn-primary small"
-              :disabled="!user?.etat"
-              @click="onAttach"
-            >
-              {{ t('button.attach') }}
-              <FontAwesomeIcon
-                :icon="faLink"
-              />
-            </button>
-          </li>
-        </ul>
+      <div
+        v-if="canDoAction && availableActions.length > 0"
+        class="user-actions"
+      >
+        <MenuButton
+          :items="availableActions"
+          :btn-title="t('button.action', 2)"
+          btn-class="btn-secondary circle small"
+          @update:model-value="onAction"
+        >
+          <FontAwesomeIcon :icon="faEllipsisVertical" />
+        </MenuButton>
       </div>
     </header>
 
@@ -403,16 +409,9 @@ function onAttach(): void {
     }
 
     > .user-actions {
-      flex: 0 1 auto;
-      min-width: 320 - 2 * 16px;
-
-      > ul {
-        @include unstyled-list;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: end;
-        gap: 8px;
-      }
+      flex: 0 0 auto;
+      display: flex;
+      justify-content: end;
     }
   }
 
@@ -435,17 +434,21 @@ function onAttach(): void {
     }
   }
 
+  @media (width >= map.get($grid-breakpoints, sm)) {
+    > header {
+      flex-direction: row;
+
+      > .user-actions {
+        display: unset;
+      }
+    }
+  }
+
   @media (width >= map.get($grid-breakpoints, md)) {
     gap: 32px;
 
     > [role='tabpanel'] {
       gap: 48px;
-    }
-  }
-
-  @media (width >= map.get($grid-breakpoints, lg)) {
-    > header {
-      flex-direction: row;
     }
   }
 }

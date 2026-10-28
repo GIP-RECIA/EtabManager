@@ -15,6 +15,8 @@
 -->
 
 <script setup lang="ts">
+import type { IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   computed,
   onMounted,
@@ -29,6 +31,8 @@ withDefaults(
     items: {
       uid: string | number
       name: string
+      icon?: IconDefinition
+      disabled?: boolean
     }[]
     disabled?: boolean
     aLabel?: string
@@ -134,9 +138,14 @@ function handleItemClick(key: string | number) {
       >
         <button
           type="button"
+          :disabled="item.disabled"
           @click="handleItemClick(item.uid)"
         >
           {{ item.name }}
+          <FontAwesomeIcon
+            v-if="item.icon"
+            :icon="item.icon"
+          />
         </button>
       </li>
     </ul>
@@ -156,7 +165,7 @@ function handleItemClick(key: string | number) {
     position: absolute;
     top: calc(100% + 6px);
     right: 0;
-    min-width: 100%;
+    min-width: 270px;
     max-width: calc(100vw - 32px);
     background-color: var(--#{$prefix}body-bg);
     border-radius: 8px;
@@ -165,19 +174,31 @@ function handleItemClick(key: string | number) {
     z-index: 1000;
 
     > li > button {
-      @include unstyled-link;
       display: inline-flex;
       align-items: center;
+      justify-content: space-between;
+      column-gap: 16px;
       padding: 14px 12px;
       text-wrap: nowrap;
       font-size: var(--#{$prefix}font-size-sm);
       width: 100%;
 
-      &:hover,
-      &:focus-visible {
-        font-weight: 500;
-        background-color: var(--#{$prefix}hover);
-        outline: none;
+      > svg {
+        min-width: var(--#{$prefix}body-font-size);
+        opacity: 0.3;
+      }
+
+      &:not(:disabled) {
+        &:hover,
+        &:focus-visible {
+          font-weight: 500;
+          background-color: var(--#{$prefix}hover);
+          outline: none;
+
+          > svg {
+            opacity: 1;
+          }
+        }
       }
     }
   }
