@@ -4942,7 +4942,7 @@ __metadata:
     npm-run-all2: "npm:^9.0.3"
     pinia: "npm:^4.0.3"
     ress: "npm:^6.0.0"
-    sass: "npm:^1.105.0"
+    sass: "npm:^1.107.0"
     typescript: "npm:@typescript/typescript6@^6.0.2"
     vite: "npm:^8.3.5"
     vite-plugin-vue-devtools: "npm:^8.2.1"
@@ -7781,9 +7781,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:^1.105.0":
-  version: 1.106.0
-  resolution: "sass@npm:1.106.0"
+"sass@npm:^1.107.0":
+  version: 1.107.0
+  resolution: "sass@npm:1.107.0"
   dependencies:
     "@parcel/watcher": "npm:^2.4.1"
     chokidar: "npm:^5.0.0"
@@ -7794,7 +7794,7 @@ __metadata:
       optional: true
   bin:
     sass: sass.js
-  checksum: 10/5c484fc39c35d1a82f76497bba8a11db0177e23c8cbf6a0aa0e46dfebfba552619b9a99a94dd8d0653aef3e2eded1032c88b992ac55b6a752343ce93e9de4437
+  checksum: 10/29df4f6e4c4fdf971fafe3d76d0a8d958b85847d6f63ff62caecf5a2babaf25ca5fe6729a5068882fc9bb9ed83d17048a38a4076d7885f8bd94179947affb0f9
   languageName: node
   linkType: hard
 
