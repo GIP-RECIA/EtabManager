@@ -92,7 +92,10 @@ function editFunction(
           </header>
 
           <div class="body">
-            <ul v-if="structure.classes.length > 0">
+            <ul
+              v-if="structure.classes.length > 0"
+              class="tag-list"
+            >
               <li
                 v-for="uClass in structure.classes"
                 :key="`class-${uClass}`"
@@ -114,6 +117,7 @@ function editFunction(
           <div class="body">
             <ul
               v-if="structure.groupesPedagogiques.length > 0"
+              class="tag-list"
             >
               <li
                 v-for="group in structure.groupesPedagogiques"

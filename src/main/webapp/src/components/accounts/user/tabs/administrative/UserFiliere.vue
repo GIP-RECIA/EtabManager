@@ -52,7 +52,10 @@ function tagClick(discipline: UserDisciplineWithDate): void {
       {{ fonction.libelle }}
     </h4>
 
-    <ul v-if="fonction.disciplines.length > 0">
+    <ul
+      v-if="fonction.disciplines.length > 0"
+      class="tag-list"
+    >
       <li
         v-for="discipline in fonction.disciplines"
         :key="`discipline-tag-${discipline.id}`"
@@ -77,12 +80,5 @@ function tagClick(discipline: UserDisciplineWithDate): void {
   border-radius: 6px;
   border: 1px solid var(--#{$prefix}stroke);
   padding: 16px;
-
-  > ul {
-    @include unstyled-list;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px 8px;
-  }
 }
 </style>

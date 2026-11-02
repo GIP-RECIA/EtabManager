@@ -89,7 +89,7 @@ const extendedServiceRights = computed<{
           </h4>
         </header>
 
-        <ul>
+        <ul class="tag-list">
           <li
             v-for="member in right.groups"
             :key="member.id"
@@ -153,10 +153,6 @@ const extendedServiceRights = computed<{
       padding: 16px;
 
       > ul {
-        @include unstyled-list;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 7px 8px;
         padding-bottom: 16px;
 
         > li {
