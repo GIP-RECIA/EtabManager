@@ -50,6 +50,7 @@ export default ({ mode }: ConfigEnv) => {
               'r-header',
               'r-footer',
               'r-filters',
+              'r-bottom-sheet',
             ].includes(tag),
           },
         },

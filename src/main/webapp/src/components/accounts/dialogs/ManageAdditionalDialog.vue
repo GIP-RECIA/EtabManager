@@ -32,7 +32,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { computed, ref, watch } from 'vue'
+import { computed, ref, useTemplateRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   useAddUserFunctionMutation,
@@ -43,6 +43,7 @@ import { toISODate } from '@/utils/index.ts'
 import FunctionSelect from './manageAdditional/FunctionSelect.vue'
 import StructureSelect from './manageAdditional/StructureSelect.vue'
 import UserSelect from './manageAdditional/UserSelect.vue'
+import '@gip-recia/ui-webcomponents/dist/r-bottom-sheet.js'
 
 const props = defineProps<{
   title: string
@@ -61,6 +62,23 @@ const modelValue = defineModel<boolean>({ required: true })
 const { t } = useI18n()
 
 const isDev = import.meta.env.DEV
+
+function close(): void {
+  emit('update:modelValue', false)
+}
+
+/* Bottom sheet */
+
+const bottomSheetRef = useTemplateRef<any>('bottom-sheet')
+
+watch(
+  () => modelValue.value,
+  (val) => {
+    val
+      ? bottomSheetRef.value?.open()
+      : bottomSheetRef.value?.close()
+  },
+)
 
 /* User and structure */
 
@@ -260,11 +278,7 @@ async function remove(): Promise<void> {
     toDeleteFunction: fields.value,
     requiredAction: requiredAction.value,
   })
-  emit('update:modelValue', false)
-}
-
-function close(): void {
-  emit('update:modelValue', false)
+  close()
 }
 
 const {
@@ -285,72 +299,57 @@ async function save(): Promise<void> {
     toAddFunction: fields.value,
     requiredAction: requiredAction.value,
   })
-  emit('update:modelValue', false)
+  close()
 }
 </script>
 
 <template>
-  <v-dialog
-    v-model="modelValue"
-    scrollable
-    :max-width="1024"
+  <r-bottom-sheet
+    ref="bottom-sheet"
+    @close="close"
   >
-    <v-card rounded="xl">
-      <v-toolbar color="rgba(255, 255, 255, 0)">
-        <v-toolbar-title>
-          <h1>
-            {{ title }}
-          </h1>
-        </v-toolbar-title>
-        <template #append>
-          <v-btn
-            icon="fas fa-xmark"
-            color="default"
-            variant="plain"
-            class="me-1"
-            @click="close"
-          />
+    <div class="form">
+      <div class="header">
+        <h1>{{ title }}</h1>
+      </div>
+      <div class="content">
+        <UserSelect
+          v-if="!user"
+          v-model="selectedUser"
+          :structure-id="structureId"
+          class="full-width"
+        />
+
+        <StructureSelect
+          v-if="!structureId"
+          v-model="selectedStructure"
+          :exclude="userStuctures"
+          class="full-width"
+        />
+
+        <FunctionSelect
+          v-if="!!modelValue"
+          v-model="fields"
+          :possible="filteredFilieres"
+          :disable-fonction-edit="!!editFonction"
+        />
+      </div>
+      <footer>
+        <template v-if="user && structureId">
+          <button
+            v-show="user && structureId"
+            type="button"
+            :disabled="!editFonction"
+            class="btn-secondary"
+            @click="remove"
+          >
+            {{ t(`button.${isDetach ? 'detach' : 'delete'}`) }}
+            <FontAwesomeIcon
+              :icon="isDetach ? faLinkSlash : faTrashCan"
+            />
+          </button>
+          <div class="grow-1" />
         </template>
-      </v-toolbar>
-
-      <v-card-text class="pt-0 py-3">
-        <div class="form-layout">
-          <UserSelect
-            v-if="!user"
-            v-model="selectedUser"
-            :structure-id="structureId"
-            class="full-width"
-          />
-
-          <StructureSelect
-            v-if="!structureId"
-            v-model="selectedStructure"
-            :exclude="userStuctures"
-            class="full-width"
-          />
-
-          <FunctionSelect
-            v-model="fields"
-            :possible="filteredFilieres"
-            :disable-fonction-edit="!!editFonction"
-          />
-        </div>
-      </v-card-text>
-
-      <v-card-actions>
-        <button
-          v-show="user && structureId"
-          type="button"
-          :disabled="!editFonction"
-          class="btn-secondary"
-          @click="remove"
-        >
-          {{ t(`button.${isDetach ? 'detach' : 'delete'}`) }}
-          <FontAwesomeIcon
-            :icon="isDetach ? faLinkSlash : faTrashCan"
-          />
-        </button>
-        <div class="grow-1" />
         <button
           type="button"
           class="btn-secondary"
@@ -372,28 +371,49 @@ async function save(): Promise<void> {
             :icon="isAttach ? faLink : faFloppyDisk"
           />
         </button>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+      </footer>
+    </div>
+  </r-bottom-sheet>
 </template>
 
 <style scoped lang="scss">
 @use 'sass:map';
 @use '@/assets/scoped' as *;
 
-h1 {
-  margin-bottom: 0;
-}
+.form {
+  > .content {
+    padding: 24px 0;
+    display: grid;
+    gap: 16px;
+  }
 
-.form-layout {
-  display: grid;
-  gap: 16px;
+  > footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    > button {
+      width: 100%;
+    }
+  }
 
   @media (width >= map.get($grid-breakpoints, md)) {
-    grid-template-columns: repeat(2, 1fr);
+    > .content {
+      grid-template-columns: repeat(2, 1fr);
 
-    > .full-width {
-      grid-column: span 2;
+      > .full-width {
+        grid-column: span 2;
+      }
+    }
+
+    > footer {
+      flex-direction: row;
+      justify-content: space-between;
+      padding-top: 32px;
+
+      > button {
+        width: unset;
+      }
     }
   }
 }
