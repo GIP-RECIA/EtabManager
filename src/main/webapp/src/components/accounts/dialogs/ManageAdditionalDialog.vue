@@ -57,11 +57,11 @@ const emit = defineEmits<{
   'update:modelValue': [value: boolean]
 }>()
 
-const modelValue = defineModel<boolean>({ required: true })
-
 const { t } = useI18n()
 
 const isDev = import.meta.env.DEV
+
+const modelValue = defineModel<boolean>({ required: true })
 
 function close(): void {
   emit('update:modelValue', false)

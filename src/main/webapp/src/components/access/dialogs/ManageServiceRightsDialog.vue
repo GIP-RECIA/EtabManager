@@ -18,9 +18,10 @@
 import type { RightMember, ServiceRight, ServiceRights } from '@/types/index.ts'
 import { faFloppyDisk, faRotateLeft, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { computed, ref, watchEffect } from 'vue'
+import { computed, ref, useTemplateRef, watch, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { alphaSort } from '@/utils/index.ts'
+import '@gip-recia/ui-webcomponents/dist/r-bottom-sheet.js'
 
 const props = defineProps<{
   serviceRight?: Pick<ServiceRights, 'service'> & ServiceRight
@@ -39,6 +40,25 @@ const emit = defineEmits<{
 const { t } = useI18n()
 
 const modelValue = defineModel<boolean>({ required: true })
+
+function close(): void {
+  emit('update:modelValue', false)
+}
+
+/* Bottom sheet */
+
+const bottomSheetRef = useTemplateRef<any>('bottom-sheet')
+
+watch(
+  () => modelValue.value,
+  (val) => {
+    val
+      ? bottomSheetRef.value?.open()
+      : bottomSheetRef.value?.close()
+  },
+)
+
+/* Rights */
 
 const EMPTY_SERVICE_RIGHT: Pick<ServiceRights, 'service'> & ServiceRight = {
   service: '',
@@ -103,10 +123,6 @@ function save() {
   close()
 }
 
-function close() {
-  emit('update:modelValue', false)
-}
-
 function removeUser(id: string) {
   currentUsers.value = currentUsers.value.filter(user => user !== id)
 }
@@ -133,30 +149,15 @@ watchEffect(
 </script>
 
 <template>
-  <v-dialog
-    v-model="modelValue"
-    scrollable
-    :max-width="1024"
+  <r-bottom-sheet
+    ref="bottom-sheet"
+    @close="close"
   >
-    <v-card rounded="xl">
-      <v-toolbar color="rgba(255, 255, 255, 0)">
-        <v-toolbar-title>
-          <h1 class="mb-0">
-            {{ serviceRight.description }}
-          </h1>
-        </v-toolbar-title>
-        <template #append>
-          <v-btn
-            icon="fas fa-xmark"
-            color="default"
-            variant="plain"
-            class="me-1"
-            @click="close"
-          />
-        </template>
-      </v-toolbar>
-
-      <v-card-text class="pt-0 py-3 manage-service-rights-dialog-container">
+    <div class="form">
+      <div class="header">
+        <h1>{{ serviceRight.description }}</h1>
+      </div>
+      <div class="content">
         <div>
           <h2>
             {{ t('page.access.dialog.group', 2) }}
@@ -262,9 +263,8 @@ watchEffect(
             </li>
           </ul>
         </div>
-      </v-card-text>
-
-      <v-card-actions>
+      </div>
+      <footer>
         <button
           type="button"
           class="btn-secondary"
@@ -286,19 +286,43 @@ watchEffect(
             :icon="faFloppyDisk"
           />
         </button>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+      </footer>
+    </div>
+  </r-bottom-sheet>
 </template>
 
 <style scoped lang="scss">
 @use 'sass:map';
 @use '@/assets/scoped' as *;
 
-.manage-service-rights-dialog-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.form {
+  > .content {
+    padding: 24px 0;
+    display: grid;
+    gap: 16px;
+  }
+
+  > footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    > button {
+      width: 100%;
+    }
+  }
+
+  @media (width >= map.get($grid-breakpoints, md)) {
+    > footer {
+      flex-direction: row;
+      justify-content: space-between;
+      padding-top: 32px;
+
+      > button {
+        width: unset;
+      }
+    }
+  }
 }
 
 .people-layout {
