@@ -32,6 +32,8 @@ import { useStructureQuery } from '@/services/queries/index.ts'
 
 const { t } = useI18n()
 
+const isDev = import.meta.env.DEV
+
 const { data: structure } = useStructureQuery()
 
 const structureRights = computed<AppRole[] | undefined>(
@@ -114,7 +116,7 @@ const availableActions = computed<{
     })
   }
 
-  if (canWriteGLC.value) {
+  if (isDev && canWriteGLC.value) {
     actions.push({
       uid: Actions.CREATE,
       name: t('button.create'),
