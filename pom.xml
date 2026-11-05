@@ -67,10 +67,6 @@
       <artifactId>guava</artifactId>
       <version>33.7.2-jre</version>
     </dependency>
-    <!--dependency>
-      <groupId>jakarta.xml.bind</groupId>
-      <artifactId>jakarta.xml.bind-api</artifactId>
-    </dependency-->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
@@ -125,11 +121,6 @@
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
       <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.openapitools</groupId>
-      <artifactId>jackson-databind-nullable</artifactId>
-      <version>0.2.13</version>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -213,11 +204,6 @@
       <groupId>org.springframework.session</groupId>
       <artifactId>spring-session-data-redis</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.zalando</groupId>
-      <artifactId>problem-spring-web</artifactId>
-      <version>0.29.1</version>
-    </dependency>
   </dependencies>
 
   <repositories>
@@ -283,25 +269,6 @@
             <phase>verify</phase>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <version>4.6</version>
-        <configuration>
-          <strictCheck>true</strictCheck>
-          <licenseSets>
-            <licenseSet>
-              <header>etc/header.template</header>
-              <includes>
-                <include>src/**/*.java</include>
-              </includes>
-              <excludes>
-                <exclude>**/dist/**</exclude>
-              </excludes>
-            </licenseSet>
-          </licenseSets>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>io.gatling</groupId>
@@ -415,12 +382,8 @@
           <packagingExcludes>WEB-INF/lib/tomcat-*.jar,
             WEB-INF/lib-provided,
             WEB-INF/classes/logback-*.xml,
-            WEB-INF/classes/config/application-*.yml,
-            scripts/**,
-            assets/**,
-            index.html</packagingExcludes>
+            WEB-INF/classes/config/application-*.yml</packagingExcludes>
           <warSourceExcludes>org/,
-            public/,
             src/,
             dist/</warSourceExcludes>
         </configuration>
@@ -465,18 +428,6 @@
       <properties>
         <spring.profiles.active>dev</spring.profiles.active>
       </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-properties-migrator</artifactId>
-          <scope>runtime</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-tomcat</artifactId>
-          <version>${project.parent.version}</version>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -495,18 +446,6 @@
       <properties>
         <spring.profiles.active>test</spring.profiles.active>
       </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-properties-migrator</artifactId>
-          <scope>provided</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-tomcat</artifactId>
-          <version>${project.parent.version}</version>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -544,14 +483,6 @@
       <properties>
         <spring.profiles.active>prod</spring.profiles.active>
       </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-starter-tomcat</artifactId>
-          <version>${project.parent.version}</version>
-          <scope>provided</scope>
-        </dependency>
-      </dependencies>
       <build>
         <plugins>
           <plugin>

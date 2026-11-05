@@ -39,8 +39,6 @@ This project includes:
   Eclipse Compiler for Java(TM) under Eclipse Public License - v 2.0
   error-prone annotations under Apache 2.0
   etab-manager under Apache License, Version 2.0
-  Faux Pas under MIT License
-  FindBugs-jsr305 under The Apache Software License, Version 2.0
   Guava InternalFutureFailureAccess and InternalFutures under Apache License, Version 2.0
   Guava ListenableFuture only under The Apache Software License, Version 2.0
   Guava: Google Core Libraries for Java under Apache License, Version 2.0
@@ -74,7 +72,6 @@ This project includes:
   JSON Small and Fast Parser under The Apache Software License, Version 2.0
   json-path under The Apache Software License, Version 2.0
   JSONassert under The Apache Software License, Version 2.0
-  JsonNullable Jackson module under Apache License 2.0
   JSpecify annotations under The Apache License, Version 2.0
   JUL to SLF4J bridge under MIT
   JUnit Jupiter (Aggregator) under Eclipse Public License v2.0
@@ -111,10 +108,6 @@ This project includes:
   org.apiguardian:apiguardian-api under The Apache License, Version 2.0
   org.opentest4j:opentest4j under The Apache License, Version 2.0
   org.xmlunit:xmlunit-core under The Apache Software License, Version 2.0
-  problem under MIT License
-  problem-spring-common under MIT License
-  problem-spring-web under MIT License
-  problem-violations under MIT License
   Project Lombok under The MIT License
   Querydsl - APT support under Apache License, Version 2.0
   Querydsl - Codegen module under Apache License, Version 2.0
@@ -151,7 +144,6 @@ This project includes:
   spring-boot-actuator-autoconfigure under Apache License, Version 2.0
   spring-boot-autoconfigure under Apache License, Version 2.0
   spring-boot-cache under Apache License, Version 2.0
-  spring-boot-configuration-metadata under Apache License, Version 2.0
   spring-boot-configuration-processor under Apache License, Version 2.0
   spring-boot-data-commons under Apache License, Version 2.0
   spring-boot-data-jpa under Apache License, Version 2.0
@@ -169,7 +161,6 @@ This project includes:
   spring-boot-micrometer-observation under Apache License, Version 2.0
   spring-boot-netty under Apache License, Version 2.0
   spring-boot-persistence under Apache License, Version 2.0
-  spring-boot-properties-migrator under Apache License, Version 2.0
   spring-boot-security under Apache License, Version 2.0
   spring-boot-servlet under Apache License, Version 2.0
   spring-boot-sql under Apache License, Version 2.0
