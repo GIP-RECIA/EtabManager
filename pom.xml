@@ -6,12 +6,12 @@
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>4.1.2</version>
-    <relativePath/>
+    <relativePath />
   </parent>
 
   <groupId>fr.recia.manager</groupId>
   <artifactId>etab-manager</artifactId>
-  <version>0.2.7</version>
+  <version>0.2.8-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>etab-manager</name>
   <description>API de gestion des établissements</description>
@@ -19,7 +19,7 @@
   <scm>
     <connection>scm:git:ssh://git@github.com/GIP-RECIA/EtabManager.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/EtabManager.git</developerConnection>
-    <tag>0.2.7</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/GIP-RECIA/EtabManager.git</url>
   </scm>
 
