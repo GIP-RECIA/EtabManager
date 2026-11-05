@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.2.7](https://github.com/GIP-RECIA/EtabManager/compare/0.2.6...0.2.7) (2026-11-05)
+
+### Features
+
+* **account:** clear search input ([6198204](https://github.com/GIP-RECIA/EtabManager/commit/619820486f1f8420a1f4917358c32b01b4037238))
+* **account:** improve actions ([79f5cf1](https://github.com/GIP-RECIA/EtabManager/commit/79f5cf13009396067bfa9c53b75f4c4d9154128b))
+* **account:** improve search ([a2a532b](https://github.com/GIP-RECIA/EtabManager/commit/a2a532b2f7a87f88bc432b971fa7153628efe3f0))
+
+### Bug Fixes
+
+* **account:** administrative missing gap ([7614457](https://github.com/GIP-RECIA/EtabManager/commit/761445733ffca96eec468f9d081c590064eb3185))
+* **account:** remove create user button ([d8e492d](https://github.com/GIP-RECIA/EtabManager/commit/d8e492d579f462813a6bab4ffd65bd8a1feb40cc))
+
 ## [0.2.6](https://github.com/GIP-RECIA/EtabManager/compare/0.2.5...0.2.6) (2026-10-27)
 
 ### Bug Fixes
