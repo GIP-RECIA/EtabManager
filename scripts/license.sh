@@ -12,12 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-files=$(find ./src/ ./scripts/ -name '*.vue' -type f \
-  -or -name '*.ts' -type f \
-  -or -name '*.scss' -type f \
-  -or -name '*.java' -type f \
-  -or -name '*.xml' -type f \
-  -or -name '*.sh' -type f)
+files=$(find ./src/ ./scripts/ -type f \
+  \( -name '*.vue' \
+  -o -name '*.ts' \
+  -o -name '*.scss' \
+  -o -name '*.java' \
+  -o -name '*.sh' \) \
+  ! -name '*.d.ts'
+)
 
 check() {
   docker run --rm -t --name licence -v ${PWD}:/src \
